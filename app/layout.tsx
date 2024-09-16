@@ -19,10 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.className}`}>
-      <body>
-        {children}
-      </body>
-    </html>
+      <html lang="en" className={`${manrope.className}`}>
+        <body>{children}</body>
+      </html>
   );
 }

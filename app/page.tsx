@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Header from "./components/Header";
-export default function Home() {
+import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import Link from "next/link";
+export default async function Home() {
+  const { isAuthenticated } = getKindeServerSession();
   return (
     <>
       <Header />
@@ -13,19 +17,44 @@ export default function Home() {
             Craft your daily pyramid of success with smart task <br></br>{" "}
             prioritization and focused time blocks.
           </p>
-          <button className="bg-black z-1 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
-            <p className="font-manrope text-p font-bold">Go to Ankh</p>
-            <Image
-              src="arrow-right.svg"
-              alt="arrow navigates to app"
-              className="invert w-[16px] h-[16px]"
-              width={16}
-              height={16}
-            />
-          </button>
+          {(await isAuthenticated()) ? (
+            <div className="z-1">
+              <Link href={"/dashboard"}>
+                <button className="bg-black z-1 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
+                  <p className="font-manrope text-p font-bold">Go to Ankh</p>
+                  <Image
+                    src="arrow-right.svg"
+                    alt="arrow navigates to app"
+                    className="invert w-[16px] h-[16px]"
+                    width={16}
+                    height={16}
+                  />
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <RegisterLink className="z-1">
+              <button className="bg-black z-1 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
+                <p className="font-manrope text-p font-bold">Go to Ankh</p>
+                <Image
+                  src="arrow-right.svg"
+                  alt="arrow navigates to app"
+                  className="invert w-[16px] h-[16px]"
+                  width={16}
+                  height={16}
+                />
+              </button>
+            </RegisterLink>
+          )}
         </div>
         <div className="flex items-center justify-center mt-[-150px]">
-          <Image src="blury-circle.svg" alt="" className="relative" width={1184} height={1184} />
+          <Image
+            src="blury-circle.svg"
+            alt=""
+            className="relative"
+            width={1184}
+            height={1184}
+          />
           <Image
             src="/showcase.png"
             alt="showcase of ankh app"

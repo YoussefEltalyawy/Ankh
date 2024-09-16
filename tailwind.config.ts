@@ -24,6 +24,9 @@ const config: Config = {
       fontFamily: {
         manrope: ["var(--font-marope)"],
       },
+      zIndex: {
+        1: "1",
+      },
     },
   },
   plugins: [],
