@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface DockProps {
   onToggleTimer: (toggle: boolean) => void;
@@ -11,26 +11,6 @@ function Dock({ onToggleTimer, onToggleTasks, onToggleNotes }: DockProps) {
   const [timerToggle, setTimerToggle] = useState<boolean>(false);
   const [tasksToggle, setTasksToggle] = useState<boolean>(false);
   const [notesToggle, setNotesToggle] = useState<boolean>(false);
-
-  // Only access localStorage when the component is mounted in the browser
-  useEffect(() => {
-    const storedTimerToggle =
-      localStorage.getItem("clockCardVisible") === "true";
-    const storedTasksToggle =
-      localStorage.getItem("tasksCardVisible") === "true";
-
-    setTimerToggle(storedTimerToggle);
-    setTasksToggle(storedTasksToggle);
-  }, []);
-
-  // Update localStorage when toggles change
-  useEffect(() => {
-    localStorage.setItem("clockCardVisible", timerToggle.toString());
-  }, [timerToggle]);
-
-  useEffect(() => {
-    localStorage.setItem("tasksCardVisible", tasksToggle.toString());
-  }, [tasksToggle]);
 
   return (
     <div className="select-none absolute bottom-[50px] left-1/2 transform -translate-x-1/2 border border-[rgba(255,255,255,.1)] bg-[rgba(255,255,255,0.09)] backdrop-blur-[3.5px] rounded-[30px] w-fit p-5">

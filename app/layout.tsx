@@ -4,13 +4,13 @@ import { Manrope, Bricolage_Grotesque } from "next/font/google";
 
 const manrope = Manrope({
   subsets: ["latin"],
-  display: "auto",
+  display: "swap",
   variable: "--font-manrope",
 });
 
 const brico = Bricolage_Grotesque({
   subsets: ["latin"],
-  display: "auto",
+  display: "swap",
   variable: "--font-brico",
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${brico.className} ${manrope.className} `}>
+    <html lang="en" className={`${manrope.className} `}>
       <body>{children}</body>
     </html>
   );

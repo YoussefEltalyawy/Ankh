@@ -23,22 +23,6 @@ function DashboardClient({ user }) {
   });
 
   useEffect(() => {
-    // Initialize state from localStorage only on the client side
-    setShowStopwatchCard({
-      show: localStorage.getItem("clockCardVisible") === "true",
-      opacity: localStorage.getItem("clockCardVisible") === "true" ? 100 : 0,
-    });
-
-    setShowTasksCard({
-      show: localStorage.getItem("tasksCardVisible") === "true",
-      opacity: localStorage.getItem("tasksCardVisible") === "true" ? 100 : 0,
-    });
-
-    setShowNotesCard({
-      show: localStorage.getItem("notesCardVisible") === "true",
-      opacity: localStorage.getItem("notesCardVisible") === "true" ? 100 : 0,
-    });
-
     // Rest of your useEffect logic
     if (
       user &&
@@ -88,7 +72,7 @@ function DashboardClient({ user }) {
     }
     localStorage.setItem("tasksCardVisible", (!showTasksCard.show).toString());
   };
-  if(!user) {
+  if (!user) {
     redirect(
       "https://ankh.kinde.com/auth/cx/_:nav&m:register&psid:0191fee9acfdeac21e25441a8206e4d3"
     );
@@ -109,7 +93,9 @@ function DashboardClient({ user }) {
           <Dock
             onToggleTimer={toggleStopwatch}
             onToggleTasks={toggleTasks}
-            onToggleNotes={() => {console.log('done')}}
+            onToggleNotes={() => {
+              console.log("done");
+            }}
           />
         </div>
         <div className="cardsContainer grid grid-cols-3 gap-[32px]">

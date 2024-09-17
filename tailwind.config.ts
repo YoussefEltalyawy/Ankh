@@ -22,7 +22,7 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        manrope: ["var(--font-marope)"],
+        manrope: ["var(--font-manrope)"],
         brico: ["var(--font-brico)"],
       },
       zIndex: {
