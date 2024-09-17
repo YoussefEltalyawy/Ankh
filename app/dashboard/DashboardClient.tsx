@@ -5,8 +5,10 @@ import { createSwapy } from "swapy";
 import Dock from "../components/Dock";
 import TasksCard from "../components/cards/Tasks";
 import StopwatchCard from "../components/cards/Stopwatch";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import NotesCard from "../components/cards/Notes";
 
-function DashboardClient({ user }) {
+function DashboardClient({ user } : {user: object}) {
   const [showStopwatchCard, setShowStopwatchCard] = useState({
     show: false,
     opacity: 0,
@@ -70,8 +72,16 @@ function DashboardClient({ user }) {
       setShowTasksCard({ show: true, opacity: 0 });
       setTimeout(() => setShowTasksCard({ show: true, opacity: 100 }), 50);
     }
-    localStorage.setItem("tasksCardVisible", (!showTasksCard.show).toString());
   };
+    const toggleNotes = () => {
+      if (showNotesCard.show) {
+        setShowNotesCard({ ...showNotesCard, opacity: 0 });
+        setTimeout(() => setShowNotesCard({ show: false, opacity: 0 }), 300);
+      } else {
+        setShowNotesCard({ show: true, opacity: 0 });
+        setTimeout(() => setShowNotesCard({ show: true, opacity: 100 }), 50);
+      }
+    };
   if (!user) {
     redirect(
       "https://ankh.kinde.com/auth/cx/_:nav&m:register&psid:0191fee9acfdeac21e25441a8206e4d3"
@@ -82,20 +92,17 @@ function DashboardClient({ user }) {
       <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
         <div className="pt-[80px] pb-[30px] flex justify-between items-center">
           <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>
-          <button
-            // onClick={handleLogout}
-            className="bg-white opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4"
-          >
-            Log Out
-          </button>
+          <LogoutLink>
+            <button className="bg-white opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4">
+              Log Out
+            </button>
+          </LogoutLink>
         </div>
         <div>
           <Dock
             onToggleTimer={toggleStopwatch}
             onToggleTasks={toggleTasks}
-            onToggleNotes={() => {
-              console.log("done");
-            }}
+            onToggleNotes={toggleNotes}
           />
         </div>
         <div className="cardsContainer grid grid-cols-3 gap-[32px]">
@@ -108,6 +115,14 @@ function DashboardClient({ user }) {
             </div>
           </div>
           <div className="secondSlot" data-swapy-slot="second">
+            <div data-swapy-item="notes">
+              <NotesCard
+                visible={showNotesCard.show}
+                opacity={showNotesCard.opacity}
+              />
+            </div>
+          </div>
+          <div className="thirdSlot" data-swapy-slot="third">
             <div data-swapy-item="stopwatch">
               <StopwatchCard
                 visible={showStopwatchCard.show}
@@ -115,7 +130,6 @@ function DashboardClient({ user }) {
               />
             </div>
           </div>
-          {/* Add other slots as needed */}
         </div>
       </section>
     </div>

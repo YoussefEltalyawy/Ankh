@@ -17,23 +17,6 @@ function Dock({ onToggleTimer, onToggleTasks, onToggleNotes }: DockProps) {
       <div className="buttonsContainer flex flex-row items-center gap-[16px]">
         <div
           onClick={() => {
-            setTimerToggle((prev) => !prev);
-            onToggleTimer(!timerToggle);
-          }}
-          className="buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2.0999999046325684px] py-[16px] px-[24px] rounded-2xl"
-        >
-          <Image
-            src="/timer-icon.svg"
-            alt="timer icon"
-            className={`w-[32px] h-[32px] transition-all ${
-              timerToggle ? "opacity-100" : "opacity-80"
-            }`}
-            width={32}
-            height={32}
-          />
-        </div>
-        <div
-          onClick={() => {
             setTasksToggle((prev) => !prev);
             onToggleTasks(!tasksToggle);
           }}
@@ -49,6 +32,7 @@ function Dock({ onToggleTimer, onToggleTasks, onToggleNotes }: DockProps) {
             height={32}
           />
         </div>
+
         <div
           onClick={() => {
             setNotesToggle((prev) => !prev);
@@ -61,6 +45,23 @@ function Dock({ onToggleTimer, onToggleTasks, onToggleNotes }: DockProps) {
             alt="background icon"
             className={`w-[32px] h-[32px] transition-all ${
               notesToggle ? "opacity-100" : "opacity-80"
+            }`}
+            width={32}
+            height={32}
+          />
+        </div>
+        <div
+          onClick={() => {
+            setTimerToggle((prev) => !prev);
+            onToggleTimer(!timerToggle);
+          }}
+          className="buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2.0999999046325684px] py-[16px] px-[24px] rounded-2xl"
+        >
+          <Image
+            src="/timer-icon.svg"
+            alt="timer icon"
+            className={`w-[32px] h-[32px] transition-all ${
+              timerToggle ? "opacity-100" : "opacity-80"
             }`}
             width={32}
             height={32}
