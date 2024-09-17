@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Manrope } from "next/font/google";
+import { Manrope, Bricolage_Grotesque } from "next/font/google";
 
 const manrope = Manrope({
   subsets: ["latin"],
   display: "auto",
   variable: "--font-manrope",
+});
+
+const brico = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "auto",
+  variable: "--font-brico",
 });
 
 export const metadata: Metadata = {
@@ -19,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" className={`${manrope.className}`}>
-        <body>{children}</body>
-      </html>
+    <html lang="en" className={`${brico.className} ${manrope.className} `}>
+      <body>{children}</body>
+    </html>
   );
 }

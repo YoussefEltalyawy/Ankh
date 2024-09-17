@@ -23,9 +23,13 @@ const config: Config = {
       },
       fontFamily: {
         manrope: ["var(--font-marope)"],
+        brico: ["var(--font-brico)"],
       },
       zIndex: {
         1: "1",
+      },
+      backgroundImage: {
+        cozy: "url('/cozy.webp')",
       },
     },
   },
