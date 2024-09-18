@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Manrope, Bricolage_Grotesque } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/system";
 
 const manrope = Manrope({
@@ -9,11 +9,11 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-const brico = Bricolage_Grotesque({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-brico",
-});
+// const brico = Bricolage_Grotesque({
+//   subsets: ["latin"],
+//   display: "swap",
+//   variable: "--font-brico",
+// });
 
 export const metadata: Metadata = {
   title: "Ankh",

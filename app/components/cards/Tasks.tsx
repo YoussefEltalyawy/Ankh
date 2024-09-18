@@ -1,5 +1,6 @@
 import React from "react";
 import TaskItem from "../TaskItem";
+import NewTask from "../NewTask";
 
 type Task = {
   id: string;
@@ -25,8 +26,8 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
         ${opacity === 100 ? "opacity-100" : "opacity-0"}
       `}
     >
-      <div className="flex flex-col gap-[16px]">
-        <h6 className="font-semibold font-manrope text-h6 text-white">Tasks</h6>
+      <div className="flex flex-col">
+        <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">Tasks</h6>
         {tasks && (
           <ul>
             {tasks.map((task) => (
@@ -39,6 +40,7 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
             ))}
           </ul>
         )}
+        <NewTask/>
       </div>
     </div>
   );
