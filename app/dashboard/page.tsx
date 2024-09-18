@@ -34,7 +34,7 @@ async function createOrFindUser(userData: UserData): Promise<void> {
 async function DashboardPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-
+  
   if (!user) {
     return redirect("/");
   }
@@ -52,4 +52,3 @@ async function DashboardPage() {
 }
 
 export default DashboardPage;
-  

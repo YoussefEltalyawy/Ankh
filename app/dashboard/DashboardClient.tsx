@@ -13,6 +13,7 @@ import NotesCard from "../components/cards/Notes";
 type Task = {
   id: string;
   title: string;
+  completed: boolean;
 };
 
 type CardState = {

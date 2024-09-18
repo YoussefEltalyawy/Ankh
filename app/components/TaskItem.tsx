@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Checkbox } from "@nextui-org/checkbox";
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
-import { revalidatePath } from "next/cache";
 
-function TaskItem({ title, id }: { title: string; id: string }) {
+function TaskItem({ title, id, completed }: { title: string; id: string, completed: boolean}) {
   // Use React state to track whether the task is selected (completed)
-  const [isSelected, setIsSelected] = useState(false);
+  console.log(completed + "hana")
+  const [isSelected, setIsSelected] = useState(completed);
 
   async function changeCompleteState(taskId: string) {
     // Toggle the state when the checkbox is changed

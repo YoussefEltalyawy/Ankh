@@ -4,6 +4,7 @@ import TaskItem from "../TaskItem";
 type Task = {
   id: string;
   title: string;
+  completed: boolean;
 };
 
 type TasksProps = {
@@ -30,7 +31,12 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
           {tasks && (
             <ul>
               {tasks.map((task) => (
-                <TaskItem id={task.id} title={task.title} key={task.id}/>
+                <TaskItem
+                  id={task.id}
+                  title={task.title}
+                  key={task.id}
+                  completed={task.completed}
+                />
               ))}
             </ul>
           )}
