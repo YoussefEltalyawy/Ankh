@@ -1,17 +1,39 @@
-"use client";
-import { Checkbox } from "@nextui-org/checkbox";
 import { useState } from "react";
+import { Checkbox } from "@nextui-org/checkbox";
+import completeTask from "../actions/completeTask";
+import unCompleteTask from "../actions/unCompleteTask";
+import { revalidatePath } from "next/cache";
 
-function TaskItem({ title, key }: { title: string; key: string }) {
+function TaskItem({ title, id }: { title: string; id: string }) {
+  // Use React state to track whether the task is selected (completed)
   const [isSelected, setIsSelected] = useState(false);
+
+  async function changeCompleteState(taskId: string) {
+    // Toggle the state when the checkbox is changed
+    if (isSelected === false) {
+      setIsSelected(true);
+      await completeTask(taskId);
+    } else {
+      setIsSelected(false);
+      await unCompleteTask(taskId);
+    }
+  }
+
   return (
     <div>
-      <li key={key}>
-        <Checkbox color="default" radius="sm" size="md">
-          <p className="text-white text-p ml-[6px]"> {title}</p>
+      <li key={id}>
+        <Checkbox
+          color="default"
+          radius="sm"
+          size="md"
+          isSelected={isSelected} // Bind isSelected to the state
+          onValueChange={() => changeCompleteState(id)}
+        >
+          <p className="text-white text-p">{title}</p>
         </Checkbox>
       </li>
     </div>
   );
 }
+
 export default TaskItem;

@@ -30,7 +30,7 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
           {tasks && (
             <ul>
               {tasks.map((task) => (
-                <TaskItem key={task.id} title={task.title}/>
+                <TaskItem id={task.id} title={task.title} key={task.id}/>
               ))}
             </ul>
           )}
