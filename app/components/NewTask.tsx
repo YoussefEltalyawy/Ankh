@@ -1,4 +1,3 @@
-
 import { Check, Plus } from "lucide-react";
 import { useState } from "react";
 import addNewTask from "../actions/addNewTask";
@@ -15,7 +14,10 @@ function NewTask() {
         placeholder="Enter Task"
         className="text-white bg-transparent outline-none"
       />
-      <button type="submit" className="text-white">
+      <button
+        type="submit"
+        className="text-white"
+      >
         <Check className="w-[20px] h-[20px]" />
       </button>
     </form>
