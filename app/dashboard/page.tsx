@@ -23,7 +23,7 @@ async function createOrFindUser(userData: UserData): Promise<void> {
     await prisma.user.create({
       data: {
         id,
-        email: email || undefined, // This will set email to undefined if it's null or an empty string
+        email: email || undefined,
         name,
         pfp,
       },
@@ -34,12 +34,12 @@ async function createOrFindUser(userData: UserData): Promise<void> {
 async function DashboardPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const tasks = await getTasks(user.id);
-  console.log(tasks)
 
   if (!user) {
     return redirect("/");
   }
+
+  const tasks = await getTasks(user.id);
 
   await createOrFindUser({
     email: user.email as string,
@@ -48,7 +48,8 @@ async function DashboardPage() {
     pfp: user.picture as string,
   });
 
-  return <DashboardClient user={user} tasks={tasks}/>;
+  return <DashboardClient user={user} tasks={tasks} />;
 }
 
 export default DashboardPage;
+  

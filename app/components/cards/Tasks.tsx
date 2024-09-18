@@ -8,7 +8,7 @@ type Task = {
 type TasksProps = {
   visible: boolean;
   opacity: number;
-  tasks: Task[];
+  tasks: Task[] | undefined;
 };
 
 function TasksCard({ visible, opacity, tasks }: TasksProps) {
@@ -26,11 +26,13 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
       <div className="flex flex-col gap-[16px]">
         <h6 className="font-semibold font-manrope text-h6 text-white">Tasks</h6>
         <div className="flex items-center gap-[8px]">
-          <ul>
-            {tasks.map((task) => (
-              <li key={task.id}>{task.title}</li>
-            ))}
-          </ul>
+          {tasks && (
+            <ul>
+              {tasks.map((task) => (
+                <li key={task.id}>{task.title}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
