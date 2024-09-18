@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Manrope, Bricolage_Grotesque } from "next/font/google";
+import { NextUIProvider } from "@nextui-org/system";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.className} `}>
-      <body>{children}</body>
+      <body>
+        <NextUIProvider>{children}</NextUIProvider>
+      </body>
     </html>
   );
 }

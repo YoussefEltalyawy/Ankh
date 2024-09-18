@@ -1,4 +1,5 @@
 import React from "react";
+import TaskItem from "../TaskItem";
 
 type Task = {
   id: string;
@@ -29,7 +30,7 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
           {tasks && (
             <ul>
               {tasks.map((task) => (
-                <li key={task.id}>{task.title}</li>
+                <TaskItem key={task.id} title={task.title}/>
               ))}
             </ul>
           )}
