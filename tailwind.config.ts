@@ -25,7 +25,7 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        manrope: ["var(--font-manrope)"],
+        manrope: ["var(--font-manrop)"],
         brico: ["var(--font-brico)"],
       },
       zIndex: {

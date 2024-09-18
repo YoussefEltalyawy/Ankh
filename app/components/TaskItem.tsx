@@ -3,9 +3,16 @@ import { Checkbox } from "@nextui-org/checkbox";
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 
-function TaskItem({ title, id, completed }: { title: string; id: string, completed: boolean}) {
+function TaskItem({
+  title,
+  id,
+  completed,
+}: {
+  title: string;
+  id: string;
+  completed: boolean;
+}) {
   // Use React state to track whether the task is selected (completed)
-  console.log(completed + "hana")
   const [isSelected, setIsSelected] = useState(completed);
 
   async function changeCompleteState(taskId: string) {
