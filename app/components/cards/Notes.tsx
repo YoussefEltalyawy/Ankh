@@ -13,7 +13,7 @@ function NotesCard({ visible, opacity }: NotesProps) {
       `}
     >
       <div className="flex flex-col gap-[16px]">
-        <h6 className="font-bold font-manrope text-h6 text-white">Notes</h6>
+        <h6 className="font-semibold font-manrope text-h6 text-white">Notes</h6>
         <div className="flex items-center gap-[8px]">
           <h1 className="text-white">Notes</h1>
         </div>

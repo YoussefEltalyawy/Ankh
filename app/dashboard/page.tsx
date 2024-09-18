@@ -2,13 +2,14 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import DashboardClient from "./DashboardClient";
 import prisma from "../lib/db";
+import getTasks from "../actions/getTask";
 
 type UserData = {
   email: string | undefined | null;
   id: string;
   name: string | undefined | null;
   pfp: string | undefined | null;
-}
+};
 
 async function createOrFindUser(userData: UserData): Promise<void> {
   const { id, email, name, pfp } = userData;
@@ -33,13 +34,12 @@ async function createOrFindUser(userData: UserData): Promise<void> {
 async function DashboardPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const tasks = await getTasks(user.id);
+  console.log(tasks)
 
   if (!user) {
     return redirect("/");
   }
-
-  console.log(user.id);
-  console.log("up");
 
   await createOrFindUser({
     email: user.email as string,
@@ -48,7 +48,7 @@ async function DashboardPage() {
     pfp: user.picture as string,
   });
 
-  return <DashboardClient user={user} />;
+  return <DashboardClient user={user} tasks={tasks}/>;
 }
 
 export default DashboardPage;

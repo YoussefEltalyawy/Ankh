@@ -7,8 +7,12 @@ import TasksCard from "../components/cards/Tasks";
 import StopwatchCard from "../components/cards/Stopwatch";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import NotesCard from "../components/cards/Notes";
+type Task = {
+  id: string;
+  title: string;
+};
 
-function DashboardClient({ user } : {user: object}) {
+function DashboardClient({ user, tasks }: { user: object; tasks: Task[] }) {
   const [showStopwatchCard, setShowStopwatchCard] = useState({
     show: false,
     opacity: 0,
@@ -73,15 +77,15 @@ function DashboardClient({ user } : {user: object}) {
       setTimeout(() => setShowTasksCard({ show: true, opacity: 100 }), 50);
     }
   };
-    const toggleNotes = () => {
-      if (showNotesCard.show) {
-        setShowNotesCard({ ...showNotesCard, opacity: 0 });
-        setTimeout(() => setShowNotesCard({ show: false, opacity: 0 }), 300);
-      } else {
-        setShowNotesCard({ show: true, opacity: 0 });
-        setTimeout(() => setShowNotesCard({ show: true, opacity: 100 }), 50);
-      }
-    };
+  const toggleNotes = () => {
+    if (showNotesCard.show) {
+      setShowNotesCard({ ...showNotesCard, opacity: 0 });
+      setTimeout(() => setShowNotesCard({ show: false, opacity: 0 }), 300);
+    } else {
+      setShowNotesCard({ show: true, opacity: 0 });
+      setTimeout(() => setShowNotesCard({ show: true, opacity: 100 }), 50);
+    }
+  };
   if (!user) {
     redirect(
       "https://ankh.kinde.com/auth/cx/_:nav&m:register&psid:0191fee9acfdeac21e25441a8206e4d3"
@@ -111,6 +115,7 @@ function DashboardClient({ user } : {user: object}) {
               <TasksCard
                 visible={showTasksCard.show}
                 opacity={showTasksCard.opacity}
+                tasks={tasks}
               />
             </div>
           </div>
