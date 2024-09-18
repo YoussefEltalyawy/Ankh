@@ -27,20 +27,18 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
     >
       <div className="flex flex-col gap-[16px]">
         <h6 className="font-semibold font-manrope text-h6 text-white">Tasks</h6>
-        <div className="flex items-center gap-[8px]">
-          {tasks && (
-            <ul>
-              {tasks.map((task) => (
-                <TaskItem
-                  id={task.id}
-                  title={task.title}
-                  key={task.id}
-                  completed={task.completed}
-                />
-              ))}
-            </ul>
-          )}
-        </div>
+        {tasks && (
+          <ul>
+            {tasks.map((task) => (
+              <TaskItem
+                id={task.id}
+                title={task.title}
+                key={task.id}
+                completed={task.completed}
+              />
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
