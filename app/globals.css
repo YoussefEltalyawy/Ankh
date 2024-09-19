@@ -12,3 +12,7 @@ html {
 body {
   background: var(--background);
 }
+/* Hiding scrollbar in all cards, i do not know how this works, but it does so fine. */
+::-webkit-scrollbar {
+  width: .1px;
+}

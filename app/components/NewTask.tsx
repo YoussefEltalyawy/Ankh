@@ -26,6 +26,7 @@ function NewTask({ onAddTask }: NewTaskProps) {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Enter Task"
         className="text-white bg-transparent outline-none"
+        maxLength={36}
       />
       <button type="submit" className="text-white">
         <Check className="w-[20px] h-[20px]" />
