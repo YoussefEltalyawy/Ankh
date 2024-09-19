@@ -1,20 +1,13 @@
-"use client";
-
-import { redirect } from "next/navigation";
-import { useState, useEffect } from "react";
-import { createSwapy } from "swapy";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
-
+'use client'
+import React, { useState, useEffect } from "react";
+import { Task, User } from "@/app/types";
 import Dock from "../components/Dock";
 import TasksCard from "../components/cards/Tasks";
 import StopwatchCard from "../components/cards/Stopwatch";
 import NotesCard from "../components/cards/Notes";
-
-type Task = {
-  id: string;
-  title: string;
-  completed: boolean;
-};
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import addNewTask from "../actions/addNewTask";
+import { createSwapy } from "swapy";
 
 type CardState = {
   show: boolean;
@@ -22,11 +15,12 @@ type CardState = {
 };
 
 type DashboardClientProps = {
-  user: object;
-  tasks: Task[] | undefined;
+  user: User;
+  initialTasks: Task[];
 };
 
-function DashboardClient({ user, tasks }: DashboardClientProps) {
+function DashboardClient({ user, initialTasks }: DashboardClientProps) {
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [showStopwatchCard, setShowStopwatchCard] = useState<CardState>({
     show: false,
     opacity: 0,
@@ -80,11 +74,28 @@ function DashboardClient({ user, tasks }: DashboardClientProps) {
   const toggleTasks = () => toggleCard(showTasksCard, setShowTasksCard);
   const toggleNotes = () => toggleCard(showNotesCard, setShowNotesCard);
 
-  if (!user) {
-    redirect(
-      "https://ankh.kinde.com/auth/cx/_:nav&m:register&psid:0191fee9acfdeac21e25441a8206e4d3"
-    );
-  }
+  const handleAddTask = async (title: string) => {
+    const tempTask: Task = {
+      id: `temp-${Date.now()}`,
+      title,
+      completed: false,
+    };
+
+    setTasks((prevTasks) => [...prevTasks, tempTask]);
+
+    try {
+      const newTask = await addNewTask(title);
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === tempTask.id ? newTask : task))
+      );
+    } catch (error) {
+      console.error("Error adding task:", error);
+      setTasks((prevTasks) =>
+        prevTasks.filter((task) => task.id !== tempTask.id)
+      );
+      // You could add an error state here and display it to the user
+    }
+  };
 
   return (
     <div>
@@ -109,6 +120,7 @@ function DashboardClient({ user, tasks }: DashboardClientProps) {
                 visible={showTasksCard.show}
                 opacity={showTasksCard.opacity}
                 tasks={tasks}
+                onAddTask={handleAddTask}
               />
             </div>
           </div>

@@ -1,20 +1,16 @@
 import React from "react";
 import TaskItem from "../TaskItem";
 import NewTask from "../NewTask";
-
-type Task = {
-  id: string;
-  title: string;
-  completed: boolean;
-};
+import { Task } from "@/app/types";
 
 type TasksProps = {
   visible: boolean;
   opacity: number;
-  tasks: Task[] | undefined;
+  tasks: Task[];
+  onAddTask: (title: string) => Promise<void>;
 };
 
-function TasksCard({ visible, opacity, tasks }: TasksProps) {
+function TasksCard({ visible, opacity, tasks, onAddTask }: TasksProps) {
   if (!visible) return null;
 
   return (
@@ -27,20 +23,20 @@ function TasksCard({ visible, opacity, tasks }: TasksProps) {
       `}
     >
       <div className="flex flex-col">
-        <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">Tasks</h6>
-        {tasks && (
-          <ul>
-            {tasks.map((task) => (
-              <TaskItem
-                id={task.id}
-                title={task.title}
-                key={task.id}
-                completed={task.completed}
-              />
-            ))}
-          </ul>
-        )}
-        <NewTask/>
+        <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
+          Tasks
+        </h6>
+        <ul>
+          {tasks.map((task) => (
+            <TaskItem
+              id={task.id}
+              title={task.title}
+              key={task.id}
+              completed={task.completed}
+            />
+          ))}
+        </ul>
+        <NewTask onAddTask={onAddTask} />
       </div>
     </div>
   );

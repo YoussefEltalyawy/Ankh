@@ -1,20 +1,20 @@
 import { Check, Plus } from "lucide-react";
 import { useState } from "react";
-import addNewTask from "../actions/addNewTask";
 
-function NewTask() {
+type NewTaskProps = {
+  onAddTask: (title: string) => Promise<void>;
+};
+
+function NewTask({ onAddTask }: NewTaskProps) {
   const [typing, setTyping] = useState(false);
+  const [title, setTitle] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevents default form submission behavior (like page reload)
-
-    const formData = new FormData(e.target); // Get form data from the event target (the form element)
-
-    try {
-      addNewTask(formData); // Pass the formData to your server action
-      setTyping(false); // Reset typing state after submission
-    } catch (error) {
-      console.error("Error adding task:", error);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (title.trim()) {
+      onAddTask(title.trim());
+      setTitle("");
+      setTyping(false);
     }
   };
 
@@ -22,8 +22,8 @@ function NewTask() {
     <form onSubmit={handleSubmit} className="flex justify-between">
       <input
         type="text"
-        name="title"
-        id="title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         placeholder="Enter Task"
         className="text-white bg-transparent outline-none"
       />
@@ -33,7 +33,7 @@ function NewTask() {
     </form>
   ) : (
     <span
-      className="flex gap-[8px] hover:opacity-80 transition-all duration-75 cursor-pointer"
+      className="flex gap-[8px] hover:opacity-80 transition-opacity duration-75 cursor-pointer"
       onClick={() => setTyping(true)}
     >
       <Plus className="text-white" />

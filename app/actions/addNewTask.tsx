@@ -1,15 +1,18 @@
-"use server";
+'use server'
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import prisma from "../lib/db";
-import { revalidatePath } from "next/cache";
+import { Task } from "@/app/types";
 
-async function addNewTask(formData: FormData) {
-  const title = formData.get("title") as string;
+async function addNewTask(title: string): Promise<Task> {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
   if (!title) {
     throw new Error("Title is required");
+  }
+
+  if (!user || !user.id) {
+    throw new Error("User not authenticated");
   }
 
   try {
@@ -20,7 +23,6 @@ async function addNewTask(formData: FormData) {
         completed: false,
       },
     });
-    revalidatePath('/dashboard');
     return task;
   } catch (err) {
     console.error("Error creating task:", err);

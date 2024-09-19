@@ -3,15 +3,9 @@ import { redirect } from "next/navigation";
 import DashboardClient from "./DashboardClient";
 import prisma from "../lib/db";
 import getTasks from "../actions/getTask";
+import { User } from "@/app/types";
 
-type UserData = {
-  email: string | undefined | null;
-  id: string;
-  name: string | undefined | null;
-  pfp: string | undefined | null;
-};
-
-async function createOrFindUser(userData: UserData): Promise<void> {
+async function createOrFindUser(userData: User): Promise<void> {
   const { id, email, name, pfp } = userData;
 
   const existingUser = await prisma.user.findUnique({
@@ -42,13 +36,13 @@ async function DashboardPage() {
   const tasks = await getTasks(user.id);
 
   await createOrFindUser({
-    email: user.email as string,
-    id: user.id as string,
-    name: user.given_name as string,
-    pfp: user.picture as string,
+    email: user.email,
+    id: user.id,
+    name: user.given_name,
+    pfp: user.picture,
   });
 
-  return <DashboardClient user={user} tasks={tasks} />;
+  return <DashboardClient user={user} initialTasks={tasks} />;
 }
 
 export default DashboardPage;
