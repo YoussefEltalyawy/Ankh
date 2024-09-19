@@ -4,15 +4,15 @@ import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 import { X } from "lucide-react";
 
-function TaskItem({
-  title,
-  id,
-  completed,
-}: {
+type TaskItemProps = {
   title: string;
   id: string;
   completed: boolean;
-}) {
+  onDeleteTask: (title: string) => Promise<void>;
+};
+
+
+function TaskItem({ title, id, completed,onDeleteTask }: TaskItemProps) {
   // Use React state to track whether the task is selected (completed)
   const [isSelected, setIsSelected] = useState(completed);
 
@@ -42,7 +42,10 @@ function TaskItem({
       </Checkbox>
 
       {/* The X button is initially hidden and appears with animation on hover */}
-      <X className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer" />
+      <X
+        className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
+        onClick={() => onDeleteTask(id)}
+      />
     </li>
   );
 }

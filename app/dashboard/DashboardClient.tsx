@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import { Task, User } from "@/app/types";
 import Dock from "../components/Dock";
@@ -8,6 +8,7 @@ import NotesCard from "../components/cards/Notes";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import addNewTask from "../actions/addNewTask";
 import { createSwapy } from "swapy";
+import deleteTask from "../actions/deleteTask";
 
 type CardState = {
   show: boolean;
@@ -75,6 +76,8 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
   const toggleNotes = () => toggleCard(showNotesCard, setShowNotesCard);
 
   const handleAddTask = async (title: string) => {
+    console.log(tasks);
+    console.log("up");
     const tempTask: Task = {
       id: `temp-${Date.now()}`,
       title,
@@ -93,7 +96,18 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
       setTasks((prevTasks) =>
         prevTasks.filter((task) => task.id !== tempTask.id)
       );
-      // You could add an error state here and display it to the user
+    }
+  };
+  const handleDeleteTask = async (taskId: string) => {
+    const index = tasks.findIndex((item) => item.id === taskId);
+    if (index !== -1) {
+      const newArray = [...tasks.slice(0, index), ...tasks.slice(index + 1)];
+      setTasks(newArray);
+    }
+    try {
+      await deleteTask(taskId);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -121,6 +135,7 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
                 opacity={showTasksCard.opacity}
                 tasks={tasks}
                 onAddTask={handleAddTask}
+                onDeleteTask={handleDeleteTask}
               />
             </div>
           </div>

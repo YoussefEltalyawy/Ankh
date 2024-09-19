@@ -8,9 +8,16 @@ type TasksProps = {
   opacity: number;
   tasks: Task[];
   onAddTask: (title: string) => Promise<void>;
+  onDeleteTask: (title: string) => Promise<void>;
 };
 
-function TasksCard({ visible, opacity, tasks, onAddTask }: TasksProps) {
+function TasksCard({
+  visible,
+  opacity,
+  tasks,
+  onAddTask,
+  onDeleteTask,
+}: TasksProps) {
   if (!visible) return null;
 
   return (
@@ -33,6 +40,7 @@ function TasksCard({ visible, opacity, tasks, onAddTask }: TasksProps) {
               title={task.title}
               key={task.id}
               completed={task.completed}
+              onDeleteTask={onDeleteTask}
             />
           ))}
         </ul>
