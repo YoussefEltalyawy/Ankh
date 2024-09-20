@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import DashboardClient from "./DashboardClient";
 import prisma from "../lib/db";
 import getTasks from "../actions/getTask";
+import getNotes from "../actions/getNote";
 import { User } from "@/app/types";
 
 async function createOrFindUser(userData: User): Promise<void> {
@@ -28,12 +29,13 @@ async function createOrFindUser(userData: User): Promise<void> {
 async function DashboardPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  
+
   if (!user) {
     return redirect("/");
   }
 
   const tasks = await getTasks(user.id);
+  const notes = await getNotes(user.id);
 
   await createOrFindUser({
     email: user.email,
@@ -42,7 +44,7 @@ async function DashboardPage() {
     pfp: user.picture,
   });
 
-  return <DashboardClient user={user} initialTasks={tasks} />;
+  return <DashboardClient user={user} initialTasks={tasks} initalNotes={notes} />;
 }
 
 export default DashboardPage;

@@ -1,14 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Task, User } from "@/app/types";
+import { Note, Task, User } from "@/app/types";
+import { createSwapy } from "swapy";
 import Dock from "../components/Dock";
 import TasksCard from "../components/cards/Tasks";
 import StopwatchCard from "../components/cards/Stopwatch";
 import NotesCard from "../components/cards/Notes";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import addNewTask from "../actions/addNewTask";
-import { createSwapy } from "swapy";
+import addNewNote from "../actions/addNewNote";
 import deleteTask from "../actions/deleteTask";
+import deleteNote from "../actions/deleteNote";
 
 type CardState = {
   show: boolean;
@@ -18,10 +20,16 @@ type CardState = {
 type DashboardClientProps = {
   user: User;
   initialTasks: Task[];
+  initalNotes: Note[];
 };
 
-function DashboardClient({ user, initialTasks }: DashboardClientProps) {
+function DashboardClient({
+  user,
+  initialTasks,
+  initalNotes,
+}: DashboardClientProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [notes, setNotes] = useState<Note[]>(initalNotes);
   const [showStopwatchCard, setShowStopwatchCard] = useState<CardState>({
     show: false,
     opacity: 0,
@@ -111,6 +119,39 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
     }
   };
 
+  // heree
+  const handleAddNote = async (content: string) => {
+    console.log(tasks);
+    console.log("up");
+    const tempNote: Note = {
+      id: `temp-${Date.now()}`,
+      content,
+    };
+
+    setNotes((prevNotes) => [...prevNotes, tempNote]);
+    try {
+      const newNote = await addNewNote(content);
+      setNotes((prevNotes) =>
+        prevNotes.map((note) => (note.id === tempNote.id ? newNote : note))
+      );
+    } catch (error) {
+      console.error("Error adding task:", error);
+      setNotes((prevTasks) => prevTasks.filter((note) => note.id !== note.id));
+    }
+  };
+  const handleDeleteNote = async (noteId: string) => {
+    const index = notes.findIndex((item) => item.id === noteId);
+    if (index !== -1) {
+      const newArray = [...notes.slice(0, index), ...notes.slice(index + 1)];
+      setNotes(newArray);
+    }
+    try {
+      await deleteNote(noteId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
@@ -144,6 +185,9 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
               <NotesCard
                 visible={showNotesCard.show}
                 opacity={showNotesCard.opacity}
+                notes={notes}
+                onAddNote={handleAddNote}
+                onDeleteNote={handleDeleteNote}
               />
             </div>
           </div>
