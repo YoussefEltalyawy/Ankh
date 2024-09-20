@@ -44,7 +44,9 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
       if (cardsContainer) {
         const swapy = createSwapy(cardsContainer, { animation: "dynamic" });
         swapy.enable(true);
-
+        swapy.onSwap((event) => {
+          console.log(event.data.object, event.data.array, event.data.map);
+        });
       } else {
         console.error("cardsContainer element not found");
       }
@@ -127,7 +129,7 @@ function DashboardClient({ user, initialTasks }: DashboardClientProps) {
         />
         <div className="cardsContainer grid grid-cols-3 gap-[32px]">
           <div className="firstSlot" data-swapy-slot="first">
-            <div data-swapy-item="tasks" className="h-[80%]">
+            <div data-swapy-item="tasks">
               <TasksCard
                 visible={showTasksCard.show}
                 opacity={showTasksCard.opacity}

@@ -22,17 +22,19 @@ function TasksCard({
 
   return (
     <div
+      data-swapy-item="first"
       className={`
-        card bg-[rgba(255,255,255,0.09)] px-[32px] h-full py-[24px] rounded-3xl
+        card bg-[rgba(255,255,255,0.09)] px-[32px] py-[24px] rounded-3xl
         border border-[rgba(255,255,255,.1)] backdrop-blur-[5.7px] transition-opacity duration-300 ease-in-out
         ${opacity === 100 ? "opacity-100" : "opacity-0"}
+        flex flex-col h-full max-h-[440px] overflow-hidden
       `}
     >
-      <div className="flex flex-col h-[99%]">
-        <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
-          Tasks
-        </h6>
-        <ul className="overflow-scroll">
+      <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
+        Tasks
+      </h6>
+      <div className="flex-grow overflow-y-auto mb-[16px]">
+        <ul>
           {tasks.map((task) => (
             <TaskItem
               id={task.id}
@@ -43,8 +45,8 @@ function TasksCard({
             />
           ))}
         </ul>
-        <NewTask onAddTask={onAddTask} />
       </div>
+      <NewTask onAddTask={onAddTask} />
     </div>
   );
 }
