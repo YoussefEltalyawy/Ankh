@@ -1,4 +1,4 @@
-# Ankh Productivity Suite
+# Ankh
 
 Ankh is an elegant productivity application that combines task management, note-taking, and time tracking functionalities in one seamless interface.
 

@@ -55,6 +55,9 @@ function DashboardClient({
         swapy.onSwap((event) => {
           console.log(event.data.object, event.data.array, event.data.map);
         });
+        return () => {
+          swapy.destroy();
+        };
       } else {
         console.error("cardsContainer element not found");
       }
