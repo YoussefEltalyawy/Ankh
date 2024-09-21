@@ -2,6 +2,7 @@ import React from "react";
 import TaskItem from "../TaskItem";
 import NewTask from "../NewTask";
 import { Task } from "@/app/types";
+import { MoreHorizontal } from "lucide-react";
 
 type TasksProps = {
   visible: boolean;
@@ -30,9 +31,12 @@ function TasksCard({
         flex flex-col h-full max-h-[440px] overflow-hidden
       `}
     >
-      <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
-        Tasks
-      </h6>
+      <span className="flex justify-between items-center">
+        <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
+          Tasks
+        </h6>
+        <MoreHorizontal className="text-white" />
+      </span>
       <div className="flex-grow overflow-y-auto mb-[16px]">
         <ul>
           {tasks.map((task) => (

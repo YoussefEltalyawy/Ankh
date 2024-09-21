@@ -11,6 +11,8 @@ import addNewTask from "../actions/addNewTask";
 import addNewNote from "../actions/addNewNote";
 import deleteTask from "../actions/deleteTask";
 import deleteNote from "../actions/deleteNote";
+import SpotifyPlaylistEmbed from "../components/SpotifyPlaylistEmbed";
+import SpotifyPlaylistForm from "../components/SpotifyPlaylistForm";
 
 type CardState = {
   show: boolean;
@@ -42,6 +44,13 @@ function DashboardClient({
     show: false,
     opacity: 0,
   });
+  const [playlistId, setPlaylistId] = useState<string>(
+    "6c1yAZ49QGHy4hgitU4QhH"
+  );
+
+  const handleSubmit = (id: string) => {
+    setPlaylistId(id);
+  };
 
   useEffect(() => {
     if (
@@ -160,6 +169,7 @@ function DashboardClient({
       <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
         <div className="pt-[80px] pb-[30px] flex justify-between items-center">
           <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>
+          <SpotifyPlaylistForm onSubmit={handleSubmit} />
           <LogoutLink>
             <button className="bg-white opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4">
               Log Out
@@ -202,6 +212,10 @@ function DashboardClient({
               />
             </div>
           </div>
+        </div>
+        <div>
+          <h1 className="text-white">Spotify player?</h1>
+          <SpotifyPlaylistEmbed playlistId={playlistId} />
         </div>
       </section>
     </div>

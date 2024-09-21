@@ -38,7 +38,10 @@ function TaskItem({ title, id, completed, onDeleteTask }: TaskItemProps) {
         className="text-white"
       >
         <p
-          className={cn("text-p transition-colors" , isSelected ? "text-[#8b8b8b]" : "text-white")}
+          className={cn(
+            "text-p transition-colors",
+            isSelected ? "text-[#8b8b8b]" : "text-white"
+          )}
         >
           {title}
         </p>
