@@ -31,10 +31,8 @@ function TasksCard({
         flex flex-col h-full max-h-[440px] overflow-hidden
       `}
     >
-      <span className="flex justify-between items-center">
-        <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
-          Tasks
-        </h6>
+      <span className="flex justify-between items-center  mb-[10px]">
+        <h6 className="font-semibold font-manrope text-h6 text-white">Tasks</h6>
         <MoreHorizontal className="text-white" />
       </span>
       <div className="flex-grow overflow-y-auto mb-[16px]">

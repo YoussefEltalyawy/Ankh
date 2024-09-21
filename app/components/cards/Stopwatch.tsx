@@ -1,4 +1,5 @@
 import { useStopwatch } from "@/app/hooks/useStopwatch";
+import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 
 type StopwatchProps = {
@@ -21,7 +22,12 @@ function StopwatchCard({ visible, opacity }: StopwatchProps) {
       `}
     >
       <div className="flex flex-col gap-[16px]">
-        <h6 className="font-bold font-manrope text-h6 text-white">Stopwatch</h6>
+        <span className="flex flex-row justify-between items-center mb-[10px]">
+          <h6 className="font-semibold font-manrope text-h6 text-white">
+            Stopwatch
+          </h6>
+          <MoreHorizontal className="text-white" />
+        </span>
         {/* Display the time returned from useStopwatch */}
         <h1 className="font-brico text-h1 text-white text-center font-bold">
           {time}

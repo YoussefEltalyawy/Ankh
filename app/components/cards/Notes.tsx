@@ -2,6 +2,7 @@ import React from "react";
 import NoteItem from "../NoteItem";
 import { Note } from "@/app/types";
 import NewNote from "../NewNote";
+import { MoreHorizontal } from "lucide-react";
 
 type NotesProps = {
   visible: boolean;
@@ -30,9 +31,10 @@ function NotesCard({
         flex flex-col h-full max-h-[440px] overflow-hidden
       `}
     >
-      <h6 className="font-semibold font-manrope text-h6 text-white mb-[16px]">
-        Notes
-      </h6>
+      <span className="flex flex-row justify-between items-center  mb-[10px]">
+        <h6 className="font-semibold font-manrope text-h6 text-white">Notes</h6>
+        <MoreHorizontal className="text-white" />
+      </span>
       <div className="flex-grow overflow-y-auto mb-[16px]">
         <ul>
           {notes.map((note) => (
