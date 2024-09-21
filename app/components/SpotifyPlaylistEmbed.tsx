@@ -16,7 +16,7 @@ const SpotifyPlaylistEmbed: React.FC<SpotifyPlaylistEmbedProps> = ({
         frameBorder="0"
         allowTransparency={true}
         allow="encrypted-media"
-        className="rounded-md shadow-md"
+        className="rounded-2xl shadow-md"
       ></iframe>
     </div>
   );
