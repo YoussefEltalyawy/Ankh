@@ -11,7 +11,8 @@ import addNewTask from "../actions/addNewTask";
 import addNewNote from "../actions/addNewNote";
 import deleteTask from "../actions/deleteTask";
 import deleteNote from "../actions/deleteNote";
-import SpotifyPlaylistForm from "../components/SpotifyPlaylistForm";
+// import SpotifyPlaylistEmbed from "../components/SpotifyPlaylistEmbed";
+// import SpotifyPlaylistForm from "../components/SpotifyPlaylistForm";
 import Music from "../components/cards/Music";
 
 type CardState = {
@@ -44,25 +45,12 @@ function DashboardClient({
     show: false,
     opacity: 0,
   });
-  const [showMusicCard, setShowMusicCard] = useState<CardState>({
-    show: false,
-    opacity: 0,
-  });
-  const [playlistId, setPlaylistId] = useState<string>(
-    "6c1yAZ49QGHy4hgitU4QhH"
-  );
-
-  const handleSubmit = (id: string) => {
-    setPlaylistId(id);
-  };
+  const [showMusicBar, setShowMusicBar] = useState<boolean>(false);
 
   useEffect(() => {
     if (
       user &&
-      (showStopwatchCard.show ||
-        showTasksCard.show ||
-        showNotesCard.show ||
-        showMusicCard.show)
+      (showStopwatchCard.show || showTasksCard.show || showNotesCard.show)
     ) {
       const cardsContainer = document.querySelector(".cardsContainer");
       if (cardsContainer) {
@@ -78,13 +66,7 @@ function DashboardClient({
         console.error("cardsContainer element not found");
       }
     }
-  }, [
-    showNotesCard.show,
-    showStopwatchCard.show,
-    showTasksCard.show,
-    showMusicCard.show,
-    user,
-  ]);
+  }, [showNotesCard.show, showStopwatchCard.show, showTasksCard.show, user]);
 
   const toggleCard = (
     currentState: CardState,
@@ -107,7 +89,9 @@ function DashboardClient({
     toggleCard(showStopwatchCard, setShowStopwatchCard, "clockCardVisible");
   const toggleTasks = () => toggleCard(showTasksCard, setShowTasksCard);
   const toggleNotes = () => toggleCard(showNotesCard, setShowNotesCard);
-  const toggleMusic = () => toggleCard(showMusicCard, setShowMusicCard);
+  const toggleMusicBar = () => {
+    setShowMusicBar((prevState) => !prevState);
+  };
 
   const handleAddTask = async (title: string) => {
     console.log(tasks);
@@ -181,10 +165,9 @@ function DashboardClient({
   return (
     <div>
       <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
+        <Music isOpen={showMusicBar} />
         <div className="pt-[80px] pb-[30px] flex justify-between items-center">
           <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>
-          {/* the input for the playlist link will be temporarly here until i implement settings. */}
-          <SpotifyPlaylistForm onSubmit={handleSubmit} />
           <LogoutLink>
             <button className="bg-white opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4">
               Log Out
@@ -195,9 +178,9 @@ function DashboardClient({
           onToggleTimer={toggleStopwatch}
           onToggleTasks={toggleTasks}
           onToggleNotes={toggleNotes}
-          onToggleMusic={toggleMusic}
+          onToggleMusic={toggleMusicBar}
         />
-        <div className="cardsContainer grid grid-cols-4 gap-[32px]">
+        <div className="cardsContainer grid grid-cols-3 gap-[32px]">
           <div className="firstSlot" data-swapy-slot="first">
             <div data-swapy-item="tasks">
               <TasksCard
@@ -228,17 +211,7 @@ function DashboardClient({
               />
             </div>
           </div>
-          <div className="fourthSlot" data-swapy-slot="fourth">
-            <div data-swapy-item="music">
-              <Music
-                visible={showMusicCard.show}
-                opacity={showMusicCard.opacity}
-                playlistId={playlistId}
-              />
-            </div>
-          </div>
         </div>
-        <div></div>
       </section>
     </div>
   );

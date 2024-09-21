@@ -1,32 +1,34 @@
-import { MoreHorizontal } from "lucide-react";
+import { cn } from "@nextui-org/theme";
+import SpotifyPlaylistForm from "../SpotifyPlaylistForm";
+import { useState } from "react";
 import SpotifyPlaylistEmbed from "../SpotifyPlaylistEmbed";
 
-type MusicProps = {
-  visible: boolean;
-  opacity: number;
-  playlistId: string;
-};
-function Music({
-  visible,
-  opacity,
-  playlistId
-} : MusicProps) {
-if (!visible) return null;
-
-return (
-  <div
-    data-swapy-item="first"
-    className={`
-        card bg-[rgba(255,255,255,0.09)] px-[16px] py-[16px] rounded-3xl
-        border border-[rgba(255,255,255,.1)] backdrop-blur-[5.7px] transition-opacity duration-300 ease-in-out
-        ${opacity === 100 ? "opacity-100" : "opacity-0"}
-        flex flex-col h-full max-h-[440px] overflow-hidden
-      `}
-  >
-    <div className="">
-      <SpotifyPlaylistEmbed playlistId={playlistId} />
-    </div>
-  </div>
-);
+interface MusicProps {
+  isOpen: boolean;
 }
+
+function Music({ isOpen }: MusicProps) {
+  const [playlistId, setPlaylistId] = useState<string>(
+    "0vvXsWCC9xrXsKd4FyS8kM"
+  );
+  const handleSubmit = (id: string) => {
+    setPlaylistId(id);
+  };
+
+  return (
+    <div
+      className={cn(
+        "bg-black h-full absolute left-0 w-[30vw] transition-transform duration-300 ease-in-out z-10",
+        isOpen ? "translate-x-[0%]" : "translate-x-[-100%]"
+      )}
+    >
+      <h1 className="text-white text-h2 text-center mt-10">Music</h1>
+      <div className="p-10">
+        <SpotifyPlaylistForm onSubmit={handleSubmit} />
+        <SpotifyPlaylistEmbed playlistId={playlistId}/>
+      </div>
+    </div>
+  );
+}
+
 export default Music;

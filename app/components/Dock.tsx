@@ -5,14 +5,18 @@ interface DockProps {
   onToggleTimer: (toggle: boolean) => void;
   onToggleTasks: (toggle: boolean) => void;
   onToggleNotes: (toggle: boolean) => void;
-  onToggleMusic: (toggle: boolean) => void;
+  onToggleMusic: () => void;
 }
 
-function Dock({ onToggleTimer, onToggleTasks, onToggleNotes, onToggleMusic }: DockProps) {
+function Dock({
+  onToggleTimer,
+  onToggleTasks,
+  onToggleNotes,
+  onToggleMusic,
+}: DockProps) {
   const [timerToggle, setTimerToggle] = useState<boolean>(false);
   const [tasksToggle, setTasksToggle] = useState<boolean>(false);
   const [notesToggle, setNotesToggle] = useState<boolean>(false);
-  const [musicToggle, setMusicToggle] = useState<boolean>(false);
 
   return (
     <div className="select-none absolute bottom-[50px] left-1/2 transform -translate-x-1/2 border border-[rgba(255,255,255,.1)] bg-[rgba(255,255,255,0.09)] backdrop-blur-[3.5px] rounded-[30px] w-fit p-5">
@@ -70,18 +74,13 @@ function Dock({ onToggleTimer, onToggleTasks, onToggleNotes, onToggleMusic }: Do
           />
         </div>
         <div
-          onClick={() => {
-            setMusicToggle((prev) => !prev);
-            onToggleMusic(!musicToggle);
-          }}
+          onClick={onToggleMusic}
           className="buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2px] py-[16px] px-[24px] rounded-xl"
         >
           <Image
             src="/music-icon.png"
             alt="background icon"
-            className={`w-[32px] h-[32px] transition-all ${
-              musicToggle ? "opacity-100" : "opacity-80"
-            }`}
+            className="w-[32px] h-[32px] opacity-70"
             width={32}
             height={32}
           />
