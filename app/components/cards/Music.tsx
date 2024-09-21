@@ -9,7 +9,7 @@ interface MusicProps {
 
 function Music({ isOpen }: MusicProps) {
   const [playlistId, setPlaylistId] = useState<string>(
-    "0vvXsWCC9xrXsKd4FyS8kM"
+    "37i9dQZF1DX4hpot8sYudB" // chnage this string to change default playlist currently brown noise
   );
   const handleSubmit = (id: string) => {
     setPlaylistId(id);
@@ -25,7 +25,7 @@ function Music({ isOpen }: MusicProps) {
       <h1 className="text-white text-h2 text-center mt-9">Music</h1>
       <div className="p-10">
         <SpotifyPlaylistForm onSubmit={handleSubmit} />
-        <SpotifyPlaylistEmbed playlistId={playlistId}/>
+        <SpotifyPlaylistEmbed playlistId={playlistId} />
       </div>
     </div>
   );

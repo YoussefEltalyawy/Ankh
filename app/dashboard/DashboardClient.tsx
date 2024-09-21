@@ -93,6 +93,10 @@ function DashboardClient({
     setShowMusicBar((prevState) => !prevState);
   };
 
+  const handleOverlayClick = () => {
+    setShowMusicBar(false);
+  };
+
   const handleAddTask = async (title: string) => {
     console.log(tasks);
     console.log("up");
@@ -163,9 +167,15 @@ function DashboardClient({
   };
 
   return (
-    <div>
+    <div className="relative">
       <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
         <Music isOpen={showMusicBar} />
+        {showMusicBar && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
+            onClick={handleOverlayClick}
+          />
+        )}
         <div className="pt-[80px] pb-[30px] flex justify-between items-center">
           <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>
           <LogoutLink>
