@@ -3,6 +3,7 @@ import { Checkbox } from "@nextui-org/checkbox";
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 import { X } from "lucide-react";
+import { cn } from "@nextui-org/theme";
 
 type TaskItemProps = {
   title: string;
@@ -11,8 +12,7 @@ type TaskItemProps = {
   onDeleteTask: (title: string) => Promise<void>;
 };
 
-
-function TaskItem({ title, id, completed,onDeleteTask }: TaskItemProps) {
+function TaskItem({ title, id, completed, onDeleteTask }: TaskItemProps) {
   // Use React state to track whether the task is selected (completed)
   const [isSelected, setIsSelected] = useState(completed);
 
@@ -35,10 +35,13 @@ function TaskItem({ title, id, completed,onDeleteTask }: TaskItemProps) {
         size="md"
         isSelected={isSelected} // Bind isSelected to the state
         onValueChange={() => changeCompleteState(id)}
-        lineThrough
         className="text-white"
       >
-        <p className="text-white text-p">{title}</p>
+        <p
+          className={cn("text-p transition-colors" , isSelected ? "text-[#8b8b8b]" : "text-white")}
+        >
+          {title}
+        </p>
       </Checkbox>
 
       {/* The X button is initially hidden and appears with animation on hover */}
