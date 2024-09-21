@@ -27,12 +27,13 @@ const SpotifyPlaylistForm: React.FC<SpotifyPlaylistFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="w-full mx-auto">
       <div className="">
+        <p className="text-white">Enter the link for spotify playlist</p>
         <input
           type="text"
           value={playlistLink}
           onChange={(e) => setPlaylistLink(e.target.value)}
           placeholder="Paste Spotify playlist link here"
-          className="px-4 py-2 mb-5 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="px-4 py-2 mb-5 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 border-solid "
         />
         <button
           type="submit"

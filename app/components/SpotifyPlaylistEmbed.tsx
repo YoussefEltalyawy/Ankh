@@ -12,7 +12,7 @@ const SpotifyPlaylistEmbed: React.FC<SpotifyPlaylistEmbedProps> = ({
       <iframe
         src={`https://open.spotify.com/embed/playlist/${playlistId}`}
         width="100%"
-        height="152"
+        height="500"
         allow="encrypted-media"
         className="rounded-2xl shadow-md"
       ></iframe>

@@ -22,7 +22,7 @@ function Music({ isOpen }: MusicProps) {
         isOpen ? "translate-x-[0%]" : "translate-x-[-100%]"
       )}
     >
-      <h1 className="text-white text-h2 text-center mt-10">Music</h1>
+      <h1 className="text-white text-h2 text-center mt-9">Music</h1>
       <div className="p-10">
         <SpotifyPlaylistForm onSubmit={handleSubmit} />
         <SpotifyPlaylistEmbed playlistId={playlistId}/>
