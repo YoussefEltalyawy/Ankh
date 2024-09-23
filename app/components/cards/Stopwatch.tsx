@@ -1,6 +1,14 @@
 import { useStopwatch } from "@/app/hooks/useStopwatch";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  DropdownSection,
+} from "@nextui-org/dropdown";
+import Link from "next/link";
 
 type StopwatchProps = {
   visible: boolean;
@@ -26,7 +34,19 @@ function StopwatchCard({ visible, opacity }: StopwatchProps) {
           <h6 className="font-semibold font-manrope text-h6 text-white">
             Stopwatch
           </h6>
-          <MoreHorizontal className="text-white" />
+          <Dropdown>
+            <DropdownTrigger>
+              <MoreHorizontal className="text-white" />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownSection title="Actions">
+                <DropdownItem key="new">
+                  <Link href={"/stopwatch/fullscreen"}>Full Screen</Link>
+                </DropdownItem>
+                <DropdownItem key="new">Minimize</DropdownItem>
+              </DropdownSection>
+            </DropdownMenu>
+          </Dropdown>
         </span>
         {/* Display the time returned from useStopwatch */}
         <h1 className="font-brico text-h1 text-white text-center font-bold">
