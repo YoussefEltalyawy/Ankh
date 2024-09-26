@@ -1,19 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Manrope } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/system";
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-manrope",
-});
-
-// const brico = Bricolage_Grotesque({
-//   subsets: ["latin"],
-//   display: "swap",
-//   variable: "--font-brico",
-// });
 
 export const metadata: Metadata = {
   title: "Ankh",
@@ -26,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.className} `}>
+    <html lang="en" className="font-manrope">
       <body>
         <NextUIProvider>{children}</NextUIProvider>
       </body>

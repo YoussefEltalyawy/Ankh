@@ -1,4 +1,4 @@
-import {nextui} from '@nextui-org/theme';
+import { nextui } from "@nextui-org/theme";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -7,7 +7,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/components/(checkbox|dropdown|menu|divider|popover|button|ripple|spinner).js",
-     "./node_modules/@nextui-org/theme/dist/components/checkbox.js",
+    "./node_modules/@nextui-org/theme/dist/components/checkbox.js",
   ],
   theme: {
     extend: {
@@ -25,8 +25,8 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        manrope: ["var(--font-manrop)"],
-        brico: ["var(--font-brico)"],
+        manrope: ["Manrope", "sans-serif"],
+        brico: ["Bricolage Grotesque", "sans-serif"],
       },
       zIndex: {
         1: "1",

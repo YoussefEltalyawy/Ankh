@@ -37,10 +37,10 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
 
       {/* Centered Clock Container */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-        <span>
-          <Dropdown backdrop="blur" >
+        <div>
+          <Dropdown backdrop="blur">
             <DropdownTrigger>
-              <p className="text-white text-3xl font-manrope">
+              <p className="text-2xl font-bold font-manrope text-white">
                 {selectedValue}
               </p>
             </DropdownTrigger>
@@ -57,8 +57,8 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
               ))}
             </DropdownMenu>
           </Dropdown>
-        </span>
-        <h1 className="font-brico text-8xl text-white text-center font-bold mb-6 mt-10">
+        </div>
+        <h1 className="font-brico text-8xl text-white text-center font-bold mb-6 mt-7">
           {time}
         </h1>
         <div className="clockContainer flex items-center gap-[8px] w-full">
