@@ -9,13 +9,21 @@ import {
   DropdownSection,
 } from "@nextui-org/dropdown";
 import Link from "next/link";
+import { Task } from "@/app/types";
+import { useMemo, useState } from "react";
 
 type StopwatchProps = {
   visible: boolean;
   opacity: number;
+  tasks: Task[];
 };
 
-function StopwatchCard({ visible, opacity }: StopwatchProps) {
+function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["Stopwatch"]));
+  const selectedValue = useMemo(
+    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    [selectedKeys]
+  );
   const { time, running, toggleRunning, resetTime } = useStopwatch();
 
   // Handle visibility
@@ -31,9 +39,30 @@ function StopwatchCard({ visible, opacity }: StopwatchProps) {
     >
       <div className="flex flex-col gap-[16px]">
         <span className="flex flex-row justify-between items-center mb-[10px]">
-          <h6 className="font-semibold font-manrope text-h6 text-white">
-            Stopwatch
-          </h6>
+          <Dropdown>
+            <DropdownTrigger>
+              <h6 className="font-semibold font-manrope text-[1.3rem] text-white">
+                {selectedValue}
+              </h6>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Tasks"
+              variant="flat"
+              disallowEmptySelection
+              selectionMode="single"
+              selectedKeys={selectedKeys}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onSelectionChange={setSelectedKeys as any}
+            >
+              {tasks.map((task) => (
+                <DropdownItem key={task.title}>
+                  <p className="text[1.3rem] my-1">{task.title}</p>
+                  <hr />
+                </DropdownItem>
+              ))}
+              
+            </DropdownMenu>
+          </Dropdown>
           <Dropdown>
             <DropdownTrigger>
               <MoreHorizontal className="text-white" />

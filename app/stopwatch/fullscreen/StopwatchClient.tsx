@@ -49,12 +49,13 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
               </Button>
             </DropdownTrigger>
             <DropdownMenu
-              aria-label="Single selection example"
+              aria-label="Tasks"
               variant="flat"
               disallowEmptySelection
               selectionMode="single"
               selectedKeys={selectedKeys}
-              onSelectionChange={setSelectedKeys}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onSelectionChange={setSelectedKeys as any}
             >
               <DropdownSection title="What task are you working on?">
                 {tasks.map((task) => (

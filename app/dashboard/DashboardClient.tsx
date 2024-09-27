@@ -218,6 +218,7 @@ function DashboardClient({
               <StopwatchCard
                 visible={showStopwatchCard.show}
                 opacity={showStopwatchCard.opacity}
+                tasks={tasks}
               />
             </div>
           </div>
