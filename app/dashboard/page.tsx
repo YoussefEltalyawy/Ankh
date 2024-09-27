@@ -7,6 +7,7 @@ import getNotes from "../actions/getNote";
 import { User } from "@/app/types";
 
 async function createOrFindUser(userData: User): Promise<void> {
+
   const { id, email, name, pfp } = userData;
 
   const existingUser = await prisma.user.findUnique({

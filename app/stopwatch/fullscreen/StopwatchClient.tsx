@@ -9,9 +9,11 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  DropdownSection,
 } from "@nextui-org/dropdown";
 import { useMemo, useState } from "react";
 import { Task } from "@/app/types";
+import { Button } from "@nextui-org/button";
 
 function StopwatchClient({ tasks }: { tasks: Task[] }) {
   const { time, running, toggleRunning, resetTime } = useStopwatch();
@@ -40,9 +42,11 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
         <div>
           <Dropdown backdrop="blur">
             <DropdownTrigger>
-              <p className="text-2xl font-bold font-manrope text-white">
-                {selectedValue}
-              </p>
+              <Button variant="light">
+                <p className="text-[28px] font-bold font-manrope text-white">
+                  {selectedValue}
+                </p>
+              </Button>
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Single selection example"
@@ -52,13 +56,18 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
               selectedKeys={selectedKeys}
               onSelectionChange={setSelectedKeys}
             >
-              {tasks.map((task) => (
-                <DropdownItem key={task.title}>{task.title}</DropdownItem> //here
-              ))}
+              <DropdownSection title="What task are you working on?">
+                {tasks.map((task) => (
+                  <DropdownItem key={task.title}>
+                    <p className="text-2xl my-3">{task.title}</p>
+                    <hr />
+                  </DropdownItem>
+                ))}
+              </DropdownSection>
             </DropdownMenu>
           </Dropdown>
         </div>
-        <h1 className="font-brico text-8xl text-white text-center font-bold mb-6 mt-7">
+        <h1 className="font-brico text-9xl text-white text-center font-bold mb-6 mt-7">
           {time}
         </h1>
         <div className="clockContainer flex items-center gap-[8px] w-full">

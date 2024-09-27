@@ -40,7 +40,7 @@ function StopwatchCard({ visible, opacity }: StopwatchProps) {
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
               <DropdownSection title="Actions">
-                <DropdownItem key="new">
+                <DropdownItem key="full-screen">
                   <Link href={"/stopwatch/fullscreen"}>Full Screen</Link>
                 </DropdownItem>
                 <DropdownItem key="new">Minimize</DropdownItem>
