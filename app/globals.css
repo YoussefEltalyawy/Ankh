@@ -1,20 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@200..800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #f3f3f3;
-  --foreground: #171717;
-}
-html {
-  background-color: var(--foreground);
-}
+html,
 body {
-  background: var(--background);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
+
 /* Hiding scrollbar in all cards, i do not know how this works, but it does so fine. */
 ::-webkit-scrollbar {
-  width: .1px;
+  width: 0.1px;
 }

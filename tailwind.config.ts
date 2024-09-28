@@ -13,8 +13,8 @@ const config: Config = {
       fontSize: {
         h1: "3rem",
         h2: "2.5rem",
-        h3: "3.6875rem",
-        h4: "2.625rem",
+        h3: "2rem",
+        h4: "1.625rem",
         h5: "1.43rem",
         h6: "1.25rem",
         p: "1rem",

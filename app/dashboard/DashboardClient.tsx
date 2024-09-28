@@ -167,7 +167,7 @@ function DashboardClient({
   };
 
   return (
-    <div className="relative">
+    <div>
       <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
         <Music isOpen={showMusicBar} />
         {showMusicBar && (
