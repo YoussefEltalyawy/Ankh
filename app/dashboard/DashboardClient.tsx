@@ -1,20 +1,27 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { Note, Task, User } from "@/app/types";
 import { createSwapy } from "swapy";
+import { useTheme } from "next-themes";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+
+// Component imports
 import Dock from "../components/Dock";
 import TasksCard from "../components/cards/Tasks";
 import StopwatchCard from "../components/cards/Stopwatch";
 import NotesCard from "../components/cards/Notes";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import Music from "../components/cards/Music";
+// import Header from "../components/Header";
+import Settings from "../components/Settings";
+
+// Action imports
 import addNewTask from "../actions/addNewTask";
 import addNewNote from "../actions/addNewNote";
 import deleteTask from "../actions/deleteTask";
 import deleteNote from "../actions/deleteNote";
-// import SpotifyPlaylistEmbed from "../components/SpotifyPlaylistEmbed";
-// import SpotifyPlaylistForm from "../components/SpotifyPlaylistForm";
-import Music from "../components/cards/Music";
 
+// Types
 type CardState = {
   show: boolean;
   opacity: number;
@@ -31,6 +38,10 @@ function DashboardClient({
   initialTasks,
   initalNotes,
 }: DashboardClientProps) {
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  // State management
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [notes, setNotes] = useState<Note[]>(initalNotes);
   const [showStopwatchCard, setShowStopwatchCard] = useState<CardState>({
@@ -46,7 +57,13 @@ function DashboardClient({
     opacity: 0,
   });
   const [showMusicBar, setShowMusicBar] = useState<boolean>(false);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Setup Swapy for card DnD
   useEffect(() => {
     if (
       user &&
@@ -68,6 +85,7 @@ function DashboardClient({
     }
   }, [showNotesCard.show, showStopwatchCard.show, showTasksCard.show, user]);
 
+  // Toggle card visibility
   const toggleCard = (
     currentState: CardState,
     setStateFunction: React.Dispatch<React.SetStateAction<CardState>>,
@@ -85,27 +103,28 @@ function DashboardClient({
     }
   };
 
+  // Card toggle handlers
   const toggleStopwatch = () =>
     toggleCard(showStopwatchCard, setShowStopwatchCard, "clockCardVisible");
   const toggleTasks = () => toggleCard(showTasksCard, setShowTasksCard);
   const toggleNotes = () => toggleCard(showNotesCard, setShowNotesCard);
-  const toggleMusicBar = () => {
-    setShowMusicBar((prevState) => !prevState);
-  };
 
+  const toggleMusicBar = () => setShowMusicBar((prevState) => !prevState);
+  const toggleSettings = () => setShowSettings((prevState) => !prevState);
+
+  // Handle music overlay click
   const handleOverlayClick = () => {
     setShowMusicBar(false);
+    setShowSettings(false);
   };
 
+  // Task management
   const handleAddTask = async (title: string) => {
-    console.log(tasks);
-    console.log("up");
     const tempTask: Task = {
       id: `temp-${Date.now()}`,
       title,
       completed: false,
     };
-
     setTasks((prevTasks) => [...prevTasks, tempTask]);
 
     try {
@@ -120,55 +139,54 @@ function DashboardClient({
       );
     }
   };
+
   const handleDeleteTask = async (taskId: string) => {
-    const index = tasks.findIndex((item) => item.id === taskId);
-    if (index !== -1) {
-      const newArray = [...tasks.slice(0, index), ...tasks.slice(index + 1)];
-      setTasks(newArray);
-    }
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
     try {
       await deleteTask(taskId);
     } catch (error) {
-      console.error(error);
+      console.error("Error deleting task:", error);
     }
   };
 
-  // heree
+  // Note management
   const handleAddNote = async (content: string) => {
-    console.log(tasks);
-    console.log("up");
-    const tempNote: Note = {
-      id: `temp-${Date.now()}`,
-      content,
-    };
-
+    const tempNote: Note = { id: `temp-${Date.now()}`, content };
     setNotes((prevNotes) => [...prevNotes, tempNote]);
+
     try {
       const newNote = await addNewNote(content);
       setNotes((prevNotes) =>
         prevNotes.map((note) => (note.id === tempNote.id ? newNote : note))
       );
     } catch (error) {
-      console.error("Error adding task:", error);
-      setNotes((prevTasks) => prevTasks.filter((note) => note.id !== note.id));
-    }
-  };
-  const handleDeleteNote = async (noteId: string) => {
-    const index = notes.findIndex((item) => item.id === noteId);
-    if (index !== -1) {
-      const newArray = [...notes.slice(0, index), ...notes.slice(index + 1)];
-      setNotes(newArray);
-    }
-    try {
-      await deleteNote(noteId);
-    } catch (error) {
-      console.error(error);
+      console.error("Error adding note:", error);
+      setNotes((prevNotes) =>
+        prevNotes.filter((note) => note.id !== tempNote.id)
+      );
     }
   };
 
+  const handleDeleteNote = async (noteId: string) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
+    try {
+      await deleteNote(noteId);
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+  };
+
+  // Render a loader or placeholder while waiting for client-side hydration
+  if (!mounted) {
+    return <div className="h-screen w-full bg-gray-100" />; // Placeholder
+  }
+
   return (
     <div>
-      <section className="bg-cozy bg-cover w-full h-screen min-h-screen px-[140px]">
+      <section
+        className="dashboardContainer bg-cover bg-center w-full h-screen min-h-screen px-[140px] transition-all duration-500 ease-in-out"
+        data-theme={theme || "default"}
+      >
         <Music isOpen={showMusicBar} />
         {showMusicBar && (
           <div
@@ -176,8 +194,16 @@ function DashboardClient({
             onClick={handleOverlayClick}
           />
         )}
+        <Settings isOpen={showSettings} />
+        {showSettings && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
+            onClick={handleOverlayClick}
+          />
+        )}
         <div className="pt-[80px] pb-[30px] flex justify-between items-center">
           <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>
+
           <LogoutLink>
             <button className="bg-white opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4">
               Log Out
@@ -189,6 +215,7 @@ function DashboardClient({
           onToggleTasks={toggleTasks}
           onToggleNotes={toggleNotes}
           onToggleMusic={toggleMusicBar}
+          onToggleSettings={toggleSettings}
         />
         <div className="cardsContainer grid grid-cols-3 gap-[32px]">
           <div className="firstSlot" data-swapy-slot="first">

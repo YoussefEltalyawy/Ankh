@@ -6,6 +6,7 @@ interface DockProps {
   onToggleTasks: (toggle: boolean) => void;
   onToggleNotes: (toggle: boolean) => void;
   onToggleMusic: () => void;
+  onToggleSettings: () => void;
 }
 
 function Dock({
@@ -13,6 +14,7 @@ function Dock({
   onToggleTasks,
   onToggleNotes,
   onToggleMusic,
+  onToggleSettings
 }: DockProps) {
   const [timerToggle, setTimerToggle] = useState<boolean>(false);
   const [tasksToggle, setTasksToggle] = useState<boolean>(false);
@@ -85,7 +87,7 @@ function Dock({
             height={32}
           />
         </div>
-        <div className="buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2.0999999046325684px] py-[16px] px-[24px] rounded-2xl">
+        <div onClick={onToggleSettings} className="buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2.0999999046325684px] py-[16px] px-[24px] rounded-2xl">
           <Image
             src="/settings-icon.svg"
             alt="settings icon"

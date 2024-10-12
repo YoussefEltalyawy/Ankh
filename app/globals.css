@@ -12,7 +12,49 @@ body {
   overflow-x: hidden;
 }
 
-/* Hiding scrollbar in all cards, i do not know how this works, but it does so fine. */
 ::-webkit-scrollbar {
   width: 0.1px;
+}
+
+/* Theme styles using data-theme attribute */
+.dashboardContainer {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+[data-theme="alexandriaArchive"] {
+  background-image: url("/alexandriaArchive-d.jpg");
+  color: #333;
+}
+
+[data-theme="marsaMatruhCoastalDrive"] {
+  background-image: url("/marsaMatruhCoastalDrive-d.jpg");
+  color: #333;
+}
+
+[data-theme="cozyDamietta"] {
+  background-image: url("/cozyDamietta.jpg");
+  color: #333;
+}
+
+[data-theme="northCoastShore"] {
+  background-image: url("/northCoastShore-d.jpg");
+  color: #333;
+}
+
+[data-theme="sinaiSunsetLodge"] {
+  background-image: url("/sinaiSunsetLodge.jpg");
+  color: #333;
+}
+
+[data-theme="cairoLateDrive"] {
+  background-image: url("/cairoLateDrive-d.jpg");
+  color: #333;
+}
+
+[data-theme="default"] {
+  background-image: url("/coast.jpg"); /* Provide a default background */
+  color: #333;
 }
