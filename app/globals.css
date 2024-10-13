@@ -25,12 +25,12 @@ body {
 }
 
 [data-theme="alexandriaArchive"] {
-  background-image: url("/alexandriaArchive-d.jpg");
+  background-image: url("/alexandriaArchive.png");
   color: #333;
 }
 
 [data-theme="marsaMatruhCoastalDrive"] {
-  background-image: url("/marsaMatruhCoastalDrive-d.jpg");
+  background-image: url("/marsaMatruhCoastalDrive.png");
   color: #333;
 }
 
@@ -50,7 +50,7 @@ body {
 }
 
 [data-theme="cairoLateDrive"] {
-  background-image: url("/cairoLateDrive-d.jpg");
+  background-image: url("/cairoLateDrive.png");
   color: #333;
 }
 

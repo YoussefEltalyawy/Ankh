@@ -185,7 +185,7 @@ function DashboardClient({
     <div>
       <section
         className="dashboardContainer bg-cover bg-center w-full h-screen min-h-screen px-[140px] transition-all duration-500 ease-in-out"
-        data-theme={theme || "default"}
+        data-theme={theme}
       >
         <Music isOpen={showMusicBar} />
         {showMusicBar && (
