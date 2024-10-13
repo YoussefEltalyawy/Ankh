@@ -9,11 +9,9 @@ export const useStopwatch = () => {
   const toggleRunning = () => {
     setRunning((prev) => !prev);
     if (!running) {
+      // Start the stopwatch
       startTimeRef.current = Date.now() - elapsedTime;
-    } else {
-      setElapsedTime(0);
-      startTimeRef.current = null;
-    }
+    } // No action needed when pausing
   };
 
   const resetTime = () => {
