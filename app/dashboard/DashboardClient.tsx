@@ -203,12 +203,6 @@ function DashboardClient({
         )}
         <div className="pt-[80px] pb-[30px] flex justify-between items-center">
           <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>
-
-          <LogoutLink>
-            <button className="bg-white opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4">
-              Log Out
-            </button>
-          </LogoutLink>
         </div>
         <Dock
           onToggleTimer={toggleStopwatch}

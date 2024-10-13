@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import { cn } from "@nextui-org/theme";
 import Image from "next/image";
 import ThemeSelector from "./ThemeSelector";
+import ProfileSection from "./ProfileSection";
 
 const settingsSections = [
   {
     icon: "/themes-icon.svg",
     label: "Themes",
-    content: <ThemeSelector/>,
+    content: <ThemeSelector />,
   },
+  {
+    icon: "/profile-icon.svg",
+    label: "Profile",
+    content: <ProfileSection/>
+  }
 ];
 
 function Settings({ isOpen }: { isOpen: boolean }) {
@@ -21,13 +27,25 @@ function Settings({ isOpen }: { isOpen: boolean }) {
         isOpen ? "translate-x-[0%]" : "translate-x-[100%]"
       )}
     >
-      <h1 className="text-h2 font-bold text-center mt-12">Settings</h1>
+      <div className="flex items-center justify-between mt-12 px-6">
+        <h1 className="text-h2 font-bold">
+          {selectedSection ? selectedSection : "Settings"}
+        </h1>
+        {selectedSection && (
+          <button
+            onClick={() => setSelectedSection(null)}
+            className="text-blue-400 hover:text-blue-300"
+          >
+            ← Back
+          </button>
+        )}
+      </div>
       <div className="p-6">
         {selectedSection === null ? (
           settingsSections.map((section, index) => (
             <div
               key={index}
-              className="flex items-center mb-4 cursor-pointer hover:bg-gray-800 p-2 rounded"
+              className="flex items-center mb-4 cursor-pointer hover:bg-[#333] p-2 rounded"
               onClick={() => setSelectedSection(section.label)}
             >
               <span className="mr-3">
@@ -38,18 +56,11 @@ function Settings({ isOpen }: { isOpen: boolean }) {
                   height={32}
                 />
               </span>
-              <span>{section.label}</span>
+              <span className="text-h6">{section.label}</span>
             </div>
           ))
         ) : (
           <div>
-            <button
-              onClick={() => setSelectedSection(null)}
-              className="mb-4 text-blue-400 hover:text-blue-300"
-            >
-              ← Back to all settings
-            </button>
-            <h2 className="text-xl font-semibold mb-4">{selectedSection}</h2>
             <div>
               {
                 settingsSections.find((s) => s.label === selectedSection)
@@ -62,4 +73,5 @@ function Settings({ isOpen }: { isOpen: boolean }) {
     </div>
   );
 }
+
 export default Settings;
