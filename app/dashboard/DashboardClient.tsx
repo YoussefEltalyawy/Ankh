@@ -182,7 +182,6 @@ function DashboardClient({
   }
 
   return (
-    <div>
       <section
         className="dashboardContainer bg-cover bg-center w-full h-screen min-h-screen px-[140px] transition-all duration-500 ease-in-out"
         data-theme={theme}
@@ -194,7 +193,7 @@ function DashboardClient({
             onClick={handleOverlayClick}
           />
         )}
-        <Settings isOpen={showSettings} />
+        <Settings isOpen={showSettings} user={user} />
         {showSettings && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
@@ -245,7 +244,6 @@ function DashboardClient({
           </div>
         </div>
       </section>
-    </div>
   );
 }
 

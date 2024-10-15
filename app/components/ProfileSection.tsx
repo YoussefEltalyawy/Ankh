@@ -1,10 +1,7 @@
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { UserExtra } from "../types";
 
-function ProfileSection() {
-  const { user, getUser } = useKindeBrowserClient();
-  const userInfo = getUser();
-  console.log(userInfo);
+function ProfileSection({user}: {user: UserExtra}) {
   return (
     <>
       <p className="text-white opacity-30 mb-3">
@@ -12,22 +9,22 @@ function ProfileSection() {
         changed here
       </p>
       <div className="userInfoCont grid gap-2">
-        <span>
+        <span >
           <label htmlFor="first-name">First Name</label>
-          <p className="text-h5 font-bold border px-3 py-1 rounded-lg w-[50%]">
-            {userInfo?.given_name}
+          <p className="text-h5 font-bold border px-3 py-1 rounded-lg max-w-[50%]">
+            {user?.given_name}
           </p>
         </span>
         <span>
         <label htmlFor="last-name">Last Name</label>
-        <p className="text-h5 font-bold border px-3 py-1 rounded-lg w-[50%]">
-          {userInfo?.family_name}
+        <p className="text-h5 font-bold border px-3 py-1 rounded-lg max-w-[50%]">
+          {user?.family_name}
         </p>
         </span>
         <span>
         <label htmlFor="email">Email</label>
-        <p className="text-h5 font-bold border px-3 py-1 rounded-lg w-[50%]">
-          {userInfo?.email}
+        <p className="text-h5 font-bold border px-3 py-1 rounded-lg w-fit">
+          {user?.email}
         </p>
         </span>
         <LogoutLink>

@@ -4,6 +4,13 @@ export type User = {
   name?: string | null;
   pfp?: string | null;
 };
+export type UserExtra = {
+  id: string;
+  email?: string | null;
+  given_name?: string | null;
+  family_name?: string | null;
+  pfp?: string | null;
+}
 
 export type Task = {
   id: string;

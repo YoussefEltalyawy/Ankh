@@ -3,22 +3,25 @@ import { cn } from "@nextui-org/theme";
 import Image from "next/image";
 import ThemeSelector from "./ThemeSelector";
 import ProfileSection from "./ProfileSection";
+import { UserExtra } from "../types";
 
-const settingsSections = [
-  {
-    icon: "/themes-icon.svg",
-    label: "Themes",
-    content: <ThemeSelector />,
-  },
-  {
-    icon: "/profile-icon.svg",
-    label: "Profile",
-    content: <ProfileSection/>
-  }
-];
 
-function Settings({ isOpen }: { isOpen: boolean }) {
+
+function Settings({ isOpen, user }: { isOpen: boolean, user: UserExtra }) {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+
+  const settingsSections = [
+    {
+      icon: "/themes-icon.svg",
+      label: "Themes",
+      content: <ThemeSelector />,
+    },
+    {
+      icon: "/profile-icon.svg",
+      label: "Profile",
+      content: <ProfileSection user = {user}/>
+    }
+  ];
 
   return (
     <div

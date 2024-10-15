@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function Home() {
   const { isAuthenticated } = getKindeServerSession();
   return (
-    <>
+    <section className="landing-container bg-[#F3F3F3]">
       <Header />
       <div className="mx-[160px]">
         <div className="flex flex-col gap-[32px] text-center itmes-center justify-center">
@@ -64,6 +64,6 @@ export default async function Home() {
           />
         </div>
       </div>
-    </>
+    </section>
   );
 }
