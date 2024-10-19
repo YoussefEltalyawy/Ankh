@@ -26,6 +26,8 @@ function Music({ isOpen }: MusicProps) {
       <div className="p-10">
         <SpotifyPlaylistForm onSubmit={handleSubmit} />
         <SpotifyPlaylistEmbed playlistId={playlistId} />
+        <div className="p-4 border-t border-gray-800">
+      </div>
       </div>
     </div>
   );
