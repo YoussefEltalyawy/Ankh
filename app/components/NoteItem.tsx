@@ -12,8 +12,7 @@ type NoteItemProps = {
 function NoteItem({ title, id, onDeleteNote }: NoteItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
-  const [setIsUpdating] = useState(false);
-
+  
   const handleEdit = () => {
     setIsEditing(true);
   };
