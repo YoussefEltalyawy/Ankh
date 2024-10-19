@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { cn } from "@nextui-org/theme";
 import React, { useState } from "react";
 
-function themeSelector() {
+function ThemeSelector() {
   const { theme, setTheme } = useTheme();
   const [lastThemeChange, setLastThemeChange] = useState<number | null>(null);
   const cooldownPeriod = 550; // 5 seconds cooldown
@@ -47,4 +47,4 @@ function themeSelector() {
   );
 }
 
-export default themeSelector;
+export default ThemeSelector;

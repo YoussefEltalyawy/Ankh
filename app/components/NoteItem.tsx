@@ -12,7 +12,7 @@ type NoteItemProps = {
 function NoteItem({ title, id, onDeleteNote }: NoteItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [setIsUpdating] = useState(false);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -25,7 +25,6 @@ function NoteItem({ title, id, onDeleteNote }: NoteItemProps) {
       return;
     }
 
-    setIsUpdating(true);
     try {
       await updateNote(id, editedTitle);
       setIsEditing(false);
@@ -33,7 +32,7 @@ function NoteItem({ title, id, onDeleteNote }: NoteItemProps) {
       console.error("Error updating note:", error);
       setEditedTitle(title); // Reset to original title on error
     } finally {
-      setIsUpdating(false);
+      return;
     }
   };
 

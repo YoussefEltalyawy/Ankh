@@ -25,7 +25,7 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <section
