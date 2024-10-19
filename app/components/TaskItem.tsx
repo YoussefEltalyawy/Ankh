@@ -1,131 +1,148 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Checkbox } from "@nextui-org/checkbox";
+import { X, Check } from "lucide-react";
+import Image from "next/image";
+import { cn } from "@nextui-org/theme";
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 import updateTask from "../actions/updateTask";
-import { X, Check } from "lucide-react";
-import { cn } from "@nextui-org/theme";
-import Image from "next/image";
 
+// TaskItem component props type definition
 type TaskItemProps = {
-  title: string;
-  id: string;
-  completed: boolean;
-  onDeleteTask: (title: string) => Promise<void>;
+  id: string; // Task ID
+  title: string; // Task title
+  completed: boolean; // Task completion state
+  onDeleteTask: (taskId: string) => Promise<void>; // Function to delete task
 };
 
-function TaskItem({ title, id, completed, onDeleteTask }: TaskItemProps) {
+// TaskItem component implementation
+const TaskItem: React.FC<TaskItemProps> = ({
+  id, 
+  title, 
+  completed, 
+  onDeleteTask 
+}) => {
+  // State to track task's selected (completed) state
   const [isSelected, setIsSelected] = useState(completed);
+  
+  // State to track if the task is in editing mode
   const [isEditing, setIsEditing] = useState(false);
+  
+  // State to hold the edited task title
   const [editedTitle, setEditedTitle] = useState(title);
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  async function changeCompleteState(taskId: string) {
-    if (isSelected === false) {
-      setIsSelected(true);
-      await completeTask(taskId);
-    } else {
-      setIsSelected(false);
-      await unCompleteTask(taskId);
+  // Handler to toggle the task's completion state
+  const handleCompleteStateChange = async () => {
+    const newState = !isSelected;
+    setIsSelected(newState); // Update UI immediately
+    
+    try {
+      // Call appropriate function based on new state
+      await (newState ? completeTask(id) : unCompleteTask(id));
+    } catch (error) {
+      console.error("Error updating task state:", error);
+      setIsSelected(!newState); // Revert state in case of error
     }
-  }
-
-  const handleEdit = () => {
-    setIsEditing(true);
   };
 
+  // Handler to update the task title after editing
   const handleUpdateTask = async () => {
-    if (editedTitle.trim() === "") return;
-    if (editedTitle === title) {
+    // Exit editing mode if title is unchanged or empty
+    if (editedTitle.trim() === "" || editedTitle === title) {
       setIsEditing(false);
       return;
     }
 
-    setIsUpdating(true);
     try {
+      // Update task title and exit editing mode
       await updateTask(id, editedTitle);
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating task:", error);
-      setEditedTitle(title); // Reset to original title on error
-    } finally {
-      setIsUpdating(false);
+      setEditedTitle(title); // Revert title on error
     }
   };
 
+  // Handler for keyboard actions during title editing
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      handleUpdateTask();
+      handleUpdateTask(); // Confirm edit on Enter
     } else if (e.key === "Escape") {
-      setEditedTitle(title);
+      setEditedTitle(title); // Revert changes on Escape
       setIsEditing(false);
     }
   };
 
-  return (
-    <li key={id} className="flex flex-row justify-between group mb-[10px]">
-      {!isEditing ? (
-        <>
-          <Checkbox
-            color="default"
-            radius="sm"
-            size="md"
-            isSelected={isSelected}
-            onValueChange={() => changeCompleteState(id)}
-            className="text-white"
-          >
-            <p
-              className={cn(
-                "text-p transition-colors",
-                isSelected ? "text-[#8b8b8b]" : "text-white"
-              )}
-            >
-              {editedTitle}
-            </p>
-          </Checkbox>
-
-          <span className="flex gap-4">
-            <Image
-              src="/edit-icon.svg"
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
-              width={24}
-              height={24}
-              alt="edit-icon"
-              onClick={handleEdit}
-            />
-            <X
-              className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
-              onClick={() => onDeleteTask(id)}
-            />
-          </span>
-        </>
-      ) : (
-        <div className="flex w-full justify-between items-center">
-          <input
-            type="text"
-            value={editedTitle}
-            onChange={(e) => setEditedTitle(e.target.value)}
-            onKeyDown={handleKeyPress}
-            className="bg-transparent text-white border-b border-white focus:outline-none px-2 py-1 w-full mr-4"
-            autoFocus
+  // Render editable task item if in editing mode
+  if (isEditing) {
+    return (
+      <li className="flex w-full justify-between items-center mb-[10px]">
+        <input
+          type="text"
+          value={editedTitle} // Bind input to editedTitle state
+          onChange={(e) => setEditedTitle(e.target.value)}
+          onKeyDown={handleKeyPress}
+          className="bg-transparent text-white border-b border-white focus:outline-none px-2 py-1 w-full mr-4"
+          autoFocus
+        />
+        <span className="flex gap-4">
+          {/* Confirm edit button */}
+          <Check
+            className="text-white cursor-pointer"
+            onClick={handleUpdateTask}
           />
-          <span className="flex gap-4">
-            <Check
-              className="text-white cursor-pointer"
-              onClick={handleUpdateTask}
-            />
-            <X
-              className="text-white cursor-pointer"
-              onClick={() => {
-                setEditedTitle(title);
-                setIsEditing(false);
-              }}
-            />
-          </span>
-        </div>
-      )}
+          {/* Cancel edit button */}
+          <X
+            className="text-white cursor-pointer"
+            onClick={() => {
+              setEditedTitle(title); // Revert changes
+              setIsEditing(false); // Exit editing mode
+            }}
+          />
+        </span>
+      </li>
+    );
+  }
+
+  // Render task item view when not in editing mode
+  return (
+    <li className="flex flex-row justify-between group mb-[10px]">
+      <Checkbox
+        color="default"
+        radius="sm"
+        size="md"
+        isSelected={isSelected} // Bind checkbox to isSelected state
+        onValueChange={handleCompleteStateChange}
+        className="text-white"
+      >
+        <p
+          className={cn(
+            "text-p transition-colors", // Style transitions
+            isSelected ? "text-[#8b8b8b]" : "text-white" // Change text color based on completion
+          )}
+        >
+          {editedTitle} {/* Display the task title */}
+        </p>
+      </Checkbox>
+
+      <span className="flex gap-4">
+        {/* Edit task button */}
+        <Image
+          src="/edit-icon.svg"
+          className="opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
+          width={24}
+          height={24}
+          alt="edit-icon"
+          onClick={() => setIsEditing(true)}
+        />
+        {/* Delete task button */}
+        <X
+          className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
+          onClick={() => onDeleteTask(id)}
+        />
+      </span>
     </li>
   );
-}
+};
 
 export default TaskItem;
