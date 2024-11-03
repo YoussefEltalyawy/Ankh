@@ -10,6 +10,9 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background-repeat: no-repeat; /* Prevent background repetition */
+  background-size: cover; /* Ensure the background covers the screen */
+  background-position: center; /* Center the background */
 }
 
 ::-webkit-scrollbar {
@@ -17,44 +20,43 @@ body {
 }
 
 /* Theme styles using data-theme attribute */
-.dashboardContainer {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: background-image 0.5s ease-in-out, color 0.5s ease-in-out;
-}
-
 [data-theme="alexandriaArchive"] {
-  background-image: url("/alexandriaArchive.png");
-  color: #333;
+  background-image: url("/alexandriaArchive-d.jpg");
+  color: #fff;
 }
 
 [data-theme="marsaMatruhCoastalDrive"] {
-  background-image: url("/marsaMatruhCoastalDrive.png");
-  color: #333;
+  background-image: url("/marsaMatruhCoastalDrive-d.jpg");
+  color: #daa742 ;
 }
 
 [data-theme="cozyDamietta"] {
   background-image: url("/cozyDamietta.jpg");
-  color: #333;
+  color: #FFB973;
 }
 
 [data-theme="northCoastShore"] {
   background-image: url("/northCoastShore-d.jpg");
-  color: #333;
+  color: #19a89e;
 }
 
 [data-theme="sinaiSunsetLodge"] {
   background-image: url("/sinaiSunsetLodge.jpg");
-  color: #333;
+  color: #D64933;
 }
 
 [data-theme="cairoLateDrive"] {
-  background-image: url("/cairoLateDrive.png");
-  color: #333;
+  background-image: url("/cairoLateDrive-d.jpg");
+  color: #ffd24b;
 }
 
-[data-theme="default"] {
-  background-image: url("/coast.jpg"); /* Provide a default background */
-  color: #333;
+/* Add a transition for smooth theme changes */
+body {
+  transition: background-image 0.5s, color 0.5s;
+}
+.dashboardContainer {
+    transition: background-image 0.5s, color 0.5s;
+}
+.bg-transition {
+  transition: background-image 0.5s, color 0.5s;
 }

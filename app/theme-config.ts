@@ -1,20 +1,34 @@
 // theme-config.ts
 
-export const themeBackgrounds = {
-  "dark-academia": 'url("/cozy.webp")',
-  "coast": 'url("/coastd.jpg")',
-  "cabin": 'url("/cabin.jpg")',
-  // Add more themes as needed
-};
-
-// export const themeProperties = {
-//   "dark-academia": {
-//     textColor: "text-white",
-//   },
-//   "coast": {
-//     textColor: "text-[#171717]",
-//   },
-//   // Add more themes as needed
-// };
-
-export type ThemeName = keyof typeof themeBackgrounds;
+export const themes = [
+  {
+    name: "Alexandria's Archive",
+    shortName: "alexandriaArchive",
+    background: "/alexandriaArchive.png",
+  },
+  {
+    name: "Matruh's Coastal Drive",
+    shortName: "marsaMatruhCoastalDrive",
+    background: "/coastd.jpg",
+  },
+  {
+    name: "Cozy Damietta",
+    shortName: "cozyDamietta",
+    background: "/cozyDamietta.jpg",
+  },
+  {
+    name: "North Coast's Shore",
+    shortName: "northCoastShore",
+    background: "/northCoastShore.jpg",
+  },
+  {
+    name: "Sinai's Sunset Lodge",
+    shortName: "sinaiSunsetLodge",
+    background: "/sinaiSunsetLodge.jpg",
+  },
+  {
+    name: "Cairo's Late Drive",
+    shortName: "cairoLateDrive",
+    background: "/cairoLateDrive.jpg",
+  },
+];

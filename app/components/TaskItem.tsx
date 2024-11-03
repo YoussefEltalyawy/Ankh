@@ -17,17 +17,17 @@ type TaskItemProps = {
 
 // TaskItem component implementation
 const TaskItem: React.FC<TaskItemProps> = ({
-  id, 
-  title, 
-  completed, 
-  onDeleteTask 
+  id,
+  title,
+  completed,
+  onDeleteTask,
 }) => {
   // State to track task's selected (completed) state
   const [isSelected, setIsSelected] = useState(completed);
-  
+
   // State to track if the task is in editing mode
   const [isEditing, setIsEditing] = useState(false);
-  
+
   // State to hold the edited task title
   const [editedTitle, setEditedTitle] = useState(title);
 
@@ -35,7 +35,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
   const handleCompleteStateChange = async () => {
     const newState = !isSelected;
     setIsSelected(newState); // Update UI immediately
-    
+
     try {
       // Call appropriate function based on new state
       await (newState ? completeTask(id) : unCompleteTask(id));
@@ -118,7 +118,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
         <p
           className={cn(
             "text-p transition-colors", // Style transitions
-            isSelected ? "text-[#8b8b8b]" : "text-white" // Change text color based on completion
+            isSelected ? "text-[#ffffffae]" : "text-white" // Change text color based on completion
           )}
         >
           {editedTitle} {/* Display the task title */}

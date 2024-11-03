@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import prisma from "../lib/db";
 import { Task } from "@/app/types";

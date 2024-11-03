@@ -1,7 +1,7 @@
 import { cn } from "@nextui-org/theme";
-import SpotifyPlaylistForm from "../SpotifyPlaylistForm";
+import SpotifyPlaylistForm from "./SpotifyPlaylistForm";
 import { useState } from "react";
-import SpotifyPlaylistEmbed from "../SpotifyPlaylistEmbed";
+import SpotifyPlaylistEmbed from "./SpotifyPlaylistEmbed";
 
 interface MusicProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface MusicProps {
 
 function Music({ isOpen }: MusicProps) {
   const [playlistId, setPlaylistId] = useState<string>(
-    "37i9dQZF1DX4hpot8sYudB" // chnage this string to change default playlist currently brown noise
+    "37i9dQZF1DX4hpot8sYudB" // chnage this string to change default playlist; currently brown noise
   );
   const handleSubmit = (id: string) => {
     setPlaylistId(id);
@@ -26,8 +26,6 @@ function Music({ isOpen }: MusicProps) {
       <div className="p-10">
         <SpotifyPlaylistForm onSubmit={handleSubmit} />
         <SpotifyPlaylistEmbed playlistId={playlistId} />
-        <div className="p-4 border-t border-gray-800">
-      </div>
       </div>
     </div>
   );

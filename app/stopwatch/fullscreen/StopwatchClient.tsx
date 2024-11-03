@@ -14,7 +14,6 @@ import {
 import { useMemo, useState } from "react";
 import { Task } from "@/app/types";
 import { Button } from "@nextui-org/button";
-import { useTheme } from "next-themes";
 
 function StopwatchClient({ tasks }: { tasks: Task[] }) {
   const { time, running, toggleRunning, resetTime } = useStopwatch();
@@ -25,13 +24,9 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
-  const { theme } = useTheme();
 
   return (
-    <section
-      className="bg-cover bg-center w-full h-screen min-h-screen px-[140px]"
-      data-theme={theme}
-    >
+    <section className="bg-cozy bg-cover w-full h-screen min-h-screen relative">
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 px-[140px] pt-[80px] pb-[30px] flex justify-between items-center">
         <h1 className="font-manrope text-h2 text-white font-bold">Ankh</h1>

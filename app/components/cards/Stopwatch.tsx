@@ -60,7 +60,6 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
                   <hr />
                 </DropdownItem>
               ))}
-              
             </DropdownMenu>
           </Dropdown>
           <Dropdown>
@@ -86,7 +85,7 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
             onClick={toggleRunning}
             className="bg-white opacity-95 font-manrope text-h6 font-bold p-5 rounded-xl px-[32px] py-[12px] w-full"
           >
-            {running ? "Stop" : "Start"}
+            <p className="text-[#333]">{running ? "Stop" : "Start"}</p>
           </button>
           <Image
             src="/reset-clock-icon.png"

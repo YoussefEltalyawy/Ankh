@@ -5,7 +5,7 @@ import StopwatchClient from "./StopwatchClient";
 async function Page() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const tasks = await getTasks(user?.id);
+  const tasks = await getTasks(user.id);
   return (
     <StopwatchClient tasks={tasks}/>
   )

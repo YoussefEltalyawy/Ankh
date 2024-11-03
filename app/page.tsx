@@ -1,12 +1,12 @@
 import Image from "next/image";
-import Header from "./components/Header";
+import Header from "./components/LandHeader";
 import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 export default async function Home() {
   const { isAuthenticated } = getKindeServerSession();
   return (
-    <section className="landing-container bg-[#F3F3F3]">
+    <section className="bg-[#f3f3f3]">
       <Header />
       <div className="mx-[160px]">
         <div className="flex flex-col gap-[32px] text-center itmes-center justify-center">
