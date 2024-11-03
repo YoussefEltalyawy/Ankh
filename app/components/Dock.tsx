@@ -34,7 +34,7 @@ function Dock({
             src="/task-icon2.svg"
             alt="task icon"
             className={`w-[30px] h-[30px] transition-all ${
-              tasksToggle ? "opacity-100" : "opacity-80"
+              tasksToggle ? "opacity-100" : "opacity-70"
             }`}
             width={32}
             height={32}
@@ -69,7 +69,7 @@ function Dock({
             src="/timer-icon.svg"
             alt="timer icon"
             className={`w-[32px] h-[32px] transition-all ${
-              timerToggle ? "opacity-100" : "opacity-80"
+              timerToggle ? "opacity-100" : "opacity-70"
             }`}
             width={32}
             height={32}

@@ -27,12 +27,12 @@ body {
 
 [data-theme="marsaMatruhCoastalDrive"] {
   background-image: url("/marsaMatruhCoastalDrive-d.jpg");
-  color: #daa742 ;
+  color: #daa742;
 }
 
 [data-theme="cozyDamietta"] {
   background-image: url("/cozyDamietta.jpg");
-  color: #FFB973;
+  color: #ffb973;
 }
 
 [data-theme="northCoastShore"] {
@@ -42,7 +42,7 @@ body {
 
 [data-theme="sinaiSunsetLodge"] {
   background-image: url("/sinaiSunsetLodge.jpg");
-  color: #D64933;
+  color: #d64933;
 }
 
 [data-theme="cairoLateDrive"] {
@@ -55,7 +55,7 @@ body {
   transition: background-image 0.5s, color 0.5s;
 }
 .dashboardContainer {
-    transition: background-image 0.5s, color 0.5s;
+  transition: background-image 0.5s, color 0.5s;
 }
 .bg-transition {
   transition: background-image 0.5s, color 0.5s;

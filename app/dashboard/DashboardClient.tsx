@@ -178,9 +178,9 @@ function DashboardClient({
 
 
   return (
-    <div>
+    <div className="dashboardContainer2">
       <section
-        className="dashboardContainer bg-cover w-full h-screen min-h-screen px-[140px] bg-transition"
+        className="dashboardContainer bg-cover w-full h-screen px-[140px] bg-transition"
         data-theme={theme}
       >
         <Music isOpen={showMusicBar} />
