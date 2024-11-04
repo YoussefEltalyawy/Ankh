@@ -4,10 +4,32 @@ import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { CircleCheck, Clock, NotebookPen } from "lucide-react";
+
+const featureCards = [
+  {
+    title: "Tasks",
+    description:
+      "Focus with a streamlined task list, Mark tasks as complete, add quick notes, and track your time with an integrated stopwatch for each task.",
+    icon: CircleCheck,
+  },
+  {
+    title: "Notes",
+    description:
+      "Stay organized with a clean, intuitive notes. Effortlessly edit, or delete notes to keep your thoughts clear and accessible.",
+    icon: NotebookPen,
+  },
+  {
+    title: "Stopwatch",
+    description:
+      "Track your time effortlessly with a minimalist stopwatch that keeps you on task, showing one priority at a time to maintain your focus",
+    icon: Clock,
+  },
+];
+
 export default async function Home() {
   const { isAuthenticated } = getKindeServerSession();
   return (
-    <section className="bg-[#f3f3f3]">
+    <section className="bg-[#f3f3f3] h-full">
       <Header />
       <div className="mx-[160px]">
         <div className="flex flex-col gap-[32px] text-center itmes-center justify-center">
@@ -62,45 +84,20 @@ export default async function Home() {
             Designed to get more done.
           </h2>
           <div>
-            <ul className="grid grid-cols-3 gap-5">
-              <li>
-                <div className="bg-white p-[2rem] rounded-2xl shadow-md relative">
-                  <CircleCheck className="absolute right-[2rem] text-black opacity-60" />
-                  <h4 className="text-h4 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
-                    Tasks
-                  </h4>
-                  <p className="text-p text-black opacity-75">
-                    Focus with a streamlined task list, Mark tasks as complete, add quick notes, and track your
-                    time with an integrated stopwatch for each task.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <div className="bg-white p-[2rem] rounded-2xl shadow-md relative">
-                  <NotebookPen className="absolute right-[2rem] text-black opacity-60" />
-                  <h4 className="text-h4 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
-                    Notes
-                  </h4>
-                  <p className="text-p text-black opacity-75">
-                    Stay organized with a clean, intuitive notes. Effortlessly
-                    edit, or delete notes to keep your thoughts clear and
-                    accessible.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <div className="bg-white p-[2rem] rounded-2xl shadow-md relative">
-                  <Clock className="absolute right-[2rem] text-black opacity-60" />
-                  <h4 className="text-h4 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
-                    Stopwatch
-                  </h4>
-                  <p className="text-p text-black opacity-75">
-                    Track your time effortlessly with a minimalist stopwatch
-                    that keeps you on task, showing one priority at a time to
-                    maintain your focus
-                  </p>
-                </div>
-              </li>
+            <ul className="grid grid-cols-3 gap-5 pb-5">
+              {featureCards.map((card, index) => (
+                <li key={index}>
+                  <div className="bg-white p-[2rem] rounded-2xl shadow-md relative">
+                    <card.icon className="absolute right-[2rem] text-black opacity-60" />
+                    <h4 className="text-h4 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
+                      {card.title}
+                    </h4>
+                    <p className="text-p text-black opacity-75">
+                      {card.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
         </section>

@@ -56,7 +56,7 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
             >
               {tasks.map((task) => (
                 <DropdownItem key={task.title}>
-                  <p className="text[1.3rem] my-1">{task.title}</p>
+                  <p className="text[1.3rem] my-1 text-[#333]">{task.title}</p>
                   <hr />
                 </DropdownItem>
               ))}
@@ -69,9 +69,13 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
             <DropdownMenu aria-label="Static Actions">
               <DropdownSection title="Actions">
                 <DropdownItem key="full-screen">
-                  <Link href={"/stopwatch/fullscreen"}>Full Screen</Link>
+                  <Link href={"/stopwatch/fullscreen"}>
+                    <p className="text-[#333]">Full Screen</p>
+                  </Link>
                 </DropdownItem>
-                <DropdownItem key="new">Minimize</DropdownItem>
+                <DropdownItem key="new">
+                  <p className="text-[#333]">Minimize</p>
+                </DropdownItem>
               </DropdownSection>
             </DropdownMenu>
           </Dropdown>

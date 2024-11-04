@@ -176,7 +176,6 @@ function DashboardClient({
   //   updateBackground();
   // }, [theme]);
 
-
   return (
     <div className="dashboardContainer2">
       <section
@@ -233,7 +232,7 @@ function DashboardClient({
               <StopwatchCard
                 visible={showStopwatchCard.show}
                 opacity={showStopwatchCard.opacity}
-                tasks={tasks}
+                tasks={tasks.filter((task) => !task.completed)}
               />
             </div>
           </div>
