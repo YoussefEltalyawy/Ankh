@@ -4,6 +4,7 @@ import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { CircleCheck, Clock, NotebookPen } from "lucide-react";
+import ImageSlideshow from "./components/ImageSlideshow";
 
 const featureCards = [
   {
@@ -70,14 +71,15 @@ export default async function Home() {
             </RegisterLink>
           )}
         </div>
-        <div className="flex items-center justify-center mt-[-150px]">
-          <Image
+        <div className="flex items-center justify-center mt-[-150px] mb-[350px]">
+          {/* <Image
             src="/showcase3.png"
             alt="showcase of ankh app"
             className=" w-[1110px]"
             width={1110}
             height={588}
-          />
+          /> */}
+          <ImageSlideshow />
         </div>
         <section>
           <h2 className=" text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
