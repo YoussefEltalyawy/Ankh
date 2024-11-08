@@ -108,7 +108,11 @@ export default async function Home() {
           <h2 className=" text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
             Personalize Your Experience.
           </h2>
-          <ThemeShowcase/>
+          <p className="text-lg text-black opacity-75 mb-6">
+            Discover themes carefully crafted, brings a unique atmosphere to your
+            space, reflecting your mind.
+          </p>
+          <ThemeShowcase />
         </section>
       </div>
     </section>
