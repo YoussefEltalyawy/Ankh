@@ -5,6 +5,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { CircleCheck, Clock, NotebookPen } from "lucide-react";
 import ImageSlideshow from "./components/ImageSlideshow";
+import ThemeShowcase from "./components/ThemesShowcase";
 
 const featureCards = [
   {
@@ -42,9 +43,9 @@ export default async function Home() {
             prioritization and focused time blocks.
           </p>
           {(await isAuthenticated()) ? (
-            <div className="z-1">
+            <div className="z-30">
               <Link href={"/dashboard"}>
-                <button className="bg-black z-1 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
+                <button className="bg-black z-30 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
                   <p className="font-manrope text-p font-bold">Go to Ankh</p>
                   <Image
                     src="arrow-right.svg"
@@ -57,8 +58,8 @@ export default async function Home() {
               </Link>
             </div>
           ) : (
-            <RegisterLink className="z-1">
-              <button className="bg-black z-1 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
+            <RegisterLink>
+              <button className="bg-black z-30 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
                 <p className="font-manrope text-p font-bold">Go to Ankh</p>
                 <Image
                   src="arrow-right.svg"
@@ -71,7 +72,7 @@ export default async function Home() {
             </RegisterLink>
           )}
         </div>
-        <div className="flex items-center justify-center mt-[-150px] mb-[350px]">
+        <div className="flex items-center justify-center mt-[-150px] mb-[350px] z-1">
           {/* <Image
             src="/showcase3.png"
             alt="showcase of ankh app"
@@ -102,6 +103,12 @@ export default async function Home() {
               ))}
             </ul>
           </div>
+        </section>
+        <section className="pt-[150px]">
+          <h2 className=" text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
+            Personalize Your Experience.
+          </h2>
+          <ThemeShowcase/>
         </section>
       </div>
     </section>
