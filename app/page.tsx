@@ -34,18 +34,35 @@ export default async function Home() {
     <section className="bg-[#f3f3f3] h-full">
       <Header />
       <div className="mx-[160px]">
-        <div className="flex flex-col gap-[32px] text-center itmes-center justify-center">
-          <h1 className=" text-h1 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
-            Pharaoh&apos;s Focus,<br></br> Modern Mastery
-          </h1>
-          <p className="text-p font-manrope black70 text-black">
-            Craft your daily pyramid of success with smart task <br></br>{" "}
-            prioritization and focused time blocks.
-          </p>
-          {(await isAuthenticated()) ? (
-            <div className="z-30">
-              <Link href={"/dashboard"}>
-                <button className="bg-black z-30 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
+        <div className="relative isolate">
+          <div className="flex flex-col gap-[32px] text-center items-center justify-center">
+            <h1 className="text-h1 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
+              Pharaoh&apos;s Focus,<br></br> Modern Mastery
+            </h1>
+            <p className="text-p font-manrope black70 text-black">
+              Craft your daily pyramid of success with smart task <br></br>{" "}
+              prioritization and focused time blocks.
+            </p>
+            {(await isAuthenticated()) ? (
+              <div className="relative z-30">
+                {" "}
+                {/* Added relative positioning */}
+                <Link href={"/dashboard"}>
+                  <button className="bg-black text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
+                    <p className="font-manrope text-p font-bold">Go to Ankh</p>
+                    <Image
+                      src="arrow-right.svg"
+                      alt="arrow navigates to app"
+                      className="invert w-[16px] h-[16px]"
+                      width={16}
+                      height={16}
+                    />
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              <RegisterLink>
+                <button className="bg-black text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
                   <p className="font-manrope text-p font-bold">Go to Ankh</p>
                   <Image
                     src="arrow-right.svg"
@@ -55,35 +72,16 @@ export default async function Home() {
                     height={16}
                   />
                 </button>
-              </Link>
-            </div>
-          ) : (
-            <RegisterLink>
-              <button className="bg-black z-30 text-white w-fit px-[32px] py-[16px] mx-auto rounded-2xl flex items-center gap-[8px]">
-                <p className="font-manrope text-p font-bold">Go to Ankh</p>
-                <Image
-                  src="arrow-right.svg"
-                  alt="arrow navigates to app"
-                  className="invert w-[16px] h-[16px]"
-                  width={16}
-                  height={16}
-                />
-              </button>
-            </RegisterLink>
-          )}
+              </RegisterLink>
+            )}
+          </div>
+          <div className="relative flex items-center justify-center mt-[-150px] mb-[350px] z-[1]">
+            <ImageSlideshow />
+          </div>
         </div>
-        <div className="flex items-center justify-center mt-[-150px] mb-[350px] z-1">
-          {/* <Image
-            src="/showcase3.png"
-            alt="showcase of ankh app"
-            className=" w-[1110px]"
-            width={1110}
-            height={588}
-          /> */}
-          <ImageSlideshow />
-        </div>
+
         <section>
-          <h2 className=" text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
+          <h2 className="text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
             Designed to get more done.
           </h2>
           <div>
@@ -104,13 +102,14 @@ export default async function Home() {
             </ul>
           </div>
         </section>
+
         <section className="pt-[150px]">
-          <h2 className=" text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
+          <h2 className="text-h2 font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-5">
             Personalize Your Experience.
           </h2>
           <p className="text-lg text-black opacity-75 mb-6">
-            Discover themes carefully crafted, brings a unique atmosphere to your
-            space, reflecting your mind.
+            Discover themes carefully crafted, brings a unique atmosphere to
+            your space, reflecting your mind.
           </p>
           <ThemeShowcase />
         </section>
