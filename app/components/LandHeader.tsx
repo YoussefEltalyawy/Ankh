@@ -8,7 +8,7 @@ const HeaderCentered = () => {
         {/* Mobile Header - Centered */}
         <div className="md:hidden flex justify-center py-6">
           <Link href="/">
-            <h2 className="text-2xl font-manrope font-bold">Ankh</h2>
+            <h2 className="text-h2 font-manrope font-bold">Ankh</h2>
           </Link>
         </div>
 
