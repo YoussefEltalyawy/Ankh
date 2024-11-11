@@ -13,6 +13,7 @@ body {
   background-repeat: no-repeat; /* Prevent background repetition */
   background-size: cover; /* Ensure the background covers the screen */
   background-position: center; /* Center the background */
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {

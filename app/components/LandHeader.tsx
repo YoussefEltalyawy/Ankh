@@ -14,27 +14,29 @@ const Header = () => {
           <div>
             <ul className="font-manrope text-p flex w-full gap-[4rem]">
               <li>
-                <Link href="/features">Features</Link>
+                <Link href="#features">Features</Link>
               </li>
               <li>
                 <Link href="/about">About Us</Link>
               </li>
               <li>
-                <Link href="/pricing">Pricing</Link>
+                <Link href="/pricing">Contact</Link>
               </li>
             </ul>
           </div>
           <div>
             <ul className="font-manrope flex items-center">
-              <li>
-                <Image
-                  src="github.svg"
-                  alt="github"
-                  className="mr-[2rem] w-[38px] h-[38px] "
-                  width={38}
-                  height={38}
-                />
-              </li>
+              <Link href={"https://github.com/YoussefEltalyawy/Ankh"}>
+                <li>
+                  <Image
+                    src="github.svg"
+                    alt="github"
+                    className="mr-[2rem] w-[38px] h-[38px] "
+                    width={38}
+                    height={38}
+                  />
+                </li>
+              </Link>
               <li>
                 <Image
                   className="mr-[2rem] w-[38px] h-[38px]"

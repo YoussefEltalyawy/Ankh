@@ -57,7 +57,7 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
 
   return (
     <div
-      className={`container mx-auto p- ${
+      className={`container  p- ${
         layout === "vertical" ? "max-w-4xl" : "max-w-7xl"
       }`}
     >
