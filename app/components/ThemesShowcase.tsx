@@ -25,12 +25,6 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
       buttonBg: "/northCoastShore-d.jpg",
       buttonTextColor: "#1ccfc3",
     },
-    // {
-    //   src: "/damietta-theme-showcase.png",
-    //   alt: "Cozy Damietta",
-    //   buttonBg: "/cozyDamietta.jpg",
-    //   buttonTextColor: "#ffb973",
-    // },
     {
       src: "/marsa-theme-showcase.png",
       alt: "Matruh's Coastal Drive",
@@ -43,12 +37,6 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
       buttonBg: "/alexandriaArchive.png",
       buttonTextColor: "white",
     },
-    // {
-    //   src: "/sinai-theme-showcase.png",
-    //   alt: "Sinai's Sunset Lodge",
-    //   buttonBg: "/sinaiSunsetLodge.jpg",
-    //   buttonTextColor: "white",
-    // },
   ];
 
   const handleButtonClick = (index: number) => {
@@ -85,8 +73,7 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
                 src={image.src}
                 alt={image.alt}
                 layout="fill"
-                objectFit="cover"
-                className="rounded-2xl"
+                className="rounded-2xl object-contain sm:object-cover" // Modified this line
                 priority={index === 0}
               />
             </div>

@@ -109,12 +109,16 @@ export default async function Home(): Promise<JSX.Element> {
         </div>
 
         {/* App Showcase */}
-        <div className="flex items-center justify-center mt-8 md:-mt-[150px] mb-16 md:mb-[350px] z-1 px-4">
+        <div className="flex items-center justify-center mt-8 md:-mt-[150px] mb-32 md:mb-[250px] z-1 px-4">
           <ImageSlideshow />
         </div>
 
         {/* Features Section */}
-        <section id="features" aria-label="Features" className="mt-16 md:mt-24">
+        <section
+          id="features"
+          aria-label="Features"
+          className="pt-16"
+        >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-3 md:mb-5 px-4">
             Designed to get more done.
           </h2>
