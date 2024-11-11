@@ -9,7 +9,7 @@ interface MusicProps {
 
 function Music({ isOpen }: MusicProps) {
   const [playlistId, setPlaylistId] = useState<string>(
-    "37i9dQZF1DX4hpot8sYudB" // chnage this string to change default playlist; currently brown noise
+    "37i9dQZF1DX4hpot8sYudB"
   );
   const handleSubmit = (id: string) => {
     setPlaylistId(id);
@@ -18,12 +18,14 @@ function Music({ isOpen }: MusicProps) {
   return (
     <div
       className={cn(
-        "bg-black h-full absolute left-0 w-[30vw] transition-transform duration-300 ease-in-out z-10",
+        "bg-black h-full fixed left-0 w-full sm:w-[80vw] md:w-[50vw] lg:w-[30vw] transition-transform duration-300 ease-in-out z-10",
         isOpen ? "translate-x-[0%]" : "translate-x-[-100%]"
       )}
     >
-      <h1 className="text-white text-h2 text-center mt-9">Music</h1>
-      <div className="p-10">
+      <h1 className="text-white text-xl sm:text-2xl md:text-3xl text-center mt-4 sm:mt-6 md:mt-9">
+        Music
+      </h1>
+      <div className="p-4 sm:p-6 md:p-10">
         <SpotifyPlaylistForm onSubmit={handleSubmit} />
         <SpotifyPlaylistEmbed playlistId={playlistId} />
       </div>

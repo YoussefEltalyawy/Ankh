@@ -11,13 +11,11 @@ function ThemesSection() {
   const handleThemeChange = useCallback(
     (newTheme: string) => {
       const now = Date.now();
-      const cooldownPeriod = 500; // .5 second cooldown
+      const cooldownPeriod = 500;
 
       if (now - lastChangeTime > cooldownPeriod) {
         setTheme(newTheme);
         setLastChangeTime(now);
-      } else {
-        // Optionally, you could show a user-friendly message here
       }
     },
     [setTheme, lastChangeTime]
@@ -25,12 +23,14 @@ function ThemesSection() {
 
   return (
     <>
-      <h5 className="text-h5 font-bold mb-3">LoFi Egypt.</h5>
-      <div className="themes-container grid grid-cols-3 gap-1">
+      <h5 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3">
+        LoFi Egypt.
+      </h5>
+      <div className="themes-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
         {themes.map((themeI, index) => (
           <div
             onClick={() => handleThemeChange(themeI.shortName)}
-            className="theme-item w-fit text-center cursor-pointer"
+            className="theme-item w-full text-center cursor-pointer"
             key={index}
           >
             <Image
@@ -39,11 +39,11 @@ function ThemesSection() {
               height={100}
               alt={themeI.name}
               className={cn(
-                "rounded-large my-3 border-2",
+                "rounded-lg sm:rounded-xl md:rounded-2xl w-full h-auto my-2 sm:my-3 border-2",
                 themeI.shortName === theme ? "border-white" : "border-none"
               )}
             />
-            <p>{themeI.name}</p>
+            <p className="text-sm sm:text-base md:text-lg">{themeI.name}</p>
           </div>
         ))}
       </div>
