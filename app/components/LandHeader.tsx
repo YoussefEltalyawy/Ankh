@@ -26,10 +26,12 @@ const HeaderCentered = () => {
                   <Link href="#features">Features</Link>
                 </li>
                 <li>
-                  <Link href="/about">About Us</Link>
+                  <Link href="https://github.com/YoussefEltalyawy">
+                    About Us
+                  </Link>
                 </li>
                 <li>
-                  <Link href="/pricing">Contact</Link>
+                  <Link href="mailto:talyawy@proton.me">Contact</Link>
                 </li>
               </ul>
             </div>

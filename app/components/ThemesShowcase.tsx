@@ -44,22 +44,18 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
   };
 
   return (
-    <div
-      className={`container  p- ${
-        layout === "vertical" ? "max-w-4xl" : "max-w-7xl"
-      }`}
-    >
+    <div className="w-full px-4">
       <div
         className={`${
           layout === "vertical"
-            ? "flex flex-col gap-8"
-            : "flex flex-col lg:flex-row gap-8"
+            ? "flex flex-col gap-12"
+            : "flex flex-col lg:flex-row gap-12"
         }`}
       >
         {/* Image Showcase */}
         <div
           className={`relative ${
-            layout === "vertical" ? "w-full h-[600px]" : "lg:w-2/3 h-[500px]"
+            layout === "vertical" ? "w-full h-[600px]" : "lg:w-3/4 h-[600px]"
           }`}
         >
           {images.map((image, index) => (
@@ -73,7 +69,7 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
                 src={image.src}
                 alt={image.alt}
                 layout="fill"
-                className="rounded-2xl object-contain sm:object-cover" // Modified this line
+                className="rounded-2xl object-contain sm:object-cover"
                 priority={index === 0}
               />
             </div>
@@ -84,8 +80,8 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
         <div
           className={`${
             layout === "vertical"
-              ? "grid grid-cols-2 lg:grid-cols-3 gap-4"
-              : "lg:w-1/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4"
+              ? "grid grid-cols-2 lg:grid-cols-4 gap-6"
+              : "lg:w-1/4 grid grid-cols-1 gap-6"
           }`}
         >
           {images.map((image, index) => (
@@ -97,7 +93,7 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
                 className={`
                   relative w-full group overflow-hidden rounded-xl
                   transition-all duration-300
-                  p-6 h-24 bg-cover bg-center
+                  p-6 h-28 bg-cover bg-center
                 `}
                 onClick={() => handleButtonClick(index)}
               >

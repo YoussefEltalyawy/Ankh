@@ -37,7 +37,7 @@ const SpotifyPlaylistForm: React.FC<SpotifyPlaylistFormProps> = ({
         />
         <button
           type="submit"
-          className="bg-white mb-5 opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4 w-full"
+          className="bg-white text-[#333] mb-5 opacity-95 font-manrope text-h6 font-bold p-2 rounded-xl px-4 w-full"
         >
           Generate Player
         </button>

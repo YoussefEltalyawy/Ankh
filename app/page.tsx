@@ -155,7 +155,7 @@ export default async function Home(): Promise<JSX.Element> {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 md:mt-24 bg-black py-8 text-white">
+      <footer className="mt-16 md:mt-24 bg-black py-8 text-white" id="footer">
         <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
           {/* Brand Section */}
           <div className="flex flex-col md:flex-row items-center md:items-start gap-2 md:gap-4 text-center md:text-left">
