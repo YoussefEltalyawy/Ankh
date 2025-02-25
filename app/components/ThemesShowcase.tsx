@@ -9,7 +9,7 @@ interface Image {
   buttonTextColor: string;
 }
 
-const ThemeShowcase = ({ layout = "horizontal" }) => {
+const ThemeShowcase = () => {
   const [activeImage, setActiveImage] = useState<number>(0);
 
   const images: Image[] = [
@@ -39,118 +39,65 @@ const ThemeShowcase = ({ layout = "horizontal" }) => {
     },
   ];
 
-  const handleButtonClick = (index: number) => {
-    setActiveImage(index);
-  };
-
   return (
-    <div className="w-full px-4">
-      <div
-        className={`${
-          layout === "vertical"
-            ? "flex flex-col gap-12"
-            : "flex flex-col lg:flex-row gap-12"
-        }`}
-      >
-        {/* Image Showcase */}
-        <div
-          className={`relative ${
-            layout === "vertical" ? "w-full h-[600px]" : "lg:w-3/4 h-[600px]"
-          }`}
-        >
+    <div className="max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        {/* Main Image Display */}
+        <div className="lg:col-span-8 relative aspect-video bg-gray-100 rounded-2xl overflow-hidden shadow-lg">
           {images.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-500 ${
-                activeImage === index ? "opacity-100" : "opacity-0"
-              }`}
+              className={`absolute inset-0 transition-opacity duration-500 ${activeImage === index ? "opacity-100" : "opacity-0"
+                }`}
             >
               <Image
                 src={image.src}
                 alt={image.alt}
-                layout="fill"
-                className="rounded-2xl object-contain sm:object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw"
                 priority={index === 0}
               />
             </div>
           ))}
         </div>
 
-        {/* Buttons Grid */}
-        <div
-          className={`${
-            layout === "vertical"
-              ? "grid grid-cols-2 lg:grid-cols-4 gap-6"
-              : "lg:w-1/4 grid grid-cols-1 gap-6"
-          }`}
-        >
+        {/* Theme Selection */}
+        <div className="lg:col-span-4 flex flex-col gap-4">
           {images.map((image, index) => (
-            <div key={index} className="relative">
-              <button
-                style={{
-                  backgroundImage: `url(${image.buttonBg})`,
-                }}
-                className={`
-                  relative w-full group overflow-hidden rounded-xl
-                  transition-all duration-300
-                  p-6 h-28 bg-cover bg-center
-                `}
-                onClick={() => handleButtonClick(index)}
-              >
-                {/* Dark overlay that's lighter when active */}
-                <div
-                  className={`
-                    absolute inset-0 transition-all duration-300
-                    ${
-                      activeImage === index
-                        ? "bg-black bg-opacity-20"
-                        : "bg-black bg-opacity-50 group-hover:bg-opacity-40"
-                    }
-                  `}
+            <button
+              key={index}
+              onClick={() => setActiveImage(index)}
+              className={`relative group overflow-hidden rounded-xl transition-all duration-200 ${activeImage === index ? "ring-2 ring-[#B8860B]" : ""
+                }`}
+            >
+              <div className="relative aspect-[3/1]">
+                <Image
+                  src={image.buttonBg}
+                  alt={image.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw"
                 />
-
-                {/* Left side indicator bar with slide-up animation */}
                 <div
-                  className={`
-                    absolute left-0 bottom-0 w-1
-                    transition-all duration-300 ease-out
-                    ${
-                      activeImage === index
-                        ? "h-full opacity-100 transform translate-y-0"
-                        : "h-0 opacity-0 transform translate-y-full"
-                    }
-                  `}
-                  style={{ backgroundColor: image.buttonTextColor }}
+                  className={`absolute inset-0 transition-opacity duration-200 ${activeImage === index
+                    ? "bg-black/20"
+                    : "bg-black/40 group-hover:bg-black/30"
+                    }`}
                 />
+              </div>
 
-                {/* Text content */}
-                <div className="relative z-10 flex items-center justify-between">
-                  <p
-                    className={`
-                      font-bold text-lg transition-all duration-300 ease-out
-                      ${activeImage === index ? "translate-x-3" : ""}
-                    `}
-                    style={{ color: image.buttonTextColor }}
-                  >
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <div className="flex items-center justify-between">
+                  <p className="font-medium text-white text-shadow">
                     {image.alt}
                   </p>
-
-                  {/* Active dot indicator */}
-                  <div
-                    className={`
-                      w-2 h-2 rounded-full ml-2
-                      transition-all duration-300
-                      ${
-                        activeImage === index
-                          ? "opacity-100 scale-100"
-                          : "opacity-0 scale-0"
-                      }
-                    `}
-                    style={{ backgroundColor: image.buttonTextColor }}
-                  />
+                  {activeImage === index && (
+                    <div className="w-2 h-2 rounded-full bg-white" />
+                  )}
                 </div>
-              </button>
-            </div>
+              </div>
+            </button>
           ))}
         </div>
       </div>

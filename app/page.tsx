@@ -49,7 +49,7 @@ const FEATURE_CARDS: FeatureCard[] = [
 
 // Components
 const ActionButton: React.FC<ActionButtonProps> = () => (
-  <button className="bg-black z-30 text-white w-fit px-6 py-4 md:px-8 md:py-4 mx-auto rounded-xl md:rounded-2xl flex items-center gap-2 md:gap-3 text-sm md:text-base">
+  <button className="bg-gradient-to-r from-[#C0A062] via-[#B8860B] to-[#DAA520] text-white w-fit px-6 py-4 md:px-8 md:py-4 mx-auto rounded-xl md:rounded-2xl flex items-center gap-2 md:gap-3 text-sm md:text-base hover:shadow-xl hover:scale-[1.02] transition-all duration-200">
     <p className="font-manrope font-bold">Go to Ankh</p>
     <Image
       src="arrow-right.svg"
@@ -67,9 +67,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   description,
   Icon,
 }) => (
-  <div className="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl shadow-md relative">
-    <Icon className="absolute right-6 md:right-8 text-black opacity-60 w-5 h-5 md:w-6 md:h-6" />
-    <h4 className="text-xl md:text-2xl font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-3 md:mb-5">
+  <div className="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200 relative">
+    <Icon className="absolute right-6 md:right-8 text-[#B8860B] opacity-60 w-5 h-5 md:w-6 md:h-6" />
+    <h4 className="text-xl md:text-2xl font-manrope leading-tight bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-3 md:mb-5">
       {title}
     </h4>
     <p className="text-sm md:text-base text-black opacity-75">{description}</p>
@@ -86,14 +86,19 @@ export default async function Home(): Promise<JSX.Element> {
       <main className="px-4 md:px-8 lg:px-16 xl:px-40">
         {/* Hero Section */}
         <div className="flex flex-col gap-6 md:gap-8 text-center items-center justify-center pt-8 md:pt-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text px-4">
-            Pharaoh&apos;s Focus,
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-manrope leading-tight px-4">
+            <span className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
+              Pharaoh&apos;s Focus,
+            </span>
             <br />
-            Modern Mastery
+            <span className="bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
+              Modern Mastery
+            </span>
           </h1>
           <p className="text-sm md:text-base font-manrope text-black opacity-70 max-w-xl px-4">
             Craft your daily pyramid of success with smart task prioritization
-            and focused time blocks.
+            and focused time blocks. Inspired by ancient wisdom, powered by
+            modern technology.
           </p>
           <div className="z-30">
             {isUserAuthenticated ? (
@@ -114,11 +119,7 @@ export default async function Home(): Promise<JSX.Element> {
         </div>
 
         {/* Features Section */}
-        <section
-          id="features"
-          aria-label="Features"
-          className="pt-16"
-        >
+        <section id="features" aria-label="Features" className="pt-16">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-3 md:mb-5 px-4">
             Designed to get more done.
           </h2>
@@ -140,12 +141,12 @@ export default async function Home(): Promise<JSX.Element> {
         {/* Themes Section */}
         <section className="pt-16 md:pt-24" aria-label="Themes">
           <div className="px-4">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-manrope leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-3 md:mb-5">
-              Personalize Your Experience.
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-manrope leading-tight bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-3 md:mb-5">
+              Personalize Your Experience
             </h2>
             <p className="text-sm md:text-base text-black opacity-75 mb-6">
-              Discover themes carefully crafted, brings a unique atmosphere to
-              your space, reflecting your mind.
+              Discover themes inspired by Egypt&apos;s diverse landscapes, each
+              carefully crafted to bring a unique atmosphere to your workspace.
             </p>
           </div>
           <div className="px-4">
@@ -155,25 +156,47 @@ export default async function Home(): Promise<JSX.Element> {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 md:mt-24 bg-black py-8 text-white" id="footer">
-        <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
-          {/* Brand Section */}
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-2 md:gap-4 text-center md:text-left">
-            <h3 className="text-xl md:text-2xl font-manrope font-bold">Ankh</h3>
-            <p className="text-xs md:text-sm opacity-75 max-w-xs">
-              Crafting focus and productivity tools for a balanced digital life.
-            </p>
+      <footer className="mt-16 md:mt-24 bg-black text-white py-12">
+        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div>
+              <h3 className="text-2xl font-manrope font-bold mb-4">Ankh</h3>
+              <p className="text-white/75">
+                Crafting focus and productivity tools for a balanced digital
+                life, inspired by timeless Egyptian wisdom.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-manrope font-bold mb-4">
+                Quick Links
+              </h4>
+              <nav className="flex flex-col gap-2">
+                <Link
+                  href="#features"
+                  className="text-white/75 hover:text-white transition-colors"
+                >
+                  Features
+                </Link>
+                <Link
+                  href="#themes"
+                  className="text-white/75 hover:text-white transition-colors"
+                >
+                  Themes
+                </Link>
+              </nav>
+            </div>
+            <div>
+              <h4 className="text-lg font-manrope font-bold mb-4">Contact</h4>
+              <a
+                href="mailto:talyawy@proton.me"
+                className="text-white/75 hover:text-white transition-colors"
+              >
+                talyawy@proton.me
+              </a>
+            </div>
           </div>
-
-          {/* Contact Section */}
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
-            <p className="text-xs md:text-sm opacity-75">Contact us:</p>
-            <a
-              href="mailto:help.ankh@proton.me"
-              className="text-blue-400 hover:text-blue-300 text-xs md:text-sm"
-            >
-              talyawy@proton.me
-            </a>
+          <div className="mt-12 pt-8 border-t border-white/10 text-center text-white/50 text-sm">
+            © {new Date().getFullYear()} Ankh. All rights reserved.
           </div>
         </div>
       </footer>
