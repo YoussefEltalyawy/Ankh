@@ -8,17 +8,62 @@ import { UserExtra } from "../types";
 function Settings({ isOpen, user }: { isOpen: boolean; user: UserExtra }) {
   const settingsSections = [
     {
+      id: "themes",
       icon: "/palette.svg",
       label: "Themes",
-      content: <ThemesSection />,
+      component: ThemesSection,
     },
     {
+      id: "profile",
       icon: "/profile-icon.svg",
       label: "Profile",
-      content: <ProfileSection user={user} />,
+      component: ProfileSection,
+      props: { user },
     },
   ];
-  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  const renderContent = () => {
+    if (!activeSection) {
+      return (
+        <div className="space-y-4 mt-6">
+          {settingsSections.map((section) => (
+            <div
+              key={section.id}
+              className="flex items-center px-4 py-3 cursor-pointer hover:bg-[#1a1a1a] rounded-lg transition-colors duration-200"
+              onClick={() => setActiveSection(section.id)}
+            >
+              <Image
+                src={section.icon}
+                width={32}
+                height={32}
+                alt={`${section.label} icon`}
+                className="mr-4"
+              />
+              <h4 className="text-h4 font-medium">{section.label}</h4>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    const section = settingsSections.find((s) => s.id === activeSection);
+    if (!section) return null;
+
+    const SectionComponent = section.component;
+    return (
+      <div className="mt-6">
+        <button
+          onClick={() => setActiveSection(null)}
+          className="flex items-center mb-6 text-white hover:text-gray-200 transition-colors"
+        >
+          <span className="mr-2">←</span> Back to settings
+        </button>
+        <SectionComponent {...(section.props || {})} />
+      </div>
+    );
+  };
 
   return (
     <div
@@ -27,45 +72,14 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: UserExtra }) {
         isOpen ? "translate-x-[0%]" : "translate-x-[100%]"
       )}
     >
-      {/* Change the title based on selectedSection */}
       <h1 className="text-h2 font-bold text-center mt-12">
-        {selectedSection === null ? "Settings" : selectedSection}
+        {activeSection
+          ? settingsSections.find(s => s.id === activeSection)?.label || "Settings"
+          : "Settings"
+        }
       </h1>
-
       <div className="p-6">
-        {selectedSection === null ? (
-          settingsSections.map((section, index) => (
-            <div
-              key={index}
-              className="flex items-center mb-4 cursor-pointer hover:bg-[#1a1a1a] p-2 rounded-large"
-              onClick={() => setSelectedSection(section.label)}
-            >
-              <Image
-                src={section.icon}
-                width={32}
-                height={32}
-                alt="icon"
-                className="mr-2"
-              />
-              <h4 className="text-h4 font-bold">{section.label}</h4>
-            </div>
-          ))
-        ) : (
-          <div>
-            <button
-              onClick={() => setSelectedSection(null)}
-              className="mb-4 text-white hover:text-gray-200"
-            >
-              ← Back to all settings
-            </button>
-            <p>
-              {
-                settingsSections.find((s) => s.label === selectedSection)
-                  ?.content
-              }
-            </p>
-          </div>
-        )}
+        {renderContent()}
       </div>
     </div>
   );

@@ -2,30 +2,24 @@
 
 import React, { useState, useEffect } from "react";
 import { Note, Task, User } from "@/app/types";
-import { createSwapy } from "swapy";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 // Component imports
 import Dock from "../components/Dock";
-import TasksCard from "../components/cards/Tasks";
-import StopwatchCard from "../components/cards/Stopwatch";
-import NotesCard from "../components/cards/Notes";
 import Music from "../components/Music";
 import Header from "../components/Header";
+import Settings from "../components/Settings";
+import GridLayout, { CardState } from "../components/GridLayout";
 
 // Action imports
 import addNewTask from "../actions/addNewTask";
 import addNewNote from "../actions/addNewNote";
 import deleteTask from "../actions/deleteTask";
 import deleteNote from "../actions/deleteNote";
-import Settings from "../components/Settings";
 import { useTheme } from "next-themes";
 
 // Types
-type CardState = {
-  show: boolean;
-  opacity: number;
-};
-
 type DashboardClientProps = {
   user: User;
   initialTasks: Task[];
@@ -71,33 +65,6 @@ function DashboardClient({
       window.removeEventListener("resize", checkMobile);
     };
   }, []);
-
-  // Setup Swapy for card DnD - only enable on desktop
-  useEffect(() => {
-    if (
-      user &&
-      !isMobile &&
-      (showStopwatchCard.show || showTasksCard.show || showNotesCard.show)
-    ) {
-      const cardsContainer = document.querySelector(".cardsContainer");
-      if (cardsContainer) {
-        const swapy = createSwapy(cardsContainer, { animation: "dynamic" });
-        swapy.enable(true);
-        swapy.onSwap((event) => {
-          console.log(event.data.object, event.data.array, event.data.map);
-        });
-        return () => {
-          swapy.destroy();
-        };
-      }
-    }
-  }, [
-    showNotesCard.show,
-    showStopwatchCard.show,
-    showTasksCard.show,
-    user,
-    isMobile,
-  ]);
 
   // Toggle card visibility with mobile handling
   const toggleCard = (
@@ -201,67 +168,61 @@ function DashboardClient({
   };
 
   return (
-    <div className="dashboardContainer2">
-      <section
-        className="dashboardContainer bg-cover w-full min-h-screen px-4 md:px-8 lg:px-[140px] bg-transition"
+    <div className="flex flex-col w-full h-screen overflow-hidden">
+      {/* Overlays */}
+      {showMusicBar && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
+          onClick={handleOverlayClick}
+        />
+      )}
+      {showSettings && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
+          onClick={handleOverlayClick}
+        />
+      )}
+
+      <div
+        className="flex flex-col w-full h-full bg-cover bg-transition"
         data-theme={theme}
       >
-        <Music isOpen={showMusicBar} />
-        {showMusicBar && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
-            onClick={handleOverlayClick}
-          />
-        )}
-        <Settings isOpen={showSettings} user={user} />
-        {showSettings && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
-            onClick={handleOverlayClick}
-          />
-        )}
+        {/* Header - Fixed at top */}
         <Header />
-        <Dock
-          onToggleTimer={toggleStopwatch}
-          onToggleTasks={toggleTasks}
-          onToggleNotes={toggleNotes}
-          onToggleMusic={toggleMusicBar}
-          onToggleSettings={toggleSettings}
-        />
-        <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-          <div className="firstSlot" data-swapy-slot="first">
-            <div data-swapy-item="tasks">
-              <TasksCard
-                visible={showTasksCard.show}
-                opacity={showTasksCard.opacity}
-                tasks={tasks}
-                onAddTask={handleAddTask}
-                onDeleteTask={handleDeleteTask}
-              />
-            </div>
-          </div>
-          <div className="secondSlot" data-swapy-slot="second">
-            <div data-swapy-item="notes">
-              <NotesCard
-                visible={showNotesCard.show}
-                opacity={showNotesCard.opacity}
-                notes={notes}
-                onAddNote={handleAddNote}
-                onDeleteNote={handleDeleteNote}
-              />
-            </div>
-          </div>
-          <div className="thirdSlot" data-swapy-slot="third">
-            <div data-swapy-item="stopwatch">
-              <StopwatchCard
-                visible={showStopwatchCard.show}
-                opacity={showStopwatchCard.opacity}
-                tasks={tasks.filter((task) => !task.completed)}
-              />
-            </div>
-          </div>
+
+        {/* Grid Layout - Takes all space between header and dock */}
+        <div className="flex-grow w-full px-8 overflow-hidden">
+          <GridLayout
+            tasks={tasks}
+            notes={notes}
+            cardVisibility={{
+              showStopwatchCard,
+              showTasksCard,
+              showNotesCard
+            }}
+            isMobile={isMobile}
+            onAddTask={handleAddTask}
+            onDeleteTask={handleDeleteTask}
+            onAddNote={handleAddNote}
+            onDeleteNote={handleDeleteNote}
+          />
         </div>
-      </section>
+
+        {/* Dock - Fixed at bottom */}
+        <div className="w-full px-8 z-10">
+          <Dock
+            onToggleTimer={toggleStopwatch}
+            onToggleTasks={toggleTasks}
+            onToggleNotes={toggleNotes}
+            onToggleMusic={toggleMusicBar}
+            onToggleSettings={toggleSettings}
+          />
+        </div>
+      </div>
+
+      {/* Floating components */}
+      <Music isOpen={showMusicBar} />
+      <Settings isOpen={showSettings} user={user} />
     </div>
   );
 }

@@ -8,8 +8,8 @@ type NotesProps = {
   visible: boolean;
   opacity: number;
   notes: Note[];
-  onAddNote: (title: string) => Promise<void>;
-  onDeleteNote: (title: string) => Promise<void>;
+  onAddNote: (content: string) => Promise<void>;
+  onDeleteNote: (id: string) => Promise<void>;
 };
 
 function NotesCard({
@@ -23,17 +23,16 @@ function NotesCard({
 
   return (
     <div
-      data-swapy-item="second"
       className={`
         card bg-[rgba(255,255,255,0.09)] px-[32px] py-[24px] rounded-3xl
         border border-[rgba(255,255,255,.1)] backdrop-blur-[5.7px] transition-opacity duration-300 ease-in-out
         ${opacity === 100 ? "opacity-100" : "opacity-0"}
-        flex flex-col h-full max-h-[440px] overflow-hidden
+        flex flex-col h-full overflow-hidden
       `}
     >
-      <span className="flex flex-row justify-between items-center  mb-[10px]">
+      <span className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab">
         <h6 className="font-semibold font-manrope text-h6 text-white">Notes</h6>
-        <MoreHorizontal className="text-white" />
+        <MoreHorizontal className="text-white cursor-pointer" />
       </span>
       <div className="flex-grow overflow-y-auto mb-[16px]">
         <ul>

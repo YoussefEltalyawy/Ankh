@@ -1,0 +1,13 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Egyptian-inspired pattern background -->
+  <rect width="1200" height="600" fill="#B8860B" fill-opacity="0.2"/>
+  
+  <!-- Pyramid silhouettes -->
+  <path d="M200 400L350 150L500 400H200Z" fill="#000000" fill-opacity="0.1"/>
+  <path d="M450 400L600 200L750 400H450Z" fill="#000000" fill-opacity="0.1"/>
+  <path d="M700 400L900 100L1100 400H700Z" fill="#000000" fill-opacity="0.1"/>
+  
+  <!-- Ankh symbol -->
+  <path d="M600 250C620 250 640 270 640 290C640 310 620 330 600 330C580 330 560 310 560 290C560 270 580 250 600 250ZM600 330V400" stroke="#000000" stroke-opacity="0.1" stroke-width="20"/>
+  <path d="M550 220H650C650 180 620 150 600 150C580 150 550 180 550 220Z" stroke="#000000" stroke-opacity="0.1" stroke-width="20"/>
+</svg> 

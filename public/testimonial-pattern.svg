@@ -1,0 +1,23 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="10" cy="10" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="30" cy="10" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="50" cy="10" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="10" cy="30" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="30" cy="30" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="50" cy="30" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="10" cy="50" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="30" cy="50" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <circle cx="50" cy="50" r="2" fill="#DAA520" fill-opacity="0.3"/>
+  <path d="M18 10L22 10" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M38 10L42 10" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M18 30L22 30" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M38 30L42 30" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M18 50L22 50" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M38 50L42 50" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M10 18L10 22" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M30 18L30 22" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M50 18L50 22" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M10 38L10 42" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M30 38L30 42" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+  <path d="M50 38L50 42" stroke="#B8860B" stroke-opacity="0.2" stroke-width="0.5"/>
+</svg> 

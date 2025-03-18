@@ -61,3 +61,86 @@ body {
 .bg-transition {
   transition: background-image 0.5s, color 0.5s;
 }
+
+/* React Grid Layout placeholder styling */
+.react-grid-placeholder {
+  background-color: transparent !important;
+  border: 2px dashed rgba(255, 255, 255, 0.5) !important;
+  border-radius: 1.5rem !important;
+  opacity: 0.8 !important;
+}
+
+/* Add cursor styling for draggable card headers */
+.card-handle {
+  cursor: grab;
+  width: 100%;
+}
+
+/* Responsive card handling for small screens */
+@media (max-width: 768px) {
+  .card {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+}
+
+/* Additional styles for globals.css to handle card positioning and dock interaction */
+
+/* Ensure cards maintain proper height constraints */
+.cardsContainer .react-grid-item {
+  max-height: calc(100vh - 160px); /* 160px accounts for dock + margins */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Prevent cards from getting too tall on smaller screens */
+@media (max-height: 700px) {
+  .cardsContainer .react-grid-item {
+    max-height: calc(100vh - 120px);
+  }
+}
+
+/* Define dock safe zone */
+.dock-safe-zone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px; /* Height of dock + safety margin */
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure cards render properly when being dragged */
+.react-grid-item.react-grid-placeholder {
+  z-index: 2;
+}
+
+/* Improve card content scrolling */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.card .card-content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Ensure the card handle is properly styled for dragging */
+.card-handle {
+  touch-action: none;
+  cursor: grab;
+}
+
+.card-handle:active {
+  cursor: grabbing;
+}
+
+/* Improve card transitions */
+.card {
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+}

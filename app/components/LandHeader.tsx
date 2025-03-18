@@ -1,69 +1,123 @@
-import Image from "next/image";
+'use client'
 import Link from "next/link";
+import { RegisterLink, LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
-const HeaderCentered = () => {
+const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <div className="mb-20">
-      <header className="bg-[#F3F3F3] text-black">
-        {/* Mobile Header - Centered */}
-        <div className="md:hidden flex justify-center py-6">
-          <Link href="/">
-            <h2 className="text-h2 font-manrope font-bold">Ankh</h2>
-          </Link>
-        </div>
-
-        {/* Desktop Header */}
-        <div className="hidden md:block mx-[160px] pt-[54px]">
-          <div className="container flex items-center justify-between">
+    <div className="relative z-50">
+      <header className="bg-transparent py-6 md:py-8">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
             <div>
               <Link href="/">
-                <h2 className="text-h2 font-manrope font-bold">Ankh</h2>
+                <h2 className="text-2xl md:text-3xl font-manrope font-bold bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h2>
               </Link>
             </div>
-            <div>
-              <ul className="font-manrope text-p flex w-full gap-16">
-                <li>
-                  <Link href="#features">Features</Link>
-                </li>
-                <li>
-                  <Link href="https://github.com/YoussefEltalyawy">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="mailto:talyawy@proton.me">Contact</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul className="font-manrope flex items-center">
-                <Link href="https://github.com/YoussefEltalyawy/Ankh">
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <nav>
+                <ul className="font-manrope flex items-center space-x-8">
                   <li>
-                    <Image
-                      src="github.svg"
-                      alt="github"
-                      className="mr-8 w-[38px] h-[38px]"
-                      width={38}
-                      height={38}
-                    />
+                    <Link href="#features" className="text-black/80 hover:text-[#B8860B] transition-colors">
+                      Features
+                    </Link>
                   </li>
-                </Link>
-                <li>
-                  <Image
-                    className="mr-8 w-[38px] h-[38px]"
-                    src="discord.svg"
-                    alt="discord-logo"
-                    width={38}
-                    height={38}
-                  />
-                </li>
-              </ul>
+                  <li>
+                    <Link href="#testimonials" className="text-black/80 hover:text-[#B8860B] transition-colors">
+                      Testimonials
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="https://github.com/YoussefEltalyawy/Ankh" className="text-black/80 hover:text-[#B8860B] transition-colors">
+                      GitHub
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-4">
+                <LoginLink className="font-medium text-sm text-black/70 hover:text-black transition-colors">
+                  Sign In
+                </LoginLink>
+                <RegisterLink className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-white font-medium text-sm px-4 py-2 rounded-lg hover:shadow-md transition-all">
+                  Sign Up Free
+                </RegisterLink>
+              </div>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-black/80 hover:text-[#B8860B] transition-colors"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white absolute inset-x-0 top-[72px] shadow-lg rounded-b-2xl">
+          <div className="px-4 py-6 space-y-4">
+            <nav>
+              <ul className="font-manrope space-y-4">
+                <li>
+                  <Link
+                    href="#features"
+                    className="block text-black/80 hover:text-[#B8860B] transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#testimonials"
+                    className="block text-black/80 hover:text-[#B8860B] transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Testimonials
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="https://github.com/YoussefEltalyawy/Ankh"
+                    className="block text-black/80 hover:text-[#B8860B] transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    GitHub
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            <div className="flex flex-col space-y-3 pt-4 border-t border-gray-100">
+              <LoginLink className="font-medium text-center text-black/70 hover:text-black transition-colors">
+                Sign In
+              </LoginLink>
+              <RegisterLink className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-center text-white font-medium px-4 py-2 rounded-lg hover:shadow-md transition-all">
+                Sign Up Free
+              </RegisterLink>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default HeaderCentered;
+export default Header;
