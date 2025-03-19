@@ -4,12 +4,11 @@ import { CircleCheck, Clock, NotebookPen, LucideIcon, Sparkles, ArrowRight, Chev
 import Image from "next/image";
 import Link from "next/link";
 import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import Header from "./LandHeader";
 import ImageSlideshow from "./ImageSlideshow";
 import ThemeShowcase from "./ThemesShowcase";
-import { Check } from "lucide-react";
 
 // Types
 interface FeatureCard {

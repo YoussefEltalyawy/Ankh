@@ -69,7 +69,6 @@ const GridLayout: React.FC<GridLayoutProps> = ({
 }) => {
   const { showStopwatchCard, showTasksCard, showNotesCard } = cardVisibility;
   const [layouts, setLayouts] = useState<Layouts>(defaultLayout);
-  const [containerHeight, setContainerHeight] = useState<number>(0);
 
   useEffect(() => {
     const savedLayouts = localStorage.getItem("dashboardLayouts");
@@ -84,7 +83,7 @@ const GridLayout: React.FC<GridLayoutProps> = ({
 
     // Set initial height and update on resize
     const updateHeight = () => {
-      setContainerHeight(window.innerHeight);
+      // No need to update containerHeight as it's not used in the component
     };
 
     updateHeight();

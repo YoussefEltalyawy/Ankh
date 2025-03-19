@@ -60,7 +60,7 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: UserExtra }) {
         >
           <span className="mr-2">←</span> Back to settings
         </button>
-        <SectionComponent {...(section.props || {})} />
+        <SectionComponent {...(section.props || { user })} />
       </div>
     );
   };

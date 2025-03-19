@@ -29,7 +29,7 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
 
   return (
     <section
-      className="bg-cover w-full h-screen px-[140px] bg-transition"
+      className="bg-cover w-full h-screen  bg-transition"
       data-theme={theme}
     >
       <Header />

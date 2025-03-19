@@ -12,25 +12,22 @@ const ImageSlideshow = () => {
 
   const images = [
     {
-      src: "/showcase3.png",
-      alt: "Task Management Interface",
-      caption: "Intuitive task management with customizable workflows"
+      src: "/dashboard-overview.png",
+      alt: "Dashboard Overview",
+      caption: "Beautiful dashboard that adapts to your workflow"
     },
     {
-      src: "/showcase4.png",
-      alt: "Note-Taking Features",
-      caption: "Clean, distraction-free note-taking experience"
-    },
-    {
-      src: "/showcase6.png",
+      src: "/time-tracking-overview.png",
       alt: "Time Tracking Tools",
       caption: "Powerful time tracking to boost your productivity"
     },
     {
-      src: "/showcase7.png",
-      alt: "Dashboard Overview",
-      caption: "Beautiful dashboard that adapts to your workflow"
+      src: "/themes-overview.png",
+      alt: "Theme Customization Interface",
+      caption: "Personalize your experience with customizable themes"
     },
+
+
   ];
 
   useEffect(() => {
@@ -200,8 +197,8 @@ const ImageSlideshow = () => {
               setIsPaused(true);
             }}
             className={`w-2 h-2 rounded-full transition-all ${currentIndex === index
-                ? 'w-6 bg-[#B8860B]'
-                : 'bg-[#B8860B]/30 hover:bg-[#B8860B]/50'
+              ? 'w-6 bg-[#B8860B]'
+              : 'bg-[#B8860B]/30 hover:bg-[#B8860B]/50'
               }`}
             aria-label={`Go to slide ${index + 1}`}
           />
