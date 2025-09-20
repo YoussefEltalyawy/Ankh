@@ -1,4 +1,4 @@
-import { nextui } from "@nextui-org/theme";
+import { heroui } from "@heroui/theme";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -6,7 +6,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/components/(button|checkbox|dropdown|ripple|spinner|menu|divider|popover).js"
+    "./node_modules/@heroui/theme/dist/components/(button|checkbox|dropdown|ripple|spinner|menu|divider|popover).js"
   ],
   theme: {
     extend: {
@@ -35,6 +35,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [nextui()],
+  plugins: [heroui()],
 };
 export default config;

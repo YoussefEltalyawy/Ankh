@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 
@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <SessionProvider>
           <ThemeProvider defaultTheme="alexandriaArchive">
-            <NextUIProvider>{children}</NextUIProvider>
+            <HeroUIProvider>{children}</HeroUIProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>

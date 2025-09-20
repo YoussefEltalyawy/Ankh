@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cn } from "@nextui-org/theme";
+import { cn } from "@heroui/theme";
 import Image from "next/image";
 import ThemesSection from "./ThemesSection";
 import ProfileSection from "./ProfileSection";

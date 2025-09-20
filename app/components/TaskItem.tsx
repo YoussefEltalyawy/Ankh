@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Checkbox } from "@nextui-org/checkbox";
+import { Checkbox } from "@heroui/checkbox";
 import { X, Check } from "lucide-react";
 import Image from "next/image";
-import { cn } from "@nextui-org/theme";
+import { cn } from "@heroui/theme";
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 import updateTask from "../actions/updateTask";

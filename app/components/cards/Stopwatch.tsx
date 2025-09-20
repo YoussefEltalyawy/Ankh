@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownSection,
-} from "@nextui-org/dropdown";
+} from "@heroui/dropdown";
 import Link from "next/link";
 import { Task } from "@/app/types";
 import { useMemo, useState } from "react";

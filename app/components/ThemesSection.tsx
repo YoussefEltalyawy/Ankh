@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import { themes } from "../theme-config";
 import { useTheme } from "next-themes";
-import { cn } from "@nextui-org/theme";
+import { cn } from "@heroui/theme";
 
 function ThemesSection() {
   const { theme, setTheme } = useTheme();
