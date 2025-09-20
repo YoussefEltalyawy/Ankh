@@ -3,7 +3,7 @@
 import { CircleCheck, Clock, NotebookPen, LucideIcon, Sparkles, ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { signIn, useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 
 import Header from "./LandHeader";
@@ -163,6 +163,9 @@ const SectionDivider = () => (
 );
 
 const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
+  const { data: session, status } = useSession();
+  const isLoading = status === "loading";
+
   return (
     <section className="bg-gradient-to-b from-[#f9f9f9] to-[#f3f3f3] min-h-screen">
       <Header />
@@ -198,14 +201,19 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
               </p>
 
               <div className="z-30 flex flex-col md:flex-row gap-4 mt-6">
-                {isUserAuthenticated ? (
+                {isLoading ? (
+                  <div className="w-fit px-6 py-4 md:px-8 md:py-4 mx-auto rounded-xl md:rounded-2xl flex items-center gap-2 md:gap-3 text-sm md:text-base bg-gray-100 text-gray-500">
+                    <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                    <p className="font-manrope font-bold">Loading...</p>
+                  </div>
+                ) : isUserAuthenticated ? (
                   <Link href="/dashboard">
                     <ActionButton />
                   </Link>
                 ) : (
-                  <RegisterLink>
+                  <button onClick={() => signIn()}>
                     <ActionButton />
-                  </RegisterLink>
+                  </button>
                 )}
               </div>
 
@@ -431,14 +439,22 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
                 Join thousands of users who have already discovered the power of Ankh&apos;s focused productivity tools.
               </p>
               <div className="inline-block bg-white rounded-xl shadow-md hover:shadow-lg transition-all">
-                {isUserAuthenticated ? (
-                  <Link href="/dashboard" className="inline-block px-10 py-5 font-bold text-[#B8860B] text-lg">
+                {isLoading ? (
+                  <div className="inline-flex items-center px-10 py-5 font-bold text-gray-500 text-lg">
+                    <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin mr-3" />
+                    Loading...
+                  </div>
+                ) : isUserAuthenticated ? (
+                  <Link href="/dashboard" className="inline-block px-10 py-5 font-bold text-[#B8860B] text-lg hover:text-[#DAA520] transition-colors">
                     Go to Dashboard
                   </Link>
                 ) : (
-                  <RegisterLink className="inline-block px-10 py-5 font-bold text-[#B8860B] text-lg">
+                  <button
+                    onClick={() => signIn()}
+                    className="inline-block px-10 py-5 font-bold text-[#B8860B] text-lg hover:text-[#DAA520] transition-colors"
+                  >
                     Get Started — It&apos;s Free
-                  </RegisterLink>
+                  </button>
                 )}
               </div>
             </div>

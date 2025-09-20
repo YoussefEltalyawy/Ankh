@@ -3,9 +3,9 @@ import { cn } from "@nextui-org/theme";
 import Image from "next/image";
 import ThemesSection from "./ThemesSection";
 import ProfileSection from "./ProfileSection";
-import { UserExtra } from "../types";
+import { SessionUser } from "../types";
 
-function Settings({ isOpen, user }: { isOpen: boolean; user: UserExtra }) {
+function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
   const settingsSections = [
     {
       id: "themes",

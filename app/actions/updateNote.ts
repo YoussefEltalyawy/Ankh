@@ -1,18 +1,13 @@
 "use server";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getCurrentUser } from "../lib/auth-utils";
 import prisma from "../lib/db";
 import { Note } from "@/app/types";
 
 async function updateNote(noteId: string, newContent: string): Promise<Note> {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await getCurrentUser();
 
   if (!noteId || !newContent) {
     throw new Error("Note ID and new content are required");
-  }
-
-  if (!user || !user.id) {
-    throw new Error("User not authenticated");
   }
 
   try {

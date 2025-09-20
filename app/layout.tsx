@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Ankh",
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="font-manrope">
       <body>
-        <ThemeProvider defaultTheme="alexandriaArchive">
-          <NextUIProvider>{children}</NextUIProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider defaultTheme="alexandriaArchive">
+            <NextUIProvider>{children}</NextUIProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

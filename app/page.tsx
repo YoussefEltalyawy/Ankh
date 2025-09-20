@@ -1,9 +1,9 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import HomePage from "./components/HomePage";  // We'll create this client component
+import { auth } from "./lib/auth";
+import HomePage from "./components/HomePage";
 
 export default async function Home(): Promise<JSX.Element> {
-  const { isAuthenticated } = getKindeServerSession();
-  const isUserAuthenticated: boolean = await isAuthenticated();
+  const session = await auth();
+  const isUserAuthenticated = !!session;
 
   // Pass the authentication status to our client component
   return <HomePage isUserAuthenticated={isUserAuthenticated} />;

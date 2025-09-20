@@ -2,14 +2,15 @@ export type User = {
   id: string;
   email?: string | null;
   name?: string | null;
-  pfp?: string | null;
+  image?: string | null; // Changed from pfp to image for Auth.js compatibility
 };
-export type UserExtra = {
+
+// Auth.js session user type
+export type SessionUser = {
   id: string;
   email?: string | null;
-  given_name?: string | null;
-  family_name?: string | null;
-  pfp?: string | null;
+  name?: string | null;
+  image?: string | null;
 };
 
 export type Task = {

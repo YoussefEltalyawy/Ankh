@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.10.0",
     "@clerk/nextjs": "^5.5.2",
-    "@kinde-oss/kinde-auth-nextjs": "^2.3.8",
     "@nextui-org/button": "^2.0.38",
     "@nextui-org/checkbox": "^2.1.5",
     "@nextui-org/dropdown": "^2.1.31",
@@ -21,6 +21,7 @@
     "lucide-react": "^0.441.0",
     "motion": "^12.5.0",
     "next": "14.2.11",
+    "next-auth": "^5.0.0-beta.29",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",

@@ -1,18 +1,13 @@
 'use server'
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getCurrentUser } from "../lib/auth-utils";
 import prisma from "../lib/db";
 import { Task } from "@/app/types";
 
 async function addNewTask(title: string): Promise<Task> {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await getCurrentUser();
 
   if (!title) {
     throw new Error("Title is required");
-  }
-
-  if (!user || !user.id) {
-    throw new Error("User not authenticated");
   }
 
   try {
