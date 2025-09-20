@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Responsive, WidthProvider, Layout, Layouts } from "react-grid-layout";
 import { Note, Task } from "@/app/types";
 import TasksCard from "../components/cards/Tasks";
@@ -69,6 +69,8 @@ const GridLayout: React.FC<GridLayoutProps> = ({
 }) => {
   const { showStopwatchCard, showTasksCard, showNotesCard } = cardVisibility;
   const [layouts, setLayouts] = useState<Layouts>(defaultLayout);
+  const [isDragging, setIsDragging] = useState(false);
+  const [containerHeight, setContainerHeight] = useState(0);
 
   useEffect(() => {
     const savedLayouts = localStorage.getItem("dashboardLayouts");
@@ -81,44 +83,138 @@ const GridLayout: React.FC<GridLayoutProps> = ({
       }
     }
 
-    // Set initial height and update on resize
-    const updateHeight = () => {
-      // No need to update containerHeight as it's not used in the component
+    // Calculate available height for grid
+    const updateContainerHeight = () => {
+      const headerHeight = 80; // Approximate header height
+      const dockHeight = 100; // Approximate dock height
+      const padding = 64; // 32px padding top and bottom
+      const availableHeight = window.innerHeight - headerHeight - dockHeight - padding;
+      setContainerHeight(availableHeight);
     };
 
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
+    updateContainerHeight();
+    window.addEventListener('resize', updateContainerHeight);
 
     return () => {
-      window.removeEventListener('resize', updateHeight);
+      window.removeEventListener('resize', updateContainerHeight);
     };
   }, []);
+
+  // Prevent page scrolling during drag operations
+  useEffect(() => {
+    if (isDragging) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isDragging]);
 
   const handleLayoutChange = (_currentLayout: Layout[], allLayouts: Layouts) => {
     setLayouts(allLayouts);
     localStorage.setItem("dashboardLayouts", JSON.stringify(allLayouts));
   };
 
+  const handleDragStart = useCallback(() => {
+    setIsDragging(true);
+  }, []);
+
+  const handleDragStop = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Calculate max rows based on available height
+  const maxRows = Math.floor(containerHeight / 156); // 140 rowHeight + 16 margin
+
+  // Prevent resizing beyond container bounds
+  const handleResize = useCallback((layout: Layout[], oldItem: Layout, newItem: Layout) => {
+    // Calculate if the new item would exceed container height
+    const itemBottom = (newItem.y + newItem.h) * 156; // 140 rowHeight + 16 margin
+    if (itemBottom > containerHeight) {
+      // Constrain the height to fit within container
+      const maxAllowedHeight = Math.floor((containerHeight - newItem.y * 156) / 156);
+      newItem.h = Math.max(1, maxAllowedHeight);
+    }
+  }, [containerHeight]);
+
+  // Prevent dragging beyond container bounds
+  const handleDrag = useCallback((layout: Layout[], oldItem: Layout, newItem: Layout) => {
+    // Constrain Y position to prevent vertical overflow
+    const itemBottom = (newItem.y + newItem.h) * 156;
+    if (itemBottom > containerHeight) {
+      const maxAllowedY = Math.floor((containerHeight - newItem.h * 156) / 156);
+      newItem.y = Math.max(0, maxAllowedY);
+    }
+    
+    // Ensure item doesn't go above the container
+    if (newItem.y < 0) {
+      newItem.y = 0;
+    }
+    
+    // Constrain X position to prevent horizontal overflow
+    if (newItem.x < 0) {
+      newItem.x = 0;
+    }
+  }, [containerHeight]);
+
+  // Validate and constrain entire layout
+  const validateLayout = useCallback((layout: Layout[]) => {
+    return layout.map(item => {
+      const constrainedItem = { ...item };
+      
+      // Constrain Y position and height
+      const itemBottom = (constrainedItem.y + constrainedItem.h) * 156;
+      if (itemBottom > containerHeight) {
+        const maxAllowedY = Math.floor((containerHeight - constrainedItem.h * 156) / 156);
+        constrainedItem.y = Math.max(0, maxAllowedY);
+      }
+      
+      // Ensure minimum bounds
+      constrainedItem.x = Math.max(0, constrainedItem.x);
+      constrainedItem.y = Math.max(0, constrainedItem.y);
+      
+      return constrainedItem;
+    });
+  }, [containerHeight]);
+
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full overflow-hidden">
       <ResponsiveGridLayout
-        className="w-full h-full"
+        className="w-full"
         style={{
-          minHeight: "calc(100% - 40px)", // Adjust this value based on your margins
-          width: "100%"
+          height: containerHeight > 0 ? `${containerHeight}px` : "100%",
+          width: "100%",
+          overflow: "hidden",
+          maxHeight: containerHeight > 0 ? `${containerHeight}px` : "100vh"
         }}
         layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 3, md: 2, sm: 1, xs: 1, xxs: 1 }}
         rowHeight={140}
-        autoSize={true}
+        maxRows={Math.max(2, maxRows)} // Ensure at least 2 rows, but respect calculated max
+        autoSize={false}
         isDraggable={!isMobile}
         isResizable={!isMobile}
         onLayoutChange={handleLayoutChange}
+        onDragStart={handleDragStart}
+        onDragStop={handleDragStop}
+        onResizeStart={handleDragStart}
+        onResizeStop={handleDragStop}
+        onResize={handleResize}
+        onDrag={handleDrag}
         margin={[16, 16]}
         containerPadding={[0, 0]}
         draggableHandle=".card-handle"
         useCSSTransforms={true}
+        preventCollision={false}
+        compactType="vertical"
+        verticalCompact={true}
       >
         {showTasksCard.show && (
           <div key="tasks">

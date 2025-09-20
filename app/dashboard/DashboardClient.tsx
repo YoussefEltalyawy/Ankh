@@ -184,14 +184,14 @@ function DashboardClient({
       )}
 
       <div
-        className="flex flex-col w-full h-full bg-cover bg-transition"
+        className="flex flex-col w-full h-full bg-cover bg-transition overflow-hidden"
         data-theme={theme}
       >
         {/* Header - Fixed at top */}
         <Header />
 
         {/* Grid Layout - Takes all space between header and dock */}
-        <div className="flex-grow w-full px-8 overflow-hidden">
+        <div className="flex-grow w-full px-8 overflow-hidden relative">
           <GridLayout
             tasks={tasks}
             notes={notes}
@@ -209,7 +209,7 @@ function DashboardClient({
         </div>
 
         {/* Dock - Fixed at bottom */}
-        <div className="w-full px-8 z-10">
+        <div className="w-full px-8 z-10 flex-shrink-0">
           <Dock
             onToggleTimer={toggleStopwatch}
             onToggleTasks={toggleTasks}

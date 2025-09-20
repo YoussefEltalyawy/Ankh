@@ -27,7 +27,7 @@ function TasksCard({
         card bg-[rgba(255,255,255,0.09)] px-[32px] py-[24px] rounded-3xl
         border border-[rgba(255,255,255,.1)] backdrop-blur-[5.7px] transition-opacity duration-300 ease-in-out
         ${opacity === 100 ? "opacity-100" : "opacity-0"}
-        flex flex-col h-full overflow-hidden
+        flex flex-col h-full max-h-full overflow-hidden
       `}
     >
       <span className="flex justify-between items-center mb-[10px] card-handle cursor-grab">
