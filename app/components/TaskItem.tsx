@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Checkbox } from "@heroui/checkbox";
 import { X, Check } from "lucide-react";
 import Image from "next/image";
-import { cn } from "@heroui/theme";
+import { clsx } from 'clsx';
+
+// import { Label } from '@/components/ui/label';
+import {
+  Checkbox,
+  type CheckboxProps,
+} from '@/components/animate-ui/components/radix/checkbox';
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 import updateTask from "../actions/updateTask";
@@ -107,23 +112,24 @@ const TaskItem: React.FC<TaskItemProps> = ({
   // Render task item view when not in editing mode
   return (
     <li className="flex flex-row justify-between group mb-[10px]">
-      <Checkbox
-        color="default"
-        radius="sm"
-        size="md"
-        isSelected={isSelected} // Bind checkbox to isSelected state
-        onValueChange={handleCompleteStateChange}
-        className="text-white"
-      >
-        <p
-          className={cn(
-            "text-p transition-colors", // Style transitions
-            isSelected ? "text-[#ffffffae]" : "text-white" // Change text color based on completion
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`task-${id}`}
+          checked={isSelected}
+          onCheckedChange={handleCompleteStateChange}
+          className="h-5 w-5 rounded-sm border-none"
+
+        />
+        <label
+          htmlFor={`task-${id}`}
+          className={clsx(
+            "text-base font-medium cursor-pointer transition-colors",
+            isSelected ? "text-[#ffffffae] line-through" : "text-white"
           )}
         >
-          {editedTitle} {/* Display the task title */}
-        </p>
-      </Checkbox>
+          {editedTitle}
+        </label>
+      </div>
 
       <span className="flex gap-4">
         {/* Edit task button */}

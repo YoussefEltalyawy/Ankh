@@ -3,86 +3,82 @@ import { useStopwatch } from "@/app/hooks/useStopwatch";
 import { Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  DropdownSection,
-} from "@nextui-org/dropdown";
 import { useMemo, useState } from "react";
 import { Task } from "@/app/types";
-import { Button } from "@nextui-org/button";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Header from "@/app/components/Header";
 import { useTheme } from "next-themes";
 
 function StopwatchClient({ tasks }: { tasks: Task[] }) {
   const { time, running, toggleRunning, resetTime } = useStopwatch();
-  const [selectedKeys, setSelectedKeys] = useState(
-    new Set(["What task are you working on?"])
-  );
+  const [selectedTask, setSelectedTask] = useState("What task are you working on?");
   const { theme } = useTheme();
-  const selectedValue = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
 
   return (
     <section
-      className="bg-cover w-full h-screen  bg-transition"
+      className="bg-cover w-full h-screen bg-transition"
       data-theme={theme}
     >
       <Header />
 
       {/* Centered Clock Container */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-        <div>
-          <Dropdown backdrop="blur">
-            <DropdownTrigger>
-              <Button variant="light">
+        <div className="mb-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="p-0 h-auto hover:bg-transparent">
                 <p className="text-[28px] font-bold font-manrope text-white">
-                  {selectedValue}
+                  {selectedTask}
                 </p>
               </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Tasks"
-              variant="flat"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedKeys}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onSelectionChange={setSelectedKeys as any}
-            >
-              <DropdownSection title="What task are you working on?">
-                {tasks.map((task) => (
-                  <DropdownItem key={task.title}>
-                    <p className="text-2xl my-3 text-[#333]">{task.title}</p>
-                    <hr />
-                  </DropdownItem>
-                ))}
-              </DropdownSection>
-            </DropdownMenu>
-          </Dropdown>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="min-w-[300px] bg-white">
+              <DropdownMenuLabel>What task are you working on?</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {tasks.map((task) => (
+                <DropdownMenuItem 
+                  key={task.id} 
+                  className="cursor-pointer"
+                  onClick={() => setSelectedTask(task.title)}
+                >
+                  <p className="text-lg my-2 text-[#333] w-full">{task.title}</p>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <h1 className="font-brico text-[10rem] text-white text-center font-bold mb-6">
           {time}
         </h1>
         <div className="clockContainer flex items-center gap-[8px] w-full">
-          <button
+          <Button
             onClick={toggleRunning}
-            className="bg-white opacity-95 font-manrope text-h6 font-bold p-5 rounded-xl  w-full py-[12px]"
+            className="w-full bg-white text-[#333] hover:bg-white/90 font-manrope font-bold h-12 text-base"
           >
-            <p className="text-[#333]">{running ? "Stop" : "Start"}</p>
-          </button>
-          <Image
-            src="/reset-clock-icon.png"
-            alt="reset clock"
-            className="w-[24px] h-[24px] cursor-pointer"
+            {running ? "Stop" : "Start"}
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-12 w-12 hover:bg-white/10"
             onClick={resetTime}
-            width={24}
-            height={24}
-          />
+          >
+            <Image
+              src="/reset-clock-icon.png"
+              alt="reset clock"
+              className="w-6 h-6"
+              width={24}
+              height={24}
+            />
+          </Button>
         </div>
       </div>
       <span>

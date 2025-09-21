@@ -3,6 +3,15 @@ import TaskItem from "../TaskItem";
 import NewTask from "../NewTask";
 import { Task } from "@/app/types";
 import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type TasksProps = {
   visible: boolean;
@@ -30,10 +39,27 @@ function TasksCard({
         flex flex-col h-full max-h-full overflow-hidden
       `}
     >
-      <span className="flex justify-between items-center mb-[10px] card-handle cursor-grab">
+      <div className="flex justify-between items-center mb-[10px] card-handle cursor-grab">
         <h6 className="font-semibold font-manrope text-h6 text-white">Tasks</h6>
-        <MoreHorizontal className="text-white cursor-pointer" />
-      </span>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/10">
+              <MoreHorizontal className="h-4 w-4 text-white" />
+              <span className="sr-only">More options</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-40 bg-white">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              Refresh
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Settings
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <div className="grow overflow-y-auto mb-[16px]">
         <ul>
           {tasks.map((task) => (
