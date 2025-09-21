@@ -32,7 +32,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         {/* Back to Home */}
         <div className="mb-8">
@@ -60,7 +60,7 @@ export default function SignInPage() {
             </div>
 
             <h1 className="text-3xl font-manrope font-bold mb-2">
-              <span className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
+              <span className="bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
                 Sign In to Ankh
               </span>
             </h1>
@@ -76,7 +76,7 @@ export default function SignInPage() {
             whileTap={{ scale: 0.98 }}
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="w-full bg-linear-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             {isLoading ? (
               <>

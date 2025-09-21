@@ -1,29 +1,76 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@200..800&display=swap");
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background-repeat: no-repeat; /* Prevent background repetition */
-  background-size: cover; /* Ensure the background covers the screen */
-  background-position: center; /* Center the background */
-  scroll-behavior: smooth;
+@import "tailwindcss";
+
+
+@theme {
+  /* Font Families */
+  --font-sans: "Manrope", sans-serif;
+  --font-display: "Bricolage Grotesque", sans-serif;
+  
+  /* Font Sizes */
+  --font-size-h1: 3rem;
+  --font-size-h2: 2.5rem;
+  --font-size-h3: 2rem;
+  --font-size-h4: 1.625rem;
+  --font-size-h5: 1.43rem;
+  --font-size-h6: 1.25rem;
+  --font-size-p: 1rem;
+  
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Z-index */
+  --z-1: 1;
 }
 
-::-webkit-scrollbar {
-  width: 0.1px;
+@layer base {
+  :root {
+    font-family: var(--font-sans);
+  }
+  
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    scroll-behavior: smooth;
+  }
+
+  h1 { font-size: var(--font-size-h1); }
+  h2 { font-size: var(--font-size-h2); }
+  h3 { font-size: var(--font-size-h3); }
+  h4 { font-size: var(--font-size-h4); }
+  h5 { font-size: var(--font-size-h5); }
+  h6 { font-size: var(--font-size-h6); }
+  p { font-size: var(--font-size-p); }
+
+  ::-webkit-scrollbar {
+    width: 0.1px;
+  }
 }
 
 /* Theme styles using data-theme attribute */
 [data-theme="alexandriaArchive"] {
   background-image: url("/alexandriaArchive-d.jpg");
   color: #fff;
+}
+
+/* Custom utilities */
+@utilities {
+  .font-bricolage {
+    font-family: var(--font-bricolage);
+  }
+  
+  .z-1 {
+    z-index: var(--z-1);
+  }
 }
 
 [data-theme="marsaMatruhCoastalDrive"] {

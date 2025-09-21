@@ -20,7 +20,7 @@ export default function TestAuthPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-[#B8860B] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Loading authentication...</p>
@@ -30,11 +30,11 @@ export default function TestAuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-manrope font-bold mb-2">
-            <span className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
+            <span className="bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
               Auth Test
             </span>
           </h1>
@@ -44,7 +44,7 @@ export default function TestAuthPage() {
         {session ? (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-[#C0A062] to-[#DAA520] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-linear-to-r from-[#C0A062] to-[#DAA520] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl font-bold">
                   {session.user?.name?.charAt(0) || "U"}
                 </span>
@@ -58,7 +58,7 @@ export default function TestAuthPage() {
             <div className="space-y-3">
               <button
                 onClick={() => window.location.href = "/dashboard"}
-                className="w-full bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200"
+                className="w-full bg-linear-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200"
               >
                 Go to Dashboard
               </button>
@@ -88,7 +88,7 @@ export default function TestAuthPage() {
             <button
               onClick={handleGoogleSignIn}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full bg-linear-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
               {isLoading ? (
                 <>

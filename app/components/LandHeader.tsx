@@ -17,7 +17,7 @@ const Header = () => {
             {/* Logo */}
             <div>
               <Link href="/">
-                <h2 className="text-2xl md:text-3xl font-manrope font-bold bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h2>
+                <h2 className="text-2xl md:text-3xl font-manrope font-bold bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h2>
               </Link>
             </div>
 
@@ -74,7 +74,7 @@ const Header = () => {
                     </button>
                     <button
                       onClick={() => signIn()}
-                      className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-white font-medium text-sm px-4 py-2 rounded-lg hover:shadow-md transition-all"
+                      className="bg-linear-to-r from-[#C0A062] to-[#DAA520] text-white font-medium text-sm px-4 py-2 rounded-lg hover:shadow-md transition-all"
                     >
                       Sign Up Free
                     </button>
@@ -169,7 +169,7 @@ const Header = () => {
                   </button>
                   <button
                     onClick={() => signIn()}
-                    className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-center text-white font-medium px-4 py-2 rounded-lg hover:shadow-md transition-all"
+                    className="bg-linear-to-r from-[#C0A062] to-[#DAA520] text-center text-white font-medium px-4 py-2 rounded-lg hover:shadow-md transition-all"
                   >
                     Sign Up Free
                   </button>

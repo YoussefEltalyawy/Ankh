@@ -83,7 +83,7 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
           </Dropdown>
         </span>
         {/* Display the time returned from useStopwatch */}
-        <div className="overflow-y-auto flex-grow">
+        <div className="overflow-y-auto grow">
           <div className="flex justify-center items-center h-full">
             <h1 className="font-brico text-[3.5rem] text-white text-center font-bold">
               {time}

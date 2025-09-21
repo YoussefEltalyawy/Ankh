@@ -79,7 +79,7 @@ const TESTIMONIALS = [
 // Components
 const ActionButton: React.FC<ActionButtonProps> = ({ primary = true }) => (
   <button className={`${primary
-    ? "bg-gradient-to-r from-[#C0A062] via-[#B8860B] to-[#DAA520] text-white"
+    ? "bg-linear-to-r from-[#C0A062] via-[#B8860B] to-[#DAA520] text-white"
     : "bg-white text-[#B8860B] border border-[#B8860B]"} 
     w-fit px-6 py-4 md:px-8 md:py-4 mx-auto rounded-xl md:rounded-2xl flex items-center gap-2 md:gap-3 text-sm md:text-base 
     hover:shadow-xl hover:scale-[1.02] transition-all duration-200`}>
@@ -97,10 +97,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     whileHover={{ y: -8, transition: { duration: 0.2 } }}
     className="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 relative group"
   >
-    <div className="absolute top-6 right-6 md:right-8 w-12 h-12 flex items-center justify-center bg-gradient-to-r from-[#C0A062] to-[#DAA520] rounded-full text-white transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+    <div className="absolute top-6 right-6 md:right-8 w-12 h-12 flex items-center justify-center bg-linear-to-r from-[#C0A062] to-[#DAA520] rounded-full text-white transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
       <Icon className="w-6 h-6" />
     </div>
-    <h4 className="text-xl md:text-2xl font-manrope leading-tight bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-3 md:mb-5">
+    <h4 className="text-xl md:text-2xl font-manrope leading-tight bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-3 md:mb-5">
       {title}
     </h4>
     <p className="text-sm md:text-base text-black/70">{description}</p>
@@ -167,13 +167,13 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
   const isLoading = status === "loading";
 
   return (
-    <section className="bg-gradient-to-b from-[#f9f9f9] to-[#f3f3f3] min-h-screen">
+    <section className="bg-linear-to-b from-[#f9f9f9] to-[#f3f3f3] min-h-screen">
       <Header />
       <main className="overflow-hidden">
         {/* Hero Section */}
         <div className="relative">
           <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#C0A062]/5 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-b from-[#C0A062]/5 to-transparent"></div>
             <div className="absolute top-0 left-0 right-0 h-[500px] bg-[url('/hero-pattern.svg')] bg-repeat opacity-5"></div>
           </div>
 
@@ -185,11 +185,11 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-manrope font-bold leading-tight">
-                <span className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
+                <span className="bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
                   Pharaoh&apos;s Focus,
                 </span>
                 <br />
-                <span className="bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
+                <span className="bg-linear-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
                   Modern Mastery
                 </span>
               </h1>
@@ -237,7 +237,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
                 <span>Discover the Experience</span>
               </div>
               <h2 className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight mb-6">
-                <span className="bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
+                <span className="bg-linear-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text">
                   Seamless. Intuitive. Beautiful.
                 </span>
               </h2>
@@ -261,7 +261,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
               <div className="inline-flex items-center bg-[#B8860B]/10 px-4 py-2 rounded-full text-sm text-[#B8860B] mb-4">
                 <span>Powerful Features</span>
               </div>
-              <h2 className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight bg-gradient-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-6">
+              <h2 className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight bg-linear-to-b from-black to-[#9C9C9C] text-transparent bg-clip-text mb-6">
                 Designed to help you get more done
               </h2>
               <p className="text-black/70 max-w-xl mx-auto md:text-lg">
@@ -317,7 +317,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
         {/* Testimonials Section */}
         <div className="relative">
           <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#B8860B]/5 to-[#DAA520]/5"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-[#B8860B]/5 to-[#DAA520]/5"></div>
             <div className="absolute inset-0 bg-[url('/testimonial-pattern.svg')] bg-repeat opacity-5"></div>
           </div>
 
@@ -337,7 +337,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-6"
+                  className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-6"
                 >
                   What our users say
                 </motion.h2>
@@ -406,7 +406,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
               <div className="inline-flex items-center bg-[#B8860B]/10 px-4 py-2 rounded-full text-sm text-[#B8860B] mb-4">
                 <span>Beautiful Themes</span>
               </div>
-              <h2 className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-6">
+              <h2 className="text-2xl md:text-3xl lg:text-5xl font-manrope font-bold leading-tight bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mb-6">
                 Personalize Your Experience
               </h2>
               <p className="text-black/70 max-w-xl mx-auto mb-8 md:text-lg">
@@ -421,7 +421,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
 
         {/* CTA Section */}
         <div className="container mx-auto px-4 md:px-8 lg:px-16 xl:px-24 py-16 md:py-24">
-          <section className="bg-gradient-to-r from-[#C0A062] to-[#DAA520] rounded-3xl p-8 md:p-12 lg:p-16 text-center relative overflow-hidden shadow-lg">
+          <section className="bg-linear-to-r from-[#C0A062] to-[#DAA520] rounded-3xl p-8 md:p-12 lg:p-16 text-center relative overflow-hidden shadow-lg">
             <div className="absolute inset-0 overflow-hidden opacity-10">
               <Image
                 src="/cta-background.jpg"
@@ -467,7 +467,7 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
         <div className="container mx-auto px-4 md:px-8 lg:px-16 xl:px-24">
           <div className="flex flex-col md:flex-row justify-between gap-12 md:gap-8 mb-12">
             <div className="md:w-1/3">
-              <h3 className="text-2xl font-manrope font-bold mb-6 bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h3>
+              <h3 className="text-2xl font-manrope font-bold mb-6 bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h3>
               <p className="text-white/75 mb-8">
                 Crafting focus and productivity tools for a balanced digital
                 life, inspired by timeless Egyptian wisdom.

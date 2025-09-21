@@ -172,13 +172,13 @@ function DashboardClient({
       {/* Overlays */}
       {showMusicBar && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
+          className="fixed inset-0 bg-black bg-opacity-50 z-5"
           onClick={handleOverlayClick}
         />
       )}
       {showSettings && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
+          className="fixed inset-0 bg-black bg-opacity-50 z-5"
           onClick={handleOverlayClick}
         />
       )}
@@ -191,7 +191,7 @@ function DashboardClient({
         <Header />
 
         {/* Grid Layout - Takes all space between header and dock */}
-        <div className="flex-grow w-full px-8 overflow-hidden relative">
+        <div className="grow w-full px-8 overflow-hidden relative">
           <GridLayout
             tasks={tasks}
             notes={notes}
@@ -209,7 +209,7 @@ function DashboardClient({
         </div>
 
         {/* Dock - Fixed at bottom */}
-        <div className="w-full px-8 z-10 flex-shrink-0">
+        <div className="w-full px-8 z-10 shrink-0">
           <Dock
             onToggleTimer={toggleStopwatch}
             onToggleTasks={toggleTasks}

@@ -72,7 +72,7 @@ const ThemeShowcase = () => {
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-10">
         {/* Main Preview - Now larger */}
         <div className="lg:col-span-10">
-          <div className="relative aspect-[16/9] rounded-2xl bg-white shadow-md overflow-hidden">
+          <div className="relative aspect-video rounded-2xl bg-white shadow-md overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTheme}
@@ -112,7 +112,7 @@ const ThemeShowcase = () => {
             </div>
 
             {/* Theme title overlay */}
-            <div className="absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent pt-20 pb-6 px-6">
+            <div className="absolute left-0 right-0 bottom-0 bg-linear-to-t from-black/60 to-transparent pt-20 pb-6 px-6">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: themes[activeTheme].buttonTextColor }}></div>
                 <h3 className="text-xl text-white font-bold">{themes[activeTheme].alt}</h3>
@@ -155,7 +155,7 @@ const ThemeShowcase = () => {
                     : "hover:bg-white/80 hover:shadow"
                   }`}
               >
-                <div className="relative w-20 h-12 rounded-md overflow-hidden mr-4 flex-shrink-0">
+                <div className="relative w-20 h-12 rounded-md overflow-hidden mr-4 shrink-0">
                   <Image
                     src={theme.buttonBg}
                     alt=""

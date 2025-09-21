@@ -34,7 +34,7 @@ function NotesCard({
         <h6 className="font-semibold font-manrope text-h6 text-white">Notes</h6>
         <MoreHorizontal className="text-white cursor-pointer" />
       </span>
-      <div className="flex-grow overflow-y-auto mb-[16px]">
+      <div className="grow overflow-y-auto mb-[16px]">
         <ul>
           {notes.map((note) => (
             <NoteItem

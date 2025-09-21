@@ -118,7 +118,7 @@ const ImageSlideshow = () => {
 
                 {/* Caption */}
                 <div
-                  className={`absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent pt-16 pb-4 px-6
+                  className={`absolute left-0 right-0 bottom-0 bg-linear-to-t from-black/60 to-transparent pt-16 pb-4 px-6
                     ${isFullScreen ? 'px-8 pb-6' : ''}
                   `}
                 >

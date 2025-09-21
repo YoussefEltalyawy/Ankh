@@ -17,7 +17,7 @@ export default function AuthErrorPage() {
   const error = searchParams.get("error") || "Default";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-b from-[#f9f9f9] to-[#f3f3f3] flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         {/* Back to Home */}
         <div className="mb-8">
@@ -57,7 +57,7 @@ export default function AuthErrorPage() {
           <div className="space-y-3">
             <Link
               href="/auth/signin"
-              className="w-full bg-gradient-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200 inline-block"
+              className="w-full bg-linear-to-r from-[#C0A062] to-[#DAA520] text-white font-manrope font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-200 inline-block"
             >
               Try Again
             </Link>
