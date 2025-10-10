@@ -110,16 +110,18 @@ function DashboardClient({
   };
 
   // Task management
-  const handleAddTask = async (title: string) => {
+  const handleAddTask = async (title: string, priority?: 'low' | 'medium' | 'high') => {
     const tempTask: Task = {
       id: `temp-${Date.now()}`,
       title,
       completed: false,
+      priority,
+      createdAt: new Date(),
     };
     setTasks((prevTasks) => [...prevTasks, tempTask]);
 
     try {
-      const newTask = await addNewTask(title);
+      const newTask = await addNewTask(title, priority);
       setTasks((prevTasks) =>
         prevTasks.map((task) => (task.id === tempTask.id ? newTask : task))
       );

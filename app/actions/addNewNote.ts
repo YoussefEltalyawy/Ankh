@@ -10,6 +10,10 @@ async function addNewNote(content: string): Promise<Note> {
     throw new Error("Content is required");
   }
 
+  if (!user || !user.id) {
+    throw new Error("Unauthorized: user not found");
+  }
+
   try {
     const note = await prisma.note.create({
       data: {

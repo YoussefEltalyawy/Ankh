@@ -1,6 +1,6 @@
 import { useStopwatch } from "@/app/hooks/useStopwatch";
-import { MoreHorizontal, Flag, RotateCcw } from "lucide-react";
-import Image from "next/image";
+import { usePomodoro } from "@/app/hooks/usePomodoro";
+import { MoreHorizontal, Play, Pause, RotateCcw } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,23 +22,31 @@ type StopwatchProps = {
 
 function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set(["Stopwatch"]));
-  const [showLaps, setShowLaps] = useState(false);
+  const [timerMode, setTimerMode] = useState<'stopwatch' | 'pomodoro'>('stopwatch');
 
   const selectedValue = useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
 
-  const { 
-    time, 
-    running, 
-    toggleRunning, 
-    resetTime, 
-    laps, 
-    addLap, 
-    clearLaps,
-    canAddLap 
-  } = useStopwatch();
+  const { time: stopwatchTime, running: stopwatchRunning, toggleRunning: toggleStopwatch, resetTime: resetStopwatch } = useStopwatch();
+  const {
+    time: pomodoroTime,
+    running: pomodoroRunning,
+    mode: pomodoroMode,
+    completedSessions,
+    isPaused,
+    toggleRunning: togglePomodoro,
+    pauseTimer,
+    resetTimer: resetPomodoro,
+    switchMode,
+    getModeLabel
+  } = usePomodoro();
+
+  const isRunning = timerMode === 'stopwatch' ? stopwatchRunning : pomodoroRunning;
+  const time = timerMode === 'stopwatch' ? stopwatchTime : pomodoroTime;
+  const toggleRunning = timerMode === 'stopwatch' ? toggleStopwatch : togglePomodoro;
+  const resetTime = timerMode === 'stopwatch' ? resetStopwatch : resetPomodoro;
 
   // Handle visibility
   if (!visible) return null;
@@ -46,43 +54,25 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
   return (
     <div
       className={`
-        card bg-[rgba(255,255,255,0.09)] px-[32px] py-[24px] rounded-3xl border border-[rgba(255,255,255,.1)] backdrop-blur-[5.7px] transition-opacity duration-300 ease-in-out h-full max-h-full overflow-hidden flex flex-col
+        card bg-[rgba(255,255,255,0.09)] px-[32px] py-[24px] rounded-3xl border border-[rgba(255,255,255,.1)] backdrop-blur-[5.7px] transition-opacity duration-300 ease-in-out h-full max-h-full overflow-hidden
         ${opacity === 100 ? "opacity-100" : "opacity-0"}
       `}
     >
       <div className="flex flex-col gap-[16px] h-full">
-        <div className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab">
-          <div className="flex items-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="font-semibold font-manrope text-[1.3rem] text-white p-0 h-auto hover:bg-transparent hover:opacity-80">
-                  {selectedValue}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="min-w-[200px] bg-white">
-                <DropdownMenuLabel>Select Task</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {tasks.map((task) => (
-                  <DropdownMenuItem 
-                    key={task.id} 
-                    className="cursor-pointer"
-                    onClick={() => setSelectedKeys(new Set([task.title]))}
-                  >
-                    <p className="text-[1rem] my-1 text-[#333] w-full">{task.title}</p>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+        <span className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab">
+          <h6 className="font-semibold font-manrope text-h6 text-white">Stopwatch</h6>
+
           <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-xs text-white/70 hover:text-white hover:bg-white/10 h-6 px-2"
-              onClick={() => setShowLaps(!showLaps)}
+            {/* Simple Mode Toggle */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setTimerMode(timerMode === 'stopwatch' ? 'pomodoro' : 'stopwatch')}
+              className="h-8 px-3 text-xs text-white hover:bg-white/10"
             >
-              {showLaps ? 'Hide Laps' : 'Show Laps'}
+              {timerMode === 'stopwatch' ? 'Pomodoro' : 'Timer'}
             </Button>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/10">
@@ -98,83 +88,127 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
                     Full Screen
                   </Link>
                 </DropdownMenuItem>
-                {laps.length > 0 && (
-                  <DropdownMenuItem 
-                    onClick={() => clearLaps()}
-                    className="text-red-500 focus:text-red-500"
-                  >
-                    Clear Laps
-                  </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   Minimize
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </div>
-        
-        {/* Main Timer Display */}
+        </span>
+
+        {/* Display the time */}
         <div className="overflow-y-auto grow">
-          <div className="flex flex-col items-center justify-center h-full">
-            <h1 className="font-brico text-[3.5rem] text-white text-center font-bold">
+          <div className="flex flex-col justify-center items-center h-full">
+            <h1 className="font-brico text-[3.5rem] text-center font-bold text-white">
               {time}
             </h1>
-            
-            {/* Laps Section */}
-            {showLaps && (
-              <div className="w-full mt-4 max-h-[200px] overflow-y-auto border-t border-white/10 pt-3">
-                {laps.length === 0 ? (
-                  <p className="text-center text-white/50 text-sm py-4">No laps recorded yet</p>
-                ) : (
-                  <div className="space-y-2">
-                    {laps.map((lap, index) => (
-                      <div key={lap.id} className="flex justify-between items-center py-1 px-2 rounded hover:bg-white/5">
-                        <div className="flex items-center gap-2">
-                          <Flag className="h-3 w-3 text-white/50" />
-                          <span className="text-white/70 text-sm">Lap {laps.length - index}</span>
-                        </div>
-                        <div className="flex gap-4">
-                          <span className="text-white/70 text-sm">{lap.lapTime}</span>
-                          <span className="text-white/50 text-xs">{lap.totalTime}</span>
-                        </div>
-                      </div>
+
+            {/* Task Selection (only for stopwatch mode) */}
+            {timerMode === 'stopwatch' && (
+              <div className="mt-4">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="font-semibold font-manrope text-lg text-white p-2 h-auto hover:bg-transparent hover:opacity-80">
+                      {selectedValue === "Stopwatch" ? "Select Task" : selectedValue}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="min-w-[200px] bg-white">
+                    <DropdownMenuLabel>Select Task</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {tasks.map((task) => (
+                      <DropdownMenuItem
+                        key={task.id}
+                        className="cursor-pointer"
+                        onClick={() => setSelectedKeys(new Set([task.title]))}
+                      >
+                        <p className="text-[1rem] my-1 text-[#333] w-full">{task.title}</p>
+                      </DropdownMenuItem>
                     ))}
-                  </div>
-                )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
+
+            {/* Pomodoro Mode Display */}
+            {timerMode === 'pomodoro' && (
+              <div className="mt-4 flex items-center justify-center gap-2">
+                <span className="font-semibold font-manrope text-lg text-white">
+                  {getModeLabel(pomodoroMode)}
+                </span>
+                <span className="text-white/60 text-sm">
+                  ({completedSessions} sessions)
+                </span>
               </div>
             )}
           </div>
         </div>
-        
-        {/* Control Buttons */}
-        <div className="flex items-center gap-[8px] mt-auto">
-          <div className="flex-1 flex gap-2">
+
+        {/* Simple Pomodoro Mode Controls - Only show when in Pomodoro mode */}
+        {timerMode === 'pomodoro' && (
+          <div className="flex justify-center gap-1 mb-4">
             <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 bg-transparent border-white/20 hover:bg-white/10"
-              onClick={resetTime}
-              disabled={running}
+              variant={pomodoroMode === 'work' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => switchMode('work')}
+              className="text-xs h-7 px-2"
             >
-              <RotateCcw className="h-4 w-4 text-white" />
+              Work
             </Button>
             <Button
-              onClick={toggleRunning}
-              className="flex-1 bg-white text-[#333] hover:bg-white/90 font-manrope font-bold h-11"
+              variant={pomodoroMode === 'shortBreak' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => switchMode('shortBreak')}
+              className="text-xs h-7 px-2"
             >
-              {running ? "Stop" : "Start"}
+              Short Break
             </Button>
             <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 bg-transparent border-white/20 hover:bg-white/10"
-              onClick={addLap}
-              disabled={!canAddLap}
+              variant={pomodoroMode === 'longBreak' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => switchMode('longBreak')}
+              className="text-xs h-7 px-2"
             >
-              <Flag className={`h-4 w-4 ${canAddLap ? 'text-white' : 'text-white/30'}`} />
+              Long Break
             </Button>
           </div>
+        )}
+
+        {/* Controls */}
+        <div className="flex items-center gap-[8px] mt-auto">
+          <Button
+            onClick={toggleRunning}
+            className="flex-1 bg-white text-[#333] hover:bg-white/90 font-manrope font-bold h-11"
+          >
+            {isRunning ? (
+              <>
+                <Pause className="w-4 h-4 mr-2" />
+                {timerMode === 'pomodoro' && isPaused ? 'Resume' : 'Pause'}
+              </>
+            ) : (
+              <>
+                <Play className="w-4 h-4 mr-2" />
+                Start
+              </>
+            )}
+          </Button>
+
+          {timerMode === 'pomodoro' && isRunning && !isPaused && (
+            <Button
+              onClick={pauseTimer}
+              variant="outline"
+              className="h-11 px-3 border-white/30 text-white hover:bg-white/10"
+            >
+              <Pause className="w-4 h-4" />
+            </Button>
+          )}
+
+          <Button
+            onClick={resetTime}
+            variant="outline"
+            className="h-11 px-3 border-white/30 text-white hover:bg-white/10"
+          >
+            <RotateCcw className="w-4 h-4" />
+          </Button>
         </div>
       </div>
     </div>

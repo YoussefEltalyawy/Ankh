@@ -6,7 +6,6 @@ import { clsx } from 'clsx';
 // import { Label } from '@/components/ui/label';
 import {
   Checkbox,
-  type CheckboxProps,
 } from '@/components/animate-ui/components/radix/checkbox';
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
@@ -17,6 +16,7 @@ type TaskItemProps = {
   id: string; // Task ID
   title: string; // Task title
   completed: boolean; // Task completion state
+  priority?: 'low' | 'medium' | 'high'; // Task priority
   onDeleteTask: (taskId: string) => Promise<void>; // Function to delete task
 };
 
@@ -25,6 +25,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
   id,
   title,
   completed,
+  priority,
   onDeleteTask,
 }) => {
   // State to track task's selected (completed) state
@@ -109,26 +110,50 @@ const TaskItem: React.FC<TaskItemProps> = ({
     );
   }
 
+  // Get priority color and label
+  const getPriorityInfo = (priority?: 'low' | 'medium' | 'high') => {
+    switch (priority) {
+      case 'high':
+        return { color: 'text-red-400', bgColor: 'bg-red-400/20', label: 'High' };
+      case 'medium':
+        return { color: 'text-yellow-400', bgColor: 'bg-yellow-400/20', label: 'Medium' };
+      case 'low':
+        return { color: 'text-green-400', bgColor: 'bg-green-400/20', label: 'Low' };
+      default:
+        return null;
+    }
+  };
+
+  const priorityInfo = getPriorityInfo(priority);
+
   // Render task item view when not in editing mode
   return (
     <li className="flex flex-row justify-between group mb-[10px]">
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 flex-1">
         <Checkbox
           id={`task-${id}`}
           checked={isSelected}
           onCheckedChange={handleCompleteStateChange}
           className="h-5 w-5 rounded-sm border-none"
-
         />
         <label
           htmlFor={`task-${id}`}
           className={clsx(
-            "text-base font-medium cursor-pointer transition-colors",
+            "text-base font-medium cursor-pointer transition-colors flex-1",
             isSelected ? "text-[#ffffffae] line-through" : "text-white"
           )}
         >
           {editedTitle}
         </label>
+        {priorityInfo && (
+          <span className={clsx(
+            "px-2 py-1 rounded-full text-xs font-medium",
+            priorityInfo.bgColor,
+            priorityInfo.color
+          )}>
+            {priorityInfo.label}
+          </span>
+        )}
       </div>
 
       <span className="flex gap-4">

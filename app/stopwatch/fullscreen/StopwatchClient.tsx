@@ -3,7 +3,7 @@ import { useStopwatch } from "@/app/hooks/useStopwatch";
 import { Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Task } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,8 +44,8 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
               <DropdownMenuLabel>What task are you working on?</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {tasks.map((task) => (
-                <DropdownMenuItem 
-                  key={task.id} 
+                <DropdownMenuItem
+                  key={task.id}
                   className="cursor-pointer"
                   onClick={() => setSelectedTask(task.title)}
                 >
@@ -65,9 +65,9 @@ function StopwatchClient({ tasks }: { tasks: Task[] }) {
           >
             {running ? "Stop" : "Start"}
           </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-12 w-12 hover:bg-white/10"
             onClick={resetTime}
           >

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { motion } from "framer-motion";
 import { AlertCircle, ArrowLeft, Home } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +13,7 @@ const errorMessages: Record<string, string> = {
   Default: "An error occurred during authentication.",
 };
 
-export default function AuthErrorPage() {
+function AuthErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error") || "Default";
 
@@ -83,5 +84,13 @@ export default function AuthErrorPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <AuthErrorContent />
+    </Suspense>
   );
 }

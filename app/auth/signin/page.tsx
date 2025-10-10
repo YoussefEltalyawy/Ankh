@@ -126,7 +126,7 @@ export default function SignInPage() {
         {/* Footer */}
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <span className="text-[#B8860B] font-medium">
               Sign in with Google to get started
             </span>

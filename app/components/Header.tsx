@@ -1,7 +1,7 @@
 function Header() {
   return (
     <div className="pt-8 pb-[30px] px-8 flex justify-between items-center">
-      <h1 className="font-manrope text-h4 font-bold">Ankh</h1>
+      <h1 className="font-manrope text- font-bold">Ankh</h1>
     </div>
   );
 }

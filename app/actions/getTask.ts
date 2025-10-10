@@ -8,7 +8,14 @@ async function getTasks(userId: string): Promise<Task[]> {
         userId: userId,
       },
     });
-    return tasks;
+    const mapped: Task[] = tasks.map(t => ({
+      id: t.id,
+      title: t.title,
+      completed: t.completed,
+      priority: (t.priority ?? undefined) as 'low' | 'medium' | 'high' | undefined,
+      createdAt: t.createdAt,
+    }));
+    return mapped;
   } catch (err) {
     console.error("Error fetching tasks:", err);
     throw new Error("Failed to fetch tasks");

@@ -1,14 +1,14 @@
 "use client"
 
 import { useSession, signIn, signOut } from "next-auth/react"
-import { Button } from "@heroui/button"
+import { Button } from "@/components/ui/button"
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
 
   if (status === "loading") {
     return (
-      <Button isLoading color="primary" variant="ghost">
+      <Button disabled variant="ghost">
         Loading...
       </Button>
     )
@@ -22,7 +22,6 @@ export default function AuthButton() {
         </span>
         <Button
           onClick={() => signOut()}
-          color="danger"
           variant="ghost"
           size="sm"
         >
@@ -35,8 +34,6 @@ export default function AuthButton() {
   return (
     <Button
       onClick={() => signIn()}
-      color="primary"
-      variant="solid"
     >
       Sign In
     </Button>

@@ -3,9 +3,17 @@ import { cn } from "@heroui/theme";
 import Image from "next/image";
 import ThemesSection from "./ThemesSection";
 import ProfileSection from "./ProfileSection";
+import PomodoroSettings from "./PomodoroSettings";
 import { SessionUser } from "../types";
 
 function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
+  const [pomodoroSettings, setPomodoroSettings] = useState({
+    workDuration: 25,
+    shortBreakDuration: 5,
+    longBreakDuration: 15,
+    longBreakInterval: 4,
+  });
+
   const settingsSections = [
     {
       id: "themes",
@@ -19,6 +27,16 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
       label: "Profile",
       component: ProfileSection,
       props: { user },
+    },
+    {
+      id: "pomodoro",
+      icon: "/timer-icon.svg",
+      label: "Pomodoro",
+      component: PomodoroSettings,
+      props: {
+        settings: pomodoroSettings,
+        onSettingsChange: setPomodoroSettings
+      },
     },
   ];
 
@@ -51,7 +69,8 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
     const section = settingsSections.find((s) => s.id === activeSection);
     if (!section) return null;
 
-    const SectionComponent = section.component;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const SectionComponent = section.component as React.ComponentType<any>;
     return (
       <div className="mt-6">
         <button
@@ -60,7 +79,8 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
         >
           <span className="mr-2">←</span> Back to settings
         </button>
-        <SectionComponent {...(section.props || { user })} />
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        <SectionComponent {...(section.props as any || {})} />
       </div>
     );
   };

@@ -10,6 +10,10 @@ async function updateTask(taskId: string, newTitle: string): Promise<Task> {
     throw new Error("Task ID and new title are required");
   }
 
+  if (!user || !user.id) {
+    throw new Error("Unauthorized: user not found");
+  }
+
   try {
     const updatedTask = await prisma.task.update({
       where: {
@@ -20,7 +24,14 @@ async function updateTask(taskId: string, newTitle: string): Promise<Task> {
         title: newTitle,
       },
     });
-    return updatedTask;
+    const mapped: Task = {
+      id: updatedTask.id,
+      title: updatedTask.title,
+      completed: updatedTask.completed,
+      priority: (updatedTask.priority ?? undefined) as 'low' | 'medium' | 'high' | undefined,
+      createdAt: updatedTask.createdAt,
+    };
+    return mapped;
   } catch (err) {
     console.error("Error updating task:", err);
     throw new Error("Failed to update task");

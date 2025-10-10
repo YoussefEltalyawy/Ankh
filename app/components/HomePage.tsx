@@ -18,8 +18,9 @@ interface FeatureCard {
 }
 
 interface ActionButtonProps {
-  children?: React.ReactNode;
   primary?: boolean;
+  href?: string;
+  onClick?: () => void;
 }
 
 interface FeatureCardProps {
@@ -77,16 +78,29 @@ const TESTIMONIALS = [
 ];
 
 // Components
-const ActionButton: React.FC<ActionButtonProps> = ({ primary = true }) => (
-  <button className={`${primary
+const ActionButton: React.FC<ActionButtonProps> = ({ primary = true, href, onClick }) => {
+  const className = `${primary
     ? "bg-linear-to-r from-[#C0A062] via-[#B8860B] to-[#DAA520] text-white"
     : "bg-white text-[#B8860B] border border-[#B8860B]"} 
     w-fit px-6 py-4 md:px-8 md:py-4 mx-auto rounded-xl md:rounded-2xl flex items-center gap-2 md:gap-3 text-sm md:text-base 
-    hover:shadow-xl hover:scale-[1.02] transition-all duration-200`}>
-    <p className="font-manrope font-bold">Go to Ankh</p>
-    <ArrowRight className="w-4 h-4" />
-  </button>
-);
+    hover:shadow-xl hover:scale-[1.02] transition-all duration-200`;
+
+  if (href) {
+    return (
+      <Link href={href} className={className}>
+        <p className="font-manrope font-bold">Go to Ankh</p>
+        <ArrowRight className="w-4 h-4" />
+      </Link>
+    );
+  }
+
+  return (
+    <button className={className} onClick={onClick}>
+      <p className="font-manrope font-bold">Go to Ankh</p>
+      <ArrowRight className="w-4 h-4" />
+    </button>
+  );
+};
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
   title,
@@ -163,7 +177,7 @@ const SectionDivider = () => (
 );
 
 const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const isLoading = status === "loading";
 
   return (
@@ -207,13 +221,9 @@ const HomePage: React.FC<HomePageProps> = ({ isUserAuthenticated }) => {
                     <p className="font-manrope font-bold">Loading...</p>
                   </div>
                 ) : isUserAuthenticated ? (
-                  <Link href="/dashboard">
-                    <ActionButton />
-                  </Link>
+                  <ActionButton href="/dashboard" />
                 ) : (
-                  <button onClick={() => signIn()}>
-                    <ActionButton />
-                  </button>
+                  <ActionButton onClick={() => signIn()} />
                 )}
               </div>
 

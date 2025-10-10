@@ -151,34 +151,35 @@ const GridLayout: React.FC<GridLayoutProps> = ({
       const maxAllowedY = Math.floor((containerHeight - newItem.h * 156) / 156);
       newItem.y = Math.max(0, maxAllowedY);
     }
-    
+
     // Ensure item doesn't go above the container
     if (newItem.y < 0) {
       newItem.y = 0;
     }
-    
+
     // Constrain X position to prevent horizontal overflow
     if (newItem.x < 0) {
       newItem.x = 0;
     }
   }, [containerHeight]);
 
-  // Validate and constrain entire layout
+  // Validate and constrain entire layout (reserved for potential future use)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const validateLayout = useCallback((layout: Layout[]) => {
     return layout.map(item => {
       const constrainedItem = { ...item };
-      
+
       // Constrain Y position and height
       const itemBottom = (constrainedItem.y + constrainedItem.h) * 156;
       if (itemBottom > containerHeight) {
         const maxAllowedY = Math.floor((containerHeight - constrainedItem.h * 156) / 156);
         constrainedItem.y = Math.max(0, maxAllowedY);
       }
-      
+
       // Ensure minimum bounds
       constrainedItem.x = Math.max(0, constrainedItem.x);
       constrainedItem.y = Math.max(0, constrainedItem.y);
-      
+
       return constrainedItem;
     });
   }, [containerHeight]);

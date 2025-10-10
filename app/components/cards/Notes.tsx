@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import NoteItem from "../NoteItem";
 import { Note } from "@/app/types";
 import NewNote from "../NewNote";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Search, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,6 +28,16 @@ function NotesCard({
   onAddNote,
   onDeleteNote,
 }: NotesProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter notes based on search query
+  const filteredNotes = useMemo(() => {
+    if (!searchQuery.trim()) return notes;
+    return notes.filter(note =>
+      note.content.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [notes, searchQuery]);
+
   if (!visible) return null;
 
   return (
@@ -41,36 +51,90 @@ function NotesCard({
     >
       <div className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab">
         <h6 className="font-semibold font-manrope text-h6 text-white">Notes</h6>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/10">
-              <MoreHorizontal className="h-4 w-4 text-white" />
-              <span className="sr-only">More options</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-40 bg-white">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              Refresh
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Settings
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 hover:bg-white/10"
+            onClick={() => setSearchQuery(searchQuery ? "" : " ")}
+          >
+            <Search className="h-4 w-4 text-white" />
+            <span className="sr-only">Search notes</span>
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white/10">
+                <MoreHorizontal className="h-4 w-4 text-white" />
+                <span className="sr-only">More options</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40 bg-white">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                Refresh
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Settings
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
+
+      {/* Search Bar - Hidden by default, shown when searchQuery is not empty */}
+      {searchQuery && (
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
+          <input
+            type="text"
+            placeholder="Search notes..."
+            value={searchQuery}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+            className="pl-10 pr-4 py-2 w-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none rounded-lg"
+            autoFocus
+          />
+        </div>
+      )}
       <div className="grow overflow-y-auto mb-[16px]">
-        <ul>
-          {notes.map((note) => (
-            <NoteItem
-              id={note.id}
-              title={note.content}
-              key={note.id}
-              onDeleteNote={onDeleteNote}
-            />
-          ))}
-        </ul>
+        {filteredNotes.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center py-8">
+            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4">
+              <FileText className="w-8 h-8 text-white/60" />
+            </div>
+            <h3 className="text-lg font-medium text-white mb-2">
+              {notes.length === 0 ? "No notes yet" : "No notes match your search"}
+            </h3>
+            <p className="text-white/60 text-sm mb-4">
+              {notes.length === 0
+                ? "Create your first note to get started"
+                : "Try adjusting your search criteria"
+              }
+            </p>
+            {notes.length === 0 && (
+              <Button
+                onClick={() => {
+                  const input = document.querySelector('input[placeholder="Enter Note"]') as HTMLInputElement;
+                  if (input) input.focus();
+                }}
+                className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+              >
+                Create Note
+              </Button>
+            )}
+          </div>
+        ) : (
+          <ul>
+            {filteredNotes.map((note) => (
+              <NoteItem
+                id={note.id}
+                title={note.content}
+                key={note.id}
+                onDeleteNote={onDeleteNote}
+              />
+            ))}
+          </ul>
+        )}
       </div>
       <NewNote onAddNote={onAddNote} />
     </div>
