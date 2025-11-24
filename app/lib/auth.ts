@@ -5,6 +5,7 @@ import prisma from "./db"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  trustHost: true, // Required for Auth.js v5 to work properly
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
