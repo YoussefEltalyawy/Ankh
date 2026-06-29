@@ -31,7 +31,7 @@ const Dock = ({
   };
 
   const buttonClasses =
-    "buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2px] rounded-2xl cursor-pointer transition-all hover:bg-[rgba(255,255,255,0.15)] py-2 px-4 sm:py-4 sm:px-6 md:py-4 md:px-6";
+    "buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2px] rounded-xl sm:rounded-2xl cursor-pointer transition-all hover:bg-[rgba(255,255,255,0.15)] py-[8px] px-[12px] sm:py-4 sm:px-6 md:py-4 md:px-6";
   const imageClasses = "w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-all";
 
   const icons = [
@@ -43,7 +43,7 @@ const Dock = ({
   return (
     <div className="flex justify-center items-center h-full pb-5">
       <div className="border border-[rgba(255,255,255,.1)] bg-[rgba(255,255,255,0.09)] backdrop-blur-[3.5px] rounded-2xl sm:rounded-[30px] w-fit p-2 sm:p-3 md:p-4">
-        <div className="buttonsContainer flex flex-row items-center gap-2 sm:gap-3 md:gap-4">
+        <div className="buttonsContainer flex flex-row items-center gap-1.5 sm:gap-3 md:gap-4">
           {icons.map(({ key, src, alt, callback }) => (
             <div
               key={key}
