@@ -17,7 +17,7 @@ const Header = () => {
             {/* Logo */}
             <div>
               <Link href="/">
-                <h2 className="text-2xl md:text-3xl font-manrope font-bold bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h2>
+                <h2 className="text-2xl md:text-[28px] font-manrope font-bold bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">Ankh</h2>
               </Link>
             </div>
 

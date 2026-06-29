@@ -72,14 +72,6 @@ function DashboardClient({
     setStateFunction: React.Dispatch<React.SetStateAction<CardState>>,
     localStorageKey?: string
   ) => {
-    if (isMobile) {
-      // On mobile, close all other cards first
-      if (!currentState.show) {
-        setShowStopwatchCard({ show: false, opacity: 0 });
-        setShowTasksCard({ show: false, opacity: 0 });
-        setShowNotesCard({ show: false, opacity: 0 });
-      }
-    }
 
     if (currentState.show) {
       setStateFunction({ ...currentState, opacity: 0 });

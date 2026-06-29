@@ -88,7 +88,7 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
   return (
     <div
       className={cn(
-        "bg-black h-full absolute right-0 w-[50vw] transition-transform duration-300 ease-in-out z-10 text-white overflow-y-auto",
+        "bg-black h-full absolute right-0 w-[85vw] md:w-[400px] transition-transform duration-300 ease-in-out z-10 text-white overflow-y-auto",
         isOpen ? "translate-x-[0%]" : "translate-x-full"
       )}
     >

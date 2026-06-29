@@ -31,7 +31,7 @@ const Dock = ({
   };
 
   const buttonClasses =
-    "buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2px] rounded-2xl cursor-pointer transition-all hover:bg-[rgba(255,255,255,0.15)] p-2 sm:py-4 sm:px-6 md:py-4 md:px-6";
+    "buttonContainer border border-[rgba(255,255,255,0.29)] bg-[rgba(255, 255, 255, 0.08)] backdrop-blur-[2px] rounded-2xl cursor-pointer transition-all hover:bg-[rgba(255,255,255,0.15)] py-2 px-4 sm:py-4 sm:px-6 md:py-4 md:px-6";
   const imageClasses = "w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-all";
 
   const icons = [

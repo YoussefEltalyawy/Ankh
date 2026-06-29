@@ -10,6 +10,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        url: "https://accounts.google.com/o/oauth2/v2/auth",
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+      token: "https://oauth2.googleapis.com/token",
+      userinfo: "https://openidconnect.googleapis.com/v1/userinfo",
     }),
     // Add more providers as needed
   ],
@@ -20,9 +30,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session
     },
-    jwt: async ({ user, token }) => {
+    jwt: async ({ token, user }) => {
       if (user) {
-        token.uid = user.id
+        token.sub = user.id
       }
       return token
     },
