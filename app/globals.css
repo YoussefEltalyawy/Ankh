@@ -114,16 +114,76 @@ body {
 
 /* React Grid Layout placeholder styling */
 .react-grid-placeholder {
-  background-color: transparent !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
   border: 2px dashed rgba(255, 255, 255, 0.5) !important;
   border-radius: 1.5rem !important;
   opacity: 0.8 !important;
+  transition: all 0.15s ease;
+}
+
+/* Custom styling for react-resizable handle */
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  bottom: 8px;
+  right: 8px;
+  cursor: se-resize;
+  z-index: 10;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 1px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.react-grid-item > .react-resizable-handle:hover::after {
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.15);
 }
 
 /* Add cursor styling for draggable card headers */
 .card-handle {
   cursor: grab;
   width: 100%;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-user-drag: none !important;
+  touch-action: none;
+}
+
+.card-handle * {
+  -webkit-user-drag: none !important;
+}
+
+.card-handle:active {
+  cursor: grabbing;
+}
+
+/* High Performance Drag and Drop Optimizations */
+.react-grid-item {
+  will-change: transform;
+  touch-action: none;
+}
+
+/* Disable expensive backdrop-blur calculations specifically during active dragging/resizing for 60fps smoothness */
+.react-grid-item.react-draggable-dragging,
+.react-grid-item.resizing {
+  transition: none !important;
+  z-index: 100 !important;
+}
+
+.react-grid-item.react-draggable-dragging .card,
+.react-grid-item.resizing .card {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Responsive card handling for small screens */

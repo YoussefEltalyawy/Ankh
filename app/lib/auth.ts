@@ -5,36 +5,35 @@ import prisma from "./db"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  trustHost: true, // Required for Auth.js v5 to work properly
+  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      allowDangerousEmailAccountLinking: true,
       authorization: {
-        url: "https://accounts.google.com/o/oauth2/v2/auth",
         params: {
-          prompt: "consent",
+          prompt: "select_account",
           access_type: "offline",
           response_type: "code",
         },
       },
-      token: "https://oauth2.googleapis.com/token",
-      userinfo: "https://openidconnect.googleapis.com/v1/userinfo",
     }),
-    // Add more providers as needed
   ],
   callbacks: {
-    session: async ({ session, token }) => {
-      if (session?.user && token?.sub) {
-        session.user.id = token.sub
-      }
-      return session
-    },
-    jwt: async ({ token, user }) => {
+    async jwt({ token, user }) {
       if (user) {
+        token.id = user.id
         token.sub = user.id
       }
       return token
+    },
+    async session({ session, token }) {
+      if (session.user && token) {
+        session.user.id = (token.id as string) || (token.sub as string)
+      }
+      return session
     },
   },
   session: {
@@ -45,3 +44,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     error: "/auth/error",
   },
 })
+

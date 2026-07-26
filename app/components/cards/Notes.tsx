@@ -49,9 +49,16 @@ function NotesCard({
         flex flex-col h-full max-h-full overflow-hidden
       `}
     >
-      <div className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab">
-        <h6 className="font-semibold font-manrope text-h6 text-white">Notes</h6>
-        <div className="flex items-center gap-2">
+      <div
+        className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab select-none"
+        onDragStart={(e) => e.preventDefault()}
+      >
+        <h6 className="font-semibold font-manrope text-h6 text-white pointer-events-none">Notes</h6>
+        <div
+          className="flex items-center gap-2"
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+        >
           <Button
             variant="ghost"
             size="icon"

@@ -59,10 +59,17 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
       `}
     >
       <div className="flex flex-col gap-[16px] h-full">
-        <span className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab">
-          <h6 className="font-semibold font-manrope text-h6 text-white">Stopwatch</h6>
+        <div
+          className="flex flex-row justify-between items-center mb-[10px] card-handle cursor-grab select-none"
+          onDragStart={(e) => e.preventDefault()}
+        >
+          <h6 className="font-semibold font-manrope text-h6 text-white pointer-events-none">Stopwatch</h6>
 
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+          >
             {/* Simple Mode Toggle */}
             <Button
               variant="ghost"
@@ -94,7 +101,7 @@ function StopwatchCard({ visible, opacity, tasks }: StopwatchProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </span>
+        </div>
 
         {/* Display the time */}
         <div className="overflow-y-auto grow">

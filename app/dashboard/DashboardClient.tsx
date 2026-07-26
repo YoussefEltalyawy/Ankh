@@ -185,7 +185,7 @@ function DashboardClient({
         <Header />
 
         {/* Grid Layout - Takes all space between header and dock */}
-        <div className="grow w-full px-8 overflow-hidden relative">
+        <div className="grow w-full px-4 md:px-8 overflow-hidden relative">
           <GridLayout
             tasks={tasks}
             notes={notes}
