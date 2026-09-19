@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { cn } from "@heroui/theme";
-import Image from "next/image";
+import { ArrowLeft, Palette, User, Timer, ChevronRight, X, BarChart3 } from "lucide-react";
 import ThemesSection from "./ThemesSection";
 import ProfileSection from "./ProfileSection";
 import PomodoroSettings from "./PomodoroSettings";
-import { SessionUser } from "../types";
+import Stats from "./Stats";
+import { SessionUser, Task } from "../types";
 
-function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
+function Settings({ isOpen, user, tasks }: { isOpen: boolean; user: SessionUser; tasks?: Task[] }) {
   const [pomodoroSettings, setPomodoroSettings] = useState({
     workDuration: 25,
     shortBreakDuration: 5,
@@ -17,26 +18,37 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
   const settingsSections = [
     {
       id: "themes",
-      icon: "/palette.svg",
+      icon: Palette,
       label: "Themes",
+      description: "Customize your workspace appearance",
       component: ThemesSection,
     },
     {
-      id: "profile",
-      icon: "/profile-icon.svg",
-      label: "Profile",
-      component: ProfileSection,
-      props: { user },
+      id: "stats",
+      icon: BarChart3,
+      label: "Productivity",
+      description: "View your focus metrics and progress",
+      component: Stats,
+      props: { tasks: tasks || [] },
     },
     {
       id: "pomodoro",
-      icon: "/timer-icon.svg",
+      icon: Timer,
       label: "Pomodoro",
+      description: "Configure focus sessions",
       component: PomodoroSettings,
       props: {
         settings: pomodoroSettings,
-        onSettingsChange: setPomodoroSettings
+        onSettingsChange: setPomodoroSettings,
       },
+    },
+    {
+      id: "profile",
+      icon: User,
+      label: "Profile",
+      description: "Manage your account",
+      component: ProfileSection,
+      props: { user },
     },
   ];
 
@@ -45,29 +57,46 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
   const renderContent = () => {
     if (!activeSection) {
       return (
-        <div className="space-y-3 mt-8">
-          {settingsSections.map((section) => (
-            <div
-              key={section.id}
-              className="group flex items-center px-5 py-4 cursor-pointer bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-all duration-300"
-              onClick={() => setActiveSection(section.id)}
-            >
-              <div className="bg-white/10 p-2 rounded-lg mr-4 group-hover:scale-110 transition-transform duration-300">
-                <Image
-                  src={section.icon}
-                  width={24}
-                  height={24}
-                  alt={`${section.label} icon`}
-                />
-              </div>
-              <h4 className="text-lg font-medium tracking-wide">{section.label}</h4>
-              <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </div>
+        <div className="space-y-2 mt-6">
+          {settingsSections.map((section) => {
+            const Icon = section.icon;
+            return (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-white/10 transition-all duration-200 group text-left"
+              >
+                <div className="w-9 h-9 rounded-xl bg-[#C0A062]/10 flex items-center justify-center shrink-0 group-hover:bg-[#C0A062]/15 transition-colors">
+                  <Icon className="w-4 h-4 text-[#C0A062]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-medium text-white">{section.label}</h4>
+                  <p className="text-[11px] text-white/35 mt-0.5">{section.description}</p>
+                </div>
+                <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/40 group-hover:translate-x-0.5 transition-all shrink-0" />
+              </button>
+            );
+          })}
+
+          {/* Keyboard shortcuts hint */}
+          <div className="mt-4 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <p className="text-[11px] text-white/30 font-medium mb-2">Keyboard Shortcuts</p>
+            <div className="grid grid-cols-2 gap-1.5">
+              {[
+                { keys: "1 / 2 / 3", desc: "Toggle panels" },
+                { keys: "M", desc: "Toggle music" },
+                { keys: "⌘ ,", desc: "Settings" },
+                { keys: "Esc", desc: "Close" },
+              ].map((s, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <kbd className="bg-white/5 px-1.5 py-0.5 rounded text-[9px] text-white/40 font-mono border border-white/5">
+                    {s.keys}
+                  </kbd>
+                  <span className="text-[10px] text-white/25">{s.desc}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       );
     }
@@ -77,17 +106,25 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const SectionComponent = section.component as React.ComponentType<any>;
+    const Icon = section.icon;
+
     return (
-      <div className="mt-8 animate-in fade-in slide-in-from-right-4 duration-300">
+      <div className="mt-6 animate-in fade-in slide-in-from-right-4 duration-300">
         <button
           onClick={() => setActiveSection(null)}
-          className="flex items-center mb-8 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-all w-fit group"
+          className="flex items-center gap-2 mb-6 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/50 hover:text-white/80 transition-all group w-fit"
         >
-          <svg className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          Back
+          <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+          <span className="text-xs font-medium">Back</span>
         </button>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-8 h-8 rounded-xl bg-[#C0A062]/10 flex items-center justify-center">
+            <Icon className="w-4 h-4 text-[#C0A062]" />
+          </div>
+          <h3 className="text-base font-manrope font-semibold text-white">{section.label}</h3>
+        </div>
+
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         <SectionComponent {...(section.props as any || {})} />
       </div>
@@ -97,23 +134,33 @@ function Settings({ isOpen, user }: { isOpen: boolean; user: SessionUser }) {
   return (
     <div
       className={cn(
-        "fixed right-0 top-0 bottom-0 w-[85vw] md:w-[400px] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] z-50 text-white overflow-y-auto border-l border-white/10 bg-black/95 backdrop-blur-2xl shadow-2xl",
+        "fixed right-0 top-0 bottom-0 w-[85vw] md:w-[380px] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] z-50 text-white overflow-y-auto border-l border-white/5 bg-[rgba(10,10,10,0.95)] backdrop-blur-2xl shadow-2xl",
         isOpen ? "translate-x-0" : "translate-x-full"
       )}
     >
-      <div className="relative p-6 md:p-8 min-h-full">
-        <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 pointer-events-none">
-          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 11L8 17H5L7 11V7H10V11ZM18 11L16 17H13L15 11V7H18V11Z" fill="#C0A062" />
-          </svg>
+      <div className="relative p-5 md:p-6 min-h-full">
+        {/* Close button */}
+        {activeSection && (
+          <button
+            onClick={() => setActiveSection(null)}
+            className="absolute top-4 right-4 w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors z-10"
+          >
+            <X className="w-3.5 h-3.5 text-white/40" />
+          </button>
+        )}
+
+        {/* Header */}
+        <div className="mb-1">
+          <h1 className="text-xl font-bold font-manrope bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text">
+            {activeSection
+              ? settingsSections.find((s) => s.id === activeSection)?.label || "Settings"
+              : "Settings"}
+          </h1>
+          {!activeSection && (
+            <p className="text-[11px] text-white/30 mt-1">Customize your Ankh experience</p>
+          )}
         </div>
-        
-        <h1 className="text-3xl font-bold bg-linear-to-r from-[#C0A062] to-[#DAA520] text-transparent bg-clip-text mt-8 mb-2">
-          {activeSection
-            ? settingsSections.find(s => s.id === activeSection)?.label || "Settings"
-            : "Settings"
-          }
-        </h1>
+
         {renderContent()}
       </div>
     </div>

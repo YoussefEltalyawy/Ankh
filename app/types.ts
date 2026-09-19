@@ -18,6 +18,7 @@ export type Task = {
   title: string;
   completed: boolean;
   priority?: 'low' | 'medium' | 'high';
+  position?: number;
   createdAt?: Date;
 };
 

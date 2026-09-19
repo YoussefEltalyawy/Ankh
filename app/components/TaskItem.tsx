@@ -1,108 +1,105 @@
 import React, { useState } from "react";
-import { X, Check } from "lucide-react";
-import Image from "next/image";
-import { clsx } from 'clsx';
-
-// import { Label } from '@/components/ui/label';
-import {
-  Checkbox,
-} from '@/components/animate-ui/components/radix/checkbox';
+import { X, Check, Pencil, GripVertical } from "lucide-react";
+import { clsx } from "clsx";
+import { Checkbox } from "@/components/animate-ui/components/radix/checkbox";
 import completeTask from "../actions/completeTask";
 import unCompleteTask from "../actions/unCompleteTask";
 import updateTask from "../actions/updateTask";
 
-// TaskItem component props type definition
 type TaskItemProps = {
-  id: string; // Task ID
-  title: string; // Task title
-  completed: boolean; // Task completion state
-  priority?: 'low' | 'medium' | 'high'; // Task priority
-  onDeleteTask: (taskId: string) => Promise<void>; // Function to delete task
+  id: string;
+  title: string;
+  completed: boolean;
+  priority?: "low" | "medium" | "high";
+  onDeleteTask: (taskId: string) => Promise<void>;
+  onDragStart?: (e: React.DragEvent, id: string) => void;
+  onDragOver?: (e: React.DragEvent, id: string) => void;
+  onDragEnd?: (e: React.DragEvent) => void;
+  onDrop?: (e: React.DragEvent, id: string) => void;
+  isDragging?: boolean;
+  dropIndicator?: "top" | "bottom" | null;
 };
 
-// TaskItem component implementation
 const TaskItem: React.FC<TaskItemProps> = ({
   id,
   title,
   completed,
   priority,
   onDeleteTask,
+  onDragStart,
+  onDragOver,
+  onDragEnd,
+  onDrop,
+  isDragging,
+  dropIndicator,
 }) => {
-  // State to track task's selected (completed) state
   const [isSelected, setIsSelected] = useState(completed);
-
-  // State to track if the task is in editing mode
   const [isEditing, setIsEditing] = useState(false);
-
-  // State to hold the edited task title
   const [editedTitle, setEditedTitle] = useState(title);
 
-  // Handler to toggle the task's completion state
   const handleCompleteStateChange = async () => {
     const newState = !isSelected;
-    setIsSelected(newState); // Update UI immediately
-
+    setIsSelected(newState);
     try {
-      // Call appropriate function based on new state
       await (newState ? completeTask(id) : unCompleteTask(id));
+      if (newState && typeof window !== "undefined") {
+        const today = new Date().toISOString().split("T")[0];
+        const log: Record<string, number> = JSON.parse(
+          localStorage.getItem("taskCompletionLog") || "{}"
+        );
+        log[today] = (log[today] || 0) + 1;
+        localStorage.setItem("taskCompletionLog", JSON.stringify(log));
+      }
     } catch (error) {
       console.error("Error updating task state:", error);
-      setIsSelected(!newState); // Revert state in case of error
+      setIsSelected(!newState);
     }
   };
 
-  // Handler to update the task title after editing
   const handleUpdateTask = async () => {
-    // Exit editing mode if title is unchanged or empty
     if (editedTitle.trim() === "" || editedTitle === title) {
       setIsEditing(false);
       return;
     }
-
     try {
-      // Update task title and exit editing mode
       await updateTask(id, editedTitle);
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating task:", error);
-      setEditedTitle(title); // Revert title on error
+      setEditedTitle(title);
     }
   };
 
-  // Handler for keyboard actions during title editing
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleUpdateTask(); // Confirm edit on Enter
-    } else if (e.key === "Escape") {
-      setEditedTitle(title); // Revert changes on Escape
+    if (e.key === "Enter") handleUpdateTask();
+    else if (e.key === "Escape") {
+      setEditedTitle(title);
       setIsEditing(false);
     }
   };
 
-  // Render editable task item if in editing mode
+  // Edit mode
   if (isEditing) {
     return (
-      <li className="flex w-full justify-between items-center mb-[10px]">
+      <li className="flex w-full justify-between items-center mb-[10px] group">
         <input
           type="text"
-          value={editedTitle} // Bind input to editedTitle state
+          value={editedTitle}
           onChange={(e) => setEditedTitle(e.target.value)}
           onKeyDown={handleKeyPress}
-          className="bg-transparent text-white border-b border-white focus:outline-none px-2 py-1 w-full mr-4"
+          className="bg-transparent text-white border-b border-white/40 focus:border-white/80 focus:outline-none px-2 py-1 w-full mr-4 text-sm"
           autoFocus
         />
-        <span className="flex gap-4">
-          {/* Confirm edit button */}
+        <span className="flex gap-3">
           <Check
-            className="text-white cursor-pointer"
+            className="w-4 h-4 text-white/60 hover:text-white cursor-pointer transition-colors"
             onClick={handleUpdateTask}
           />
-          {/* Cancel edit button */}
           <X
-            className="text-white cursor-pointer"
+            className="w-4 h-4 text-white/60 hover:text-white cursor-pointer transition-colors"
             onClick={() => {
-              setEditedTitle(title); // Revert changes
-              setIsEditing(false); // Exit editing mode
+              setEditedTitle(title);
+              setIsEditing(false);
             }}
           />
         </span>
@@ -110,15 +107,14 @@ const TaskItem: React.FC<TaskItemProps> = ({
     );
   }
 
-  // Get priority color and label
-  const getPriorityInfo = (priority?: 'low' | 'medium' | 'high') => {
-    switch (priority) {
-      case 'high':
-        return { color: 'text-red-400', bgColor: 'bg-red-400/20', label: 'High' };
-      case 'medium':
-        return { color: 'text-yellow-400', bgColor: 'bg-yellow-400/20', label: 'Medium' };
-      case 'low':
-        return { color: 'text-green-400', bgColor: 'bg-green-400/20', label: 'Low' };
+  const getPriorityInfo = (p?: "low" | "medium" | "high") => {
+    switch (p) {
+      case "high":
+        return { color: "text-red-400", bgColor: "bg-red-400/20", label: "High" };
+      case "medium":
+        return { color: "text-yellow-400", bgColor: "bg-yellow-400/20", label: "Medium" };
+      case "low":
+        return { color: "text-green-400", bgColor: "bg-green-400/20", label: "Low" };
       default:
         return null;
     }
@@ -126,49 +122,72 @@ const TaskItem: React.FC<TaskItemProps> = ({
 
   const priorityInfo = getPriorityInfo(priority);
 
-  // Render task item view when not in editing mode
   return (
-    <li className="flex flex-row justify-between group mb-[10px]">
-      <div className="flex items-center space-x-2 flex-1">
+    <li
+      id={`task-row-${id}`}
+      data-task-row={id}
+      className={clsx(
+        "relative flex flex-row justify-between group mb-[10px] rounded-lg py-1 transition-all duration-200",
+        isDragging && "opacity-40 scale-[0.98]"
+      )}
+      draggable
+      onDragStart={(e) => onDragStart?.(e, id)}
+      onDragOver={(e) => onDragOver?.(e, id)}
+      onDragEnd={onDragEnd}
+      onDrop={(e) => onDrop?.(e, id)}
+    >
+      {/* Drop indicator line */}
+      {dropIndicator === "top" && (
+        <div className="absolute -top-[5px] left-0 right-0 h-[2px] bg-[#C0A062] rounded-full shadow-[0_0_6px_rgba(192,160,98,0.5)]" />
+      )}
+      {dropIndicator === "bottom" && (
+        <div className="absolute -bottom-[5px] left-0 right-0 h-[2px] bg-[#C0A062] rounded-full shadow-[0_0_6px_rgba(192,160,98,0.5)]" />
+      )}
+
+      <div className="flex items-center space-x-2 flex-1 min-w-0">
+        {/* Grip handle — drag handle */}
+        <div
+          className="-ml-3 opacity-0 group-hover:opacity-60 transition-opacity cursor-grab active:cursor-grabbing shrink-0"
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <GripVertical className="w-3.5 h-3.5 text-white/40" />
+        </div>
+
         <Checkbox
           id={`task-${id}`}
           checked={isSelected}
           onCheckedChange={handleCompleteStateChange}
-          className="h-5 w-5 rounded-sm border-none"
+          className="h-5 w-5 rounded-sm border-none shrink-0"
         />
         <label
           htmlFor={`task-${id}`}
           className={clsx(
-            "text-base font-medium cursor-pointer transition-colors flex-1",
+            "text-sm font-medium cursor-pointer transition-colors flex-1 min-w-0 truncate",
             isSelected ? "text-[#ffffffae] line-through" : "text-white"
           )}
         >
           {editedTitle}
         </label>
         {priorityInfo && (
-          <span className={clsx(
-            "px-2 py-1 rounded-full text-xs font-medium",
-            priorityInfo.bgColor,
-            priorityInfo.color
-          )}>
+          <span
+            className={clsx(
+              "px-2 py-0.5 rounded-full text-[10px] font-medium shrink-0",
+              priorityInfo.bgColor,
+              priorityInfo.color
+            )}
+          >
             {priorityInfo.label}
           </span>
         )}
       </div>
 
-      <span className="flex gap-4">
-        {/* Edit task button */}
-        <Image
-          src="/edit-icon.svg"
-          className="opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
-          width={24}
-          height={24}
-          alt="edit-icon"
+      <span className="flex gap-3 shrink-0">
+        <Pencil
+          className="w-4 h-4 text-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-in-out cursor-pointer hover:text-white"
           onClick={() => setIsEditing(true)}
         />
-        {/* Delete task button */}
         <X
-          className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-in-out cursor-pointer"
+          className="w-4 h-4 text-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-in-out cursor-pointer hover:text-white"
           onClick={() => onDeleteTask(id)}
         />
       </span>

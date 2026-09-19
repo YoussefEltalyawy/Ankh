@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface DockProps {
   onToggleTimer: (toggle: boolean) => void;
@@ -41,7 +42,12 @@ const Dock = ({
   ];
 
   return (
-    <div className="flex justify-center items-center h-full pb-5">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="flex justify-center items-center h-full pb-5"
+    >
       <div className="border border-[rgba(255,255,255,.1)] bg-[rgba(255,255,255,0.09)] backdrop-blur-[3.5px] rounded-2xl sm:rounded-[30px] w-fit p-2 sm:p-3 md:p-4">
         <div className="buttonsContainer flex flex-row items-center gap-1.5 sm:gap-3 md:gap-4">
           {icons.map(({ key, src, alt, callback }) => (
@@ -60,7 +66,7 @@ const Dock = ({
               />
             </div>
           ))}
-  
+
           <div onClick={onToggleMusic} className={buttonClasses}>
             <Image
               src="/music-icon.png"
@@ -70,7 +76,7 @@ const Dock = ({
               height={32}
             />
           </div>
-  
+
           <div onClick={onToggleSettings} className={buttonClasses}>
             <Image
               src="/settings-icon.svg"
@@ -82,7 +88,7 @@ const Dock = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

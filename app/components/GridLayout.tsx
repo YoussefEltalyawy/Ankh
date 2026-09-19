@@ -27,6 +27,7 @@ export type GridLayoutProps = {
   onDeleteTask: (taskId: string) => Promise<void>;
   onAddNote: (content: string) => Promise<void>;
   onDeleteNote: (noteId: string) => Promise<void>;
+  onReorderTasks?: (taskIds: string[]) => Promise<void>;
 };
 
 const defaultLayout: Layouts = {
@@ -66,6 +67,7 @@ const GridLayout: React.FC<GridLayoutProps> = ({
   onDeleteTask,
   onAddNote,
   onDeleteNote,
+  onReorderTasks,
 }) => {
   const { showStopwatchCard, showTasksCard, showNotesCard } = cardVisibility;
   const [containerHeight, setContainerHeight] = useState<number>(600);
@@ -224,6 +226,7 @@ const GridLayout: React.FC<GridLayoutProps> = ({
             tasks={tasks}
             onAddTask={onAddTask}
             onDeleteTask={onDeleteTask}
+            onReorderTasks={onReorderTasks}
           />
         </div>
         <div key="notes" style={{ display: showNotesCard.show ? "block" : "none" }} className="h-full">

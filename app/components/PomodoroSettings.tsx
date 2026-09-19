@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { RotateCcw, Save } from "lucide-react";
 
 type PomodoroSettingsProps = {
   settings: {
@@ -23,7 +22,6 @@ function PomodoroSettings({ settings, onSettingsChange }: PomodoroSettingsProps)
 
   const handleSave = () => {
     onSettingsChange(localSettings);
-    // Save to localStorage
     if (typeof window !== "undefined") {
       localStorage.setItem("pomodoroSettings", JSON.stringify(localSettings));
     }
@@ -44,99 +42,117 @@ function PomodoroSettings({ settings, onSettingsChange }: PomodoroSettingsProps)
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="workDuration" className="text-white text-sm font-medium">
-            Work Duration (minutes)
-          </Label>
-          <Input
-            id="workDuration"
-            type="number"
-            min="1"
-            max="60"
-            value={localSettings.workDuration}
-            onChange={(e) => setLocalSettings(prev => ({
-              ...prev,
-              workDuration: parseInt(e.target.value) || 25
-            }))}
-            className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-          />
-        </div>
+    <div className="space-y-4">
+      {/* Work duration */}
+      <SettingSlider
+        label="Focus Duration"
+        value={localSettings.workDuration}
+        min={5}
+        max={60}
+        unit="min"
+        color="#C0A062"
+        onChange={(v) => setLocalSettings((prev) => ({ ...prev, workDuration: v }))}
+      />
 
-        <div>
-          <Label htmlFor="shortBreakDuration" className="text-white text-sm font-medium">
-            Short Break Duration (minutes)
-          </Label>
-          <Input
-            id="shortBreakDuration"
-            type="number"
-            min="1"
-            max="30"
-            value={localSettings.shortBreakDuration}
-            onChange={(e) => setLocalSettings(prev => ({
-              ...prev,
-              shortBreakDuration: parseInt(e.target.value) || 5
-            }))}
-            className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-          />
-        </div>
+      {/* Short break */}
+      <SettingSlider
+        label="Short Break"
+        value={localSettings.shortBreakDuration}
+        min={1}
+        max={15}
+        unit="min"
+        color="#C0A062"
+        onChange={(v) => setLocalSettings((prev) => ({ ...prev, shortBreakDuration: v }))}
+      />
 
-        <div>
-          <Label htmlFor="longBreakDuration" className="text-white text-sm font-medium">
-            Long Break Duration (minutes)
-          </Label>
-          <Input
-            id="longBreakDuration"
-            type="number"
-            min="1"
-            max="60"
-            value={localSettings.longBreakDuration}
-            onChange={(e) => setLocalSettings(prev => ({
-              ...prev,
-              longBreakDuration: parseInt(e.target.value) || 15
-            }))}
-            className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-          />
-        </div>
+      {/* Long break */}
+      <SettingSlider
+        label="Long Break"
+        value={localSettings.longBreakDuration}
+        min={5}
+        max={30}
+        unit="min"
+        color="#C0A062"
+        onChange={(v) => setLocalSettings((prev) => ({ ...prev, longBreakDuration: v }))}
+      />
 
-        <div>
-          <Label htmlFor="longBreakInterval" className="text-white text-sm font-medium">
-            Long Break Interval (work sessions)
-          </Label>
-          <Input
-            id="longBreakInterval"
-            type="number"
-            min="2"
-            max="10"
-            value={localSettings.longBreakInterval}
-            onChange={(e) => setLocalSettings(prev => ({
-              ...prev,
-              longBreakInterval: parseInt(e.target.value) || 4
-            }))}
-            className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-          />
-        </div>
-      </div>
+      {/* Sessions before long break */}
+      <SettingSlider
+        label="Sessions before Long Break"
+        value={localSettings.longBreakInterval}
+        min={2}
+        max={8}
+        unit=""
+        color="#C0A062"
+        onChange={(v) => setLocalSettings((prev) => ({ ...prev, longBreakInterval: v }))}
+      />
 
-      <div className="flex gap-3">
+      {/* Action buttons */}
+      <div className="flex gap-2 pt-2">
         <Button
           onClick={handleSave}
-          className="bg-white text-black hover:bg-white/90 font-medium"
+          className="flex-1 bg-[#C0A062] text-white hover:bg-[#C0A062]/80 font-manrope font-medium h-9 text-sm rounded-xl"
         >
-          Save Settings
+          <Save className="w-3.5 h-3.5 mr-2" />
+          Save
         </Button>
         <Button
           onClick={handleReset}
-          variant="outline"
-          className="border-white/30 text-white hover:bg-white/10"
+          variant="ghost"
+          className="text-white/40 hover:text-white hover:bg-white/10 h-9 text-sm rounded-xl"
         >
-          Reset to Default
+          <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
+          Reset
         </Button>
       </div>
     </div>
   );
 }
 
-export default PomodoroSettings;
+// Reusable slider setting component
+function SettingSlider({
+  label,
+  value,
+  min,
+  max,
+  unit,
+  color,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  unit: string;
+  color: string;
+  onChange: (value: number) => void;
+}) {
+  const percentage = ((value - min) / (max - min)) * 100;
 
+  return (
+    <div className="bg-white/[0.03] rounded-xl p-3 border border-white/5">
+      <div className="flex items-center justify-between mb-2.5">
+        <span className="text-xs text-white/60 font-medium">{label}</span>
+        <span className="text-sm font-bold text-white font-manrope tabular-nums">
+          {value}{unit ? ` ${unit}` : ""}
+        </span>
+      </div>
+      <div className="relative h-1.5 bg-white/5 rounded-full">
+        <div
+          className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
+          style={{ width: `${percentage}%`, backgroundColor: color }}
+        />
+        <input
+          type="range"
+          min={min}
+          max={max}
+          value={value}
+          onChange={(e) => onChange(parseInt(e.target.value))}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default PomodoroSettings;

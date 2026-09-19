@@ -20,14 +20,14 @@ function Music({ isOpen }: MusicProps) {
   return (
     <div
       className={cn(
-        "bg-black h-full fixed left-0 w-full sm:w-[80vw] md:w-[50vw] lg:w-[30vw] transition-transform duration-300 ease-in-out z-10",
+        "bg-black h-full fixed left-0 w-full sm:w-[80vw] md:w-[50vw] lg:w-[30vw] transition-transform duration-300 ease-in-out z-50",
         isOpen ? "translate-x-[0%]" : "-translate-x-full"
       )}
     >
       <div className="relative">
         <button
           onClick={() => {
-            const overlay = document.querySelector(".bg-black.bg-opacity-50");
+            const overlay = document.querySelector("[class*=\"backdrop-blur-sm\"]");
             if (overlay) {
               (overlay as HTMLElement).click();
             }

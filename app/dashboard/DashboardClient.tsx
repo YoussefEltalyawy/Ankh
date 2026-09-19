@@ -17,25 +17,29 @@ import addNewTask from "../actions/addNewTask";
 import addNewNote from "../actions/addNewNote";
 import deleteTask from "../actions/deleteTask";
 import deleteNote from "../actions/deleteNote";
+import reorderTasks from "../actions/reorderTasks";
 import { useTheme } from "next-themes";
+
+// Keyboard shortcuts
+import { useDashboardShortcuts } from "../hooks/useKeyboardShortcuts";
 
 // Types
 type DashboardClientProps = {
   user: User;
   initialTasks: Task[];
-  initalNotes: Note[];
+  initialNotes: Note[];
 };
 
 function DashboardClient({
   user,
   initialTasks,
-  initalNotes,
+  initialNotes,
 }: DashboardClientProps) {
   const { theme } = useTheme();
 
   // State management
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
-  const [notes, setNotes] = useState<Note[]>(initalNotes);
+  const [notes, setNotes] = useState<Note[]>(initialNotes);
   const [showStopwatchCard, setShowStopwatchCard] = useState<CardState>({
     show: false,
     opacity: 0,
@@ -95,7 +99,16 @@ function DashboardClient({
   const toggleMusicBar = () => setShowMusicBar((prevState) => !prevState);
   const toggleSettings = () => setShowSettings((prevState) => !prevState);
 
-  // Handle music overlay click
+  // Wire up keyboard shortcuts
+  useDashboardShortcuts({
+    toggleTasks,
+    toggleNotes,
+    toggleTimer: toggleStopwatch,
+    toggleMusic: toggleMusicBar,
+    toggleSettings,
+  });
+
+  // Handle overlay clicks
   const handleOverlayClick = () => {
     setShowMusicBar(false);
     setShowSettings(false);
@@ -161,18 +174,27 @@ function DashboardClient({
     }
   };
 
+  // Task reorder handler
+  const handleReorderTasks = async (taskIds: string[]) => {
+    // Optimistic update: reorder tasks in state immediately
+    const reordered = taskIds.map(id => tasks.find(t => t.id === id)).filter(Boolean) as Task[];
+    setTasks(reordered);
+
+    try {
+      await reorderTasks(taskIds);
+    } catch (error) {
+      console.error("Error reordering tasks:", error);
+      // Revert on error by refetching from original order
+      setTasks(initialTasks);
+    }
+  };
+
   return (
     <div className="flex flex-col w-full h-screen overflow-hidden">
-      {/* Overlays */}
-      {showMusicBar && (
+      {/* Overlay - translucent backdrop */}
+      {(showMusicBar || showSettings) && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-5"
-          onClick={handleOverlayClick}
-        />
-      )}
-      {showSettings && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-5"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
           onClick={handleOverlayClick}
         />
       )}
@@ -199,6 +221,7 @@ function DashboardClient({
             onDeleteTask={handleDeleteTask}
             onAddNote={handleAddNote}
             onDeleteNote={handleDeleteNote}
+            onReorderTasks={handleReorderTasks}
           />
         </div>
 
@@ -216,7 +239,7 @@ function DashboardClient({
 
       {/* Floating components */}
       <Music isOpen={showMusicBar} />
-      <Settings isOpen={showSettings} user={user} />
+      <Settings isOpen={showSettings} user={user} tasks={tasks} />
     </div>
   );
 }

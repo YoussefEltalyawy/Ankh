@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import NoteItem from "../NoteItem";
 import { Note } from "@/app/types";
 import NewNote from "../NewNote";
@@ -30,7 +31,6 @@ function NotesCard({
 }: NotesProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Filter notes based on search query
   const filteredNotes = useMemo(() => {
     if (!searchQuery.trim()) return notes;
     return notes.filter(note =>
@@ -75,21 +75,17 @@ function NotesCard({
                 <span className="sr-only">More options</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-40 bg-white">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
+            <DropdownMenuContent className="w-40 bg-[#1a1a1a] border-white/10 text-white">
+              <DropdownMenuLabel className="text-white/60 text-xs">Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-white/10" />
+              <DropdownMenuItem className="text-white focus:bg-white/10 focus:text-white cursor-pointer">
                 Refresh
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Settings
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
 
-      {/* Search Bar - Hidden by default, shown when searchQuery is not empty */}
       {searchQuery && (
         <div className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
@@ -98,7 +94,7 @@ function NotesCard({
             placeholder="Search notes..."
             value={searchQuery}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-4 py-2 w-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none rounded-lg"
+            className="pl-10 pr-4 py-2 w-full bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none rounded-lg text-sm"
             autoFocus
           />
         </div>
@@ -132,14 +128,24 @@ function NotesCard({
           </div>
         ) : (
           <ul>
-            {filteredNotes.map((note) => (
-              <NoteItem
-                id={note.id}
-                title={note.content}
-                key={note.id}
-                onDeleteNote={onDeleteNote}
-              />
-            ))}
+            <AnimatePresence mode="popLayout">
+              {filteredNotes.map((note) => (
+                <motion.div
+                  key={note.id}
+                  layout
+                  initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -20, scale: 0.95 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  <NoteItem
+                    id={note.id}
+                    title={note.content}
+                    onDeleteNote={onDeleteNote}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </ul>
         )}
       </div>

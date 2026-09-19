@@ -52,17 +52,17 @@ function NewTask({ onAddTask }: NewTaskProps) {
             <Flag className={`w-4 h-4 ${getPriorityColor(priority)}`} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-32 bg-white">
-          <DropdownMenuItem onClick={() => setPriority(undefined)}>
+        <DropdownMenuContent className="w-32 bg-[#1a1a1a] border-white/10 text-white">
+          <DropdownMenuItem onClick={() => setPriority(undefined)} className="text-white focus:bg-white/10 focus:text-white cursor-pointer">
             No Priority
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setPriority('low')}>
+          <DropdownMenuItem onClick={() => setPriority('low')} className="text-white focus:bg-white/10 focus:text-white cursor-pointer">
             <span className="text-green-400 mr-2">●</span> Low
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setPriority('medium')}>
+          <DropdownMenuItem onClick={() => setPriority('medium')} className="text-white focus:bg-white/10 focus:text-white cursor-pointer">
             <span className="text-yellow-400 mr-2">●</span> Medium
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setPriority('high')}>
+          <DropdownMenuItem onClick={() => setPriority('high')} className="text-white focus:bg-white/10 focus:text-white cursor-pointer">
             <span className="text-red-400 mr-2">●</span> High
           </DropdownMenuItem>
         </DropdownMenuContent>

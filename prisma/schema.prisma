@@ -66,10 +66,13 @@ model Task {
   title     String
   completed Boolean  @default(false)
   priority  String?  // 'low', 'medium', 'high'
+  position  Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, position])
 }
 
 model Note {

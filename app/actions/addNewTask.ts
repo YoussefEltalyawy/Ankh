@@ -15,12 +15,20 @@ async function addNewTask(title: string, priority?: 'low' | 'medium' | 'high'): 
   }
 
   try {
+    // Get the max position for this user's tasks
+    const maxPos = await prisma.task.aggregate({
+      where: { userId: user.id },
+      _max: { position: true },
+    });
+    const nextPosition = (maxPos._max.position ?? -1) + 1;
+
     const task = await prisma.task.create({
       data: {
         title: title,
         userId: user.id,
         completed: false,
         priority: priority || null,
+        position: nextPosition,
       },
     });
     const mappedTask: Task = {
@@ -28,6 +36,7 @@ async function addNewTask(title: string, priority?: 'low' | 'medium' | 'high'): 
       title: task.title,
       completed: task.completed,
       priority: (task.priority ?? undefined) as 'low' | 'medium' | 'high' | undefined,
+      position: task.position,
       createdAt: task.createdAt,
     };
     return mappedTask;

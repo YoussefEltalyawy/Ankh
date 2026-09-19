@@ -20,7 +20,7 @@ async function DashboardPage() {
     image: 'image' in user ? ((user as { image?: string | null }).image ?? null) : null,
   };
 
-  return <DashboardClient user={appUser} initialTasks={tasks} initalNotes={notes} />;
+  return <DashboardClient user={appUser} initialTasks={tasks} initialNotes={notes} />;
 }
 
 export default DashboardPage;
